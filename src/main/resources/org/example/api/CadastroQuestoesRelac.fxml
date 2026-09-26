@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.api.Controller">
+    <children>
+        <ImageView fitHeight="1079.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../Imagens/CadastroQuestõesRelac.png" />
+         </image>
+        </ImageView>
+        <ScrollPane layoutX="81.0" layoutY="299.0" prefHeight="82.0" prefWidth="681.0" style="-fx-border-color: #00c1cf; -fx-border-radius: 10;">
+            <content>
+                <TextArea fx:id="txtPergunta" prefHeight="155.0" prefWidth="660.0" promptText="Escreva o enunciado" style="-fx-border-color: #00c1cf; -fx-border-radius: 10;" wrapText="true">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </TextArea>
+            </content>
+        </ScrollPane>
+        <Button fx:id="btMultipla" layoutX="285.0" layoutY="221.0" mnemonicParsing="false" onAction="#abrirMultipla" prefHeight="15.0" prefWidth="24.0" style="-fx-background-color: transparent;" />
+        <Button layoutX="477.0" layoutY="221.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="24.0" style="-fx-background-color: transparent;" />
+        <Button fx:id="btnVerProva" layoutX="359.0" layoutY="21.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: transparent;" />
+        <Button fx:id="btnAlunos" layoutX="489.0" layoutY="21.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: transparent;" />
+        <TextArea fx:id="txtConceito1" layoutX="79.0" layoutY="496.0" prefHeight="70.0" prefWidth="308.0" promptText="escreva o conceito 1" style="-fx-border-color: #00c1cf;" wrapText="true">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextArea>
+        <TextArea fx:id="txtConceito2" layoutX="79.0" layoutY="602.0" prefHeight="70.0" prefWidth="308.0" promptText="escreva o conceito 2" style="-fx-border-color: #00c1cf;" wrapText="true">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextArea>
+        <TextArea fx:id="txtConceito3" layoutX="79.0" layoutY="708.0" prefHeight="70.0" prefWidth="308.0" promptText="escreva o conceito 3" style="-fx-border-color: #00c1cf;" wrapText="true">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextArea>
+        <TextArea fx:id="txtConceito4" layoutX="79.0" layoutY="815.0" prefHeight="70.0" prefWidth="308.0" promptText="escreva o conceito 4" style="-fx-border-color: #00c1cf;" wrapText="true">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextArea>
+        <Button layoutX="79.0" layoutY="915.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="163.0" style="-fx-background-color: transparent;" />
+        <Button layoutX="532.0" layoutY="963.0" mnemonicParsing="false" onAction="#salvarQuestao" prefHeight="38.0" prefWidth="210.0" style="-fx-background-color: transparent;" />
+      <Button fx:id="btAberta" layoutX="102.0" layoutY="221.0" mnemonicParsing="false" onAction="#abrirAberta" prefHeight="15.0" prefWidth="24.0" style="-fx-background-color: transparent;" />
+      <ComboBox fx:id="comboRelacao1" layoutX="469.0" layoutY="496.0" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: #00c1c6;" />
+      <ComboBox fx:id="comboRelacao2" layoutX="468.0" layoutY="602.0" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: #00c1c6;" />
+      <ComboBox fx:id="comboRelacao3" layoutX="468.0" layoutY="708.0" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: #00c1c6;" />
+      <ComboBox fx:id="comboRelacao4" layoutX="470.0" layoutY="815.0" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-color: #00c1c6;" />
+    </children>
+</AnchorPane>
