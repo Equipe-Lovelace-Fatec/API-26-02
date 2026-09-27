@@ -35,28 +35,25 @@ Desenvolvimento das telas da plataforma em Java, implementando suas funcionalida
 -   **Banco de Dados:** MySQL
 
 ----
+
 ☑️ **Definition of Ready (DoR)** 
 
--   Não ter dependência de outra User Story;
+- O protótipo visual da tela está aprovado.
+
+- Os campos e regras de cada tela foram definidos.
+
+- O formato de cada tipo de questão (múltipla escolha, coluna e dissertativa) está especificado.
+
+- As telas seguem a regra de negócio do cliente.
   
--   User Story e critérios de aceitação detalhados e bem compreendidos pela equipe;
-
--   Distribuição da User Story ao desenvolvedor e QAs;
- 
--   Não ter dependência de outra User Story;
- 
--   Ter um esboço da tela em que a User Story funcionará;
-
--   Definição das informações que devem ser armazenadas para que a User Story seja funcional;
-
----- 
+----
 
 ☑️ **Definition of Done (DoD)**
 
--   A entrega deve acrescentar valor ao cliente;
+- A funcionalidade está totalmente integrada e os dados são salvos.
 
--   A entrega deve ser testada pelos QAs da User Story;
+- O fluxo de cadastrar, montar e corrigir funciona sem erros.
 
--   Os commits precisam seguir o padrão estabelecido pela equipe;
-  
--   Documentação do GitHub atualizada, incluindo o Manual de Usuário, com um responsável por sprint;
+- O layout da tela está amigável e segue o protótipo.
+
+- O código foi revisado e enviado para a branch principal.
