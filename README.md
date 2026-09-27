@@ -59,7 +59,7 @@ Desenvolver um sistema desktop em Java, integrado a um banco de dados relacional
 
 | Sprint          |    Período    | Documentação                                     |
 | :-------------: | :-----------: | :----------------------------------------------: |
-|  **SPRINT 1** | 07/09 - 27/09 | [Ver Sprint 1] |
+|  **SPRINT 1** | 07/09 - 27/09 | [Ver Sprint 1](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/main/Docs/sprint1/sprint1.md) |
 |  **SPRINT 2** | 05/10 - 25/10 | [Ver Sprint 2] |
 |  **SPRINT 3** | 02/11 - 22/11 | [Ver Sprint 3] |
 
