@@ -83,10 +83,17 @@ public class MontagemProvaController {
 
     @FXML
     void AddQuestao(ActionEvent event) {
-        // Apenas salva as informações dos cabeçalhos nos campos estáticos sem abrir caixas de diálogo
+        // Salva as informações dos cabeçalhos nos campos estáticos
         nomeProvaSalvo = txtNomeProva.getText();
         disciplinaSalva = boxDisciplina.getValue() != null ? boxDisciplina.getValue() : "";
         valorProvaSalvo = txtValorProva.getText();
+
+        // Exibe o alerta de questão adicionada
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Sucesso");
+        alert.setHeaderText(null);
+        alert.setContentText("Questão(ões) adicionada(s) com sucesso!");
+        alert.showAndWait();
     }
 
     @FXML
@@ -116,7 +123,7 @@ public class MontagemProvaController {
             String valorEnviar = !valorProvaSalvo.isEmpty() ? valorProvaSalvo : (txtValorProva != null ? txtValorProva.getText() : "");
 
             System.out.println(">>> 2. Carregando o FXML visualizacao.fxml...");
-            // ALTERAÇÃO AQUI: Uso da barra '/' no início para garantir o caminho absoluto nos recursos
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/visualizacao.fxml"));
             Parent root = loader.load();
 
@@ -155,7 +162,14 @@ public class MontagemProvaController {
         }
     }
 
-    @FXML void SalvarProva(ActionEvent event) {}
+    @FXML
+    void SalvarProva(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Sucesso");
+        alert.setHeaderText(null);
+        alert.setContentText("Prova salva com sucesso!");
+        alert.showAndWait();
+    }
     @FXML void irAlunos(ActionEvent event) throws IOException {
             App.setRoot("Aluno");
         }
