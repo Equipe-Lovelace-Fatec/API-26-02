@@ -1,0 +1,14 @@
+.checkbox-transparente .box {
+    -fx-background-color: transparent;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.checkbox-transparente:selected .box {
+    -fx-background-color: transparent;
+}
+
+.checkbox-transparente:selected .mark {
+    -fx-background-color: #00c1cf;
+}
