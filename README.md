@@ -47,7 +47,7 @@ Desenvolver um sistema desktop em Java, integrado a um banco de dados relacional
 -   **Ferramenta de gestão:** Github
 -   **Linguagem:** Java
 -   **Plataforma:** IntelliJ
--   **Interface:** JavaFX
+-   **Interface:** JavaFX e SceneBuilder
 -   **Design de Interface:** Canva
 -   **Banco de Dados:** MySQL
 
