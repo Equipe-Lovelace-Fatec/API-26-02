@@ -95,6 +95,7 @@ Desenvolver um sistema desktop em Java, integrado a um banco de dados relacional
 ----
   
 ### 📁 Manual de Instalação
+Link para o manual de instalação: [Manual de instalação](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/main/Docs/Manuais/Manual%20de%20Instala%C3%A7%C3%A3o.md)
 
 
 ----
