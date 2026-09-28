@@ -1,7 +1,7 @@
 
-## 🚀 Desafio da sprint 1**
+## 🚀 Desafio da sprint 1
 
-Desenvolvimento das telas da plataforma em Java, implementando suas funcionalidades básicas de cadastro, edição e armazenamento de questões e respostas, com organização das informações necessárias para a composição do portfólio de avaliações dos professores.
+Desenvolvimento das telas da plataforma em Java, implementando suas funcionalidades de cadastro, edição e armazenamento de questões e respostas, com organização das informações necessárias para a composição do portfólio de avaliações dos professores.
 
 -----
 
@@ -15,7 +15,7 @@ Desenvolvimento das telas da plataforma em Java, implementando suas funcionalida
 | 4 | Média | Como professor, quero aplicar provas com data e hora definidas para que todos os alunos da turma realizem a prova no mesmo período. | 1 | 5 | ⏳ |
 ----
 
-## 📑 BACKLOG SPRINT 1 
+## 📑 Backlog Sprint 1 
 
 | | |
 |---|---|
