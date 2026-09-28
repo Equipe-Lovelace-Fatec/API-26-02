@@ -3,7 +3,7 @@
 ## API-26-02 - **aNota**
 
   
-  <img width="337" height="305" alt="image" src="https://github.com/user-attachments/assets/d446b835-299c-4777-a2bf-c9d114403136" />
+  <img width="500" height="250" alt="Telas API" src="https://github.com/user-attachments/assets/92f49ce3-2760-4f42-8446-5f924f1346d3" />
  
   
   <h2>Lovelace</h2>
@@ -94,14 +94,14 @@ Desenvolver um sistema desktop em Java, integrado a um banco de dados relacional
 
 ----
   
-### 📁 Manual de Instalação
+### 🛠️ Manual de Instalação
 Link para o manual de instalação: [Manual de instalação](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/main/Docs/Manuais/Manual%20de%20Instala%C3%A7%C3%A3o.md)
 
 
 ----
 
-### 🧑‍🤝‍🧑 Manual do Usuário
-
+### 📘 Manual do Usuário
+Link para o manual do usuário: [Manual do usuário](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/512f53e476a8e4cf674eaaf60cd3e0fb6be2e89e/Docs/Manuais/Manual%20do%20Usu%C3%A1rio.md)
 
 ----
 
