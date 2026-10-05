@@ -25,9 +25,9 @@ O processo atual de gestão de avaliações impõe uma rotina operacional exaust
 
 | Rank | Prioridade | User Story | Sprint | Story Points | Status |
 |:------:|:------------:|------------|:--------:|:--------:|:--------:|
-| 1 | Alta | Como professor, quero gerenciar questões e respostas para ter um portfólio do meu material usado em avaliações. | 1 e 2 | 8 | ⬜ | 
-| 2 | Alta | Como professor, quero manter um histórico de quando utilizei uma questão para evitar repetição excessiva de conteúdo. | 1 e 2 | 8 | ⬜ | 
-| 3 | Alta | Como professor, quero selecionar e organizar questões para montar as provas e centralizar o processo de avaliação.  | 1 e 2 | 8 | ⬜ | 
+| 1 | Alta | Como professor, quero gerenciar questões e respostas para ter um portfólio do meu material usado em avaliações. | 1 e 2 | 8 | ✅ | 
+| 2 | Alta | Como professor, quero manter um histórico de quando utilizei uma questão para evitar repetição excessiva de conteúdo. | 1 e 2 | 8 | ✅ | 
+| 3 | Alta | Como professor, quero selecionar e organizar questões para montar as provas e centralizar o processo de avaliação.  | 1 e 2 | 8 | ✅ | 
 | 4 | Média | Como professor, quero aplicar provas com data e hora definidas para que todos os alunos da turma realizem a prova no mesmo período. | 1 e 2 | 5 | ⬜ | 
 | 5 | Média | Como professor, quero divulgar o gabarito da avaliação para que o aluno possa consultar. | 1 e 3 | 2 | ⬜ | 
 | 6 | Média | Como professor, quero que as provas sejam pré-corrigidas para evitar repetições desnecessárias. | 1 e 3 | 5 | ⬜ | 
