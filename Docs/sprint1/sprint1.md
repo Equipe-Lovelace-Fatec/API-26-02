@@ -9,9 +9,9 @@ Desenvolvimento das telas da plataforma em Java, implementando suas funcionalida
 
 | Rank | Prioridade | User Story | Sprint | Estimativa | Status |
 |------|------------|------------|--------|------------|--------|
-| 1 | Alta | Como professor, quero armazenar e consultar questões e respostas para ter um portfólio do meu material usado em avaliações. | 1 | 8 | ⏳ |
-| 2 | Alta | Como professor, quero manter um histórico de quando utilizei uma questão para evitar repetição excessiva de conteúdo. | 1 | 8 | ⏳ |
-| 3 | Alta | Como professor, quero selecionar e organizar questões para montar as provas e centralizar o processo de avaliação.  | 1 | 8 | ⏳ |
+| 1 | Alta | Como professor, quero armazenar e consultar questões e respostas para ter um portfólio do meu material usado em avaliações. | 1 | 8 | ✅ |
+| 2 | Alta | Como professor, quero manter um histórico de quando utilizei uma questão para evitar repetição excessiva de conteúdo. | 1 | 8 | ✅ |
+| 3 | Alta | Como professor, quero selecionar e organizar questões para montar as provas e centralizar o processo de avaliação.  | 1 | 8 | ✅ |
 | 4 | Média | Como professor, quero aplicar provas com data e hora definidas para que todos os alunos da turma realizem a prova no mesmo período. | 1 | 5 | ⏳ |
 ----
 
@@ -32,7 +32,6 @@ Desenvolvimento das telas da plataforma em Java, implementando suas funcionalida
 -   **Plataforma:** IntelliJ
 -   **Interface:** JavaFX e SceneBuilder
 -   **Design de Interface:** Canva
--   **Banco de Dados:** MySQL
 
 ----
 
