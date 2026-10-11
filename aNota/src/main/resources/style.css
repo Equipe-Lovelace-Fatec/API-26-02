@@ -12,7 +12,14 @@
     -fx-shape: null;
     -fx-background-color: transparent;
 }
+.menu-button .arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
 
+.menu-button .arrow-button {
+    -fx-padding: 0;
+}
 
 /* Altera o tamanho da fonte do item selecionado e das opções do menu */
 .combo-box .cell {
