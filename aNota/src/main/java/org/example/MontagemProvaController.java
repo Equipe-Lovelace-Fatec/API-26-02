@@ -52,20 +52,33 @@ public class MontagemProvaController {
     public static String nomeProvaSalvo = "";
     public static String disciplinaSalva = "";
     public static String valorProvaSalvo = "";
+    private CheckBox[] checkBoxes;
+    private TextField[] camposValores;
 
-    @FXML private ComboBox<String> boxDisciplina;
-    @FXML private Button btnAddQuestao;
-    @FXML private Button btnAlunos;
-    @FXML private Button btnQuestoes;
-    @FXML private Button btnSalvarProva;
-    @FXML private Button btnVerProva;
+    @FXML
+    private ComboBox<String> boxDisciplina;
+    @FXML
+    private Button btnAddQuestao;
+    @FXML
+    private Button btnAlunos;
+    @FXML
+    private Button btnQuestoes;
+    @FXML
+    private Button btnSalvarProva;
+    @FXML
+    private Button btnVerProva;
 
-    @FXML private CheckBox checkbox1, checkbox2, checkbox3, checkbox4, checkbox5;
-    @FXML private CheckBox checkbox6, checkbox7, checkbox8, checkbox9, checkbox10;
+    @FXML
+    private CheckBox checkbox1, checkbox2, checkbox3, checkbox4, checkbox5;
+    @FXML
+    private CheckBox checkbox6, checkbox7, checkbox8, checkbox9, checkbox10;
 
-    @FXML private TextField txtNomeProva, txtValorProva;
-    @FXML private TextField valor_questao1, valor_questao2, valor_questao3, valor_questao4, valor_questao5;
-    @FXML private TextField valor_questao6, valor_questao7, valor_questao8, valor_questao9, valor_questao10;
+    @FXML
+    private TextField txtNomeProva, txtValorProva;
+    @FXML
+    private TextField valor_questao1, valor_questao2, valor_questao3, valor_questao4, valor_questao5;
+    @FXML
+    private TextField valor_questao6, valor_questao7, valor_questao8, valor_questao9, valor_questao10;
 
     @FXML
     public void initialize() {
@@ -73,11 +86,61 @@ public class MontagemProvaController {
             boxDisciplina.getItems().addAll("AGE002", "IMB003", "IES001", "AGR001", "ILP008", "MCA001");
         }
 
-        CheckBox[] checkBoxes = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5,
+        checkBoxes = new CheckBox[]{checkbox1, checkbox2, checkbox3, checkbox4, checkbox5,
                 checkbox6, checkbox7, checkbox8, checkbox9, checkbox10};
+
+        camposValores = new TextField[]{valor_questao1, valor_questao2, valor_questao3, valor_questao4, valor_questao5,
+                valor_questao6, valor_questao7, valor_questao8, valor_questao9, valor_questao10};
 
         for (int i = 0; i < perguntas.size() && i < checkBoxes.length; i++) {
             checkBoxes[i].setText(perguntas.get(i));
+        }
+        atualizacaoValorProva();
+    }
+
+    private void atualizacaoValorProva() {
+
+        for (int i = 0; i < checkBoxes.length; i++) {
+            final int index = i;
+
+            checkBoxes[i].selectedProperty().addListener((observable, oldValue, newValue) -> {
+                recalcularValorProva(checkBoxes, camposValores);
+            });
+
+            camposValores[i].textProperty().addListener((observable, oldValue, newValue) -> {
+                recalcularValorProva(checkBoxes, camposValores);
+            });
+        }
+    }
+
+    private void recalcularValorProva(CheckBox[] checkBoxes, TextField[] camposValores) {
+        double somaTotal = 0.0;
+        boolean temValorInformado = false;
+
+        for (int i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].isSelected()) {
+                String texto = camposValores[i].getText().trim();
+                if (!texto.isEmpty()) {
+                    try {
+                        double valor = Double.parseDouble(texto.replace(",", "."));
+                        if (valor > 0) {
+                            somaTotal += valor;
+                            temValorInformado = true;
+                        }
+                    } catch (NumberFormatException e) {
+                    }
+                }
+            }
+        }
+
+        if (temValorInformado) {
+            if (somaTotal == (int) somaTotal) {
+                txtValorProva.setText(String.valueOf((int) somaTotal));
+            } else {
+                txtValorProva.setText(String.format("%.2f", somaTotal).replace(",", "."));
+            }
+        } else {
+            txtValorProva.clear();
         }
     }
 
@@ -100,9 +163,6 @@ public class MontagemProvaController {
     void VerProva(ActionEvent event) {
         try {
             System.out.println(">>> 1. Iniciando clique do VerProva...");
-
-            CheckBox[] checkBoxes = {checkbox1, checkbox2, checkbox3, checkbox4, checkbox5,
-                    checkbox6, checkbox7, checkbox8, checkbox9, checkbox10};
 
             List<String> perguntasSelecionadas = new ArrayList<>();
             List<String> gabaritosSelecionados = new ArrayList<>();
@@ -164,15 +224,61 @@ public class MontagemProvaController {
 
     @FXML
     void SalvarProva(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Sucesso");
-        alert.setHeaderText(null);
-        alert.setContentText("Prova salva com sucesso!");
-        alert.showAndWait();
-    }
-    @FXML void irAlunos(ActionEvent event) throws IOException {
-            App.setRoot("Aluno");
+
+        List<Integer> questoesSelecionadas = new ArrayList<>();
+        for (int i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].isSelected()) {
+                questoesSelecionadas.add(i);
+            }
         }
 
-    @FXML void irQuestao(ActionEvent event) {}
+        if (questoesSelecionadas.isEmpty()) {
+            mostrarAlerta("Aviso", "Selecione ao menos uma questão para a prova.");
+            return;
+        }
+
+        boolean provaTemValor = !txtValorProva.getText().trim().isEmpty();
+
+        for (int index : questoesSelecionadas) {
+            boolean questaoTemValor = !camposValores[index].getText().trim().isEmpty();
+
+            // Se a prova tem valor, mas alguma questão selecionada está vazia (inconsistência)
+            if (provaTemValor && !questaoTemValor) {
+                mostrarAlerta("Atenção!", "Há questões sem valor.");
+                return;
+            }
+            // Se a prova está vazia, mas alguma questão tem valor
+            if (!provaTemValor && questaoTemValor) {
+                mostrarAlerta("Atenção!", "A prova está sem valor.");
+                return;
+            }
+        }
+
+        // Se a prova está vazia e todas as questões também, salva como rascunho
+        if (!provaTemValor) {
+            mostrarAlerta("Sucesso", "Prova salva como rascunho (sem valores definidos).");
+            return;
+        }
+
+        // Tudo está preenchido e validado
+        mostrarAlerta("Sucesso", "Prova salva com sucesso! \nValor da avaliação: " + txtValorProva.getText());
+    }
+
+    private void mostrarAlerta(String titulo, String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
+
+    @FXML
+    void irAlunos(ActionEvent event) throws IOException {
+        App.setRoot("Aluno");
+    }
+
+    @FXML
+    void irQuestao(ActionEvent event) throws IOException {
+        App.setRoot(" ");
+    }
 }
