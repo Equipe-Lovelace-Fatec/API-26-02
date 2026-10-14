@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConexaoBanco {
+public class ConexaoDAO {
 
     private static final String URL = "jdbc:mysql://localhost:3306/anota_database?useTimezone=true&serverTimezone=UTC";
     private static final String USUARIO = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : "root";

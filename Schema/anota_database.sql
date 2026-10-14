@@ -1,6 +1,10 @@
 CREATE DATABASE anota_database DEFAULT CHARACTER SET utf8mb4;
 USE anota_database;
 
+create user 'lovelace'@'localhost' identified by 'pass123';
+
+grant select, insert, delete, update on anota_database.* to lovelace@'localhost';
+
 CREATE TABLE usuario ( -- usuário generalizado
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL,
