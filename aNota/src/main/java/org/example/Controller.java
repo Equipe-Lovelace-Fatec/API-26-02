@@ -217,16 +217,16 @@ public class Controller {
 
         if (proximaPosicao < 10) {
 
-            org.example.MontagemProvaController MontagemProvaController = null;
-            MontagemProvaController.perguntas.set(
-                    proximaPosicao,
-                    pergunta
-            );
+            //org.example.MontagemProvaController MontagemProvaController = null;
+            //MontagemProvaController.perguntas.set(
+                  //  proximaPosicao,
+                   // pergunta
+          //  );
 
-            MontagemProvaController.gabaritos.set(
-                    proximaPosicao,
-                    gabarito
-            );
+          //  MontagemProvaController.gabaritos.set(
+           //         proximaPosicao,
+            //        gabarito
+           // );
 
             proximaPosicao++;
 
