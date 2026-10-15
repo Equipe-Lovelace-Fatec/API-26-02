@@ -144,36 +144,73 @@ INSERT INTO prova (nome_prova, dificuldade, valor, email_professor, nome_discipl
 ('Prova 1', 'facil', 10.00, 'teresinha.fatima@prof.fatec.com', 'Inglês II');
  
 -- ========== QUESTÕES DAS PROVAS ==========
-INSERT INTO prova_questao (nome_prova, email_professor, nome_disciplina, enunciado, tipo, peso) VALUES
--- Teresinha
-('Prova 1', 'teresinha.fatima@prof.fatec.com', 'Inglês I', 'Qual é o plural correto de "child" em inglês?', 'alt', 4.00),
-('Prova 1', 'teresinha.fatima@prof.fatec.com', 'Inglês I', 'Escreva em inglês uma frase se apresentando com nome, idade e profissão.', 'diss', 6.00),
-('Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', 'Qual é o plural correto de "child" em inglês?', 'alt', 5.00),
-('Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', 'Escreva em inglês uma frase se apresentando com nome, idade e profissão.', 'diss', 5.00),
--- Emanuel
-('Prova 1', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados', 'Qual forma normal exige que não haja dependências parciais da chave primária?', 'alt', 4.00),
-('Prova 1', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados', 'Explique a diferença entre chave primária e chave estrangeira.', 'diss', 6.00),
-('Prova 2', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados', 'Qual forma normal exige que não haja dependências parciais da chave primária?', 'alt', 5.00),
-('Prova 2', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados', 'Explique a diferença entre chave primária e chave estrangeira.', 'diss', 5.00),
--- Giuliano
-('Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', 'Qual metodologia ágil organiza o trabalho em sprints?', 'alt', 4.00),
-('Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', 'Cite duas diferenças entre requisitos funcionais e não funcionais.', 'diss', 6.00),
-('Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', 'Qual metodologia ágil organiza o trabalho em sprints?', 'alt', 5.00),
-('Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', 'Cite duas diferenças entre requisitos funcionais e não funcionais.', 'diss', 5.00);
- 
+INSERT INTO prova_questao (prova_id, questao_id, email_professor, nome_disciplina, peso)
+SELECT p.prova_id, q.questao_id, p.email_professor, p.nome_disciplina, v.peso
+FROM (
+    SELECT 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina,
+           'Qual é o plural correto de "child" em inglês?' AS enunciado, 'alt' AS tipo, 4.00 AS peso
+    UNION ALL
+    SELECT 'Prova 1', 'teresinha.fatima@prof.fatec.com', 'Inglês I',
+           'Escreva em inglês uma frase se apresentando com nome, idade e profissão.', 'diss', 6.00
+    UNION ALL
+    SELECT 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I',
+           'Qual é o plural correto de "child" em inglês?', 'alt', 5.00
+    UNION ALL
+    SELECT 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I',
+           'Escreva em inglês uma frase se apresentando com nome, idade e profissão.', 'diss', 5.00
+    UNION ALL
+    SELECT 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados',
+           'Qual forma normal exige que não haja dependências parciais da chave primária?', 'alt', 4.00
+    UNION ALL
+    SELECT 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados',
+           'Explique a diferença entre chave primária e chave estrangeira.', 'diss', 6.00
+    UNION ALL
+    SELECT 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados',
+           'Qual forma normal exige que não haja dependências parciais da chave primária?', 'alt', 5.00
+    UNION ALL
+    SELECT 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados',
+           'Explique a diferença entre chave primária e chave estrangeira.', 'diss', 5.00
+    UNION ALL
+    SELECT 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I',
+           'Qual metodologia ágil organiza o trabalho em sprints?', 'alt', 4.00
+    UNION ALL
+    SELECT 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I',
+           'Cite duas diferenças entre requisitos funcionais e não funcionais.', 'diss', 6.00
+    UNION ALL
+    SELECT 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I',
+           'Qual metodologia ágil organiza o trabalho em sprints?', 'alt', 5.00
+    UNION ALL
+    SELECT 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I',
+           'Cite duas diferenças entre requisitos funcionais e não funcionais.', 'diss', 5.00
+) AS v
+JOIN prova p
+  ON p.nome_prova = v.nome_prova
+ AND p.email_professor = v.email_professor
+ AND p.nome_disciplina = v.nome_disciplina
+JOIN questao q
+  ON q.enunciado = v.enunciado
+ AND q.tipo = v.tipo;
+
 -- ========= PROVA aplicada TURMA =============
-INSERT INTO prova_turma (id_turma, nome_prova, email_professor, nome_disciplina, data, horario) VALUES
--- Turma 2 (1º semestre, Inglês): Inglês I, da Teresinha
-(2, 'Prova 1', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-03-18', '19:30:00'),
-(2, 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-05-20', '19:30:00'),
--- Turma 3 (2º semestre, Regular): Arquitetura e Modelagem de BD, do Emanuel
-(3, 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados', '2026-10-14', '19:30:00'),
-(3, 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados', '2026-11-18', '19:30:00'),
--- Turma 3 (2º semestre, Regular): Engenharia de Software I, do Giuliano
-(3, 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-10-15', '19:30:00'),
-(3, 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-11-19', '19:30:00');
- 
- 
+INSERT INTO prova_turma (prova_id, id_turma, nome_prova, email_professor, nome_disciplina, data, horario)
+SELECT p.prova_id, v.id_turma, p.nome_prova, p.email_professor, p.nome_disciplina, v.data, v.horario
+FROM (
+    SELECT 2 AS id_turma, 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina, '2026-03-18' AS data, '19:30:00' AS horario
+    UNION ALL
+    SELECT 2, 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-05-20', '19:30:00'
+    UNION ALL
+    SELECT 3, 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados', '2026-10-14', '19:30:00'
+    UNION ALL
+    SELECT 3, 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Arquitetura e Modelagem de Banco de Dados', '2026-11-18', '19:30:00'
+    UNION ALL
+    SELECT 3, 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-10-15', '19:30:00'
+    UNION ALL
+    SELECT 3, 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-11-19', '19:30:00'
+) AS v
+JOIN prova p
+  ON p.nome_prova = v.nome_prova
+ AND p.email_professor = v.email_professor
+ AND p.nome_disciplina = v.nome_disciplina;
  
  
  
@@ -202,4 +239,3 @@ SELECT * FROM prova;
 
 SELECT * FROM prova_questao;
 SELECT * FROM prova_turma;
-
