@@ -52,12 +52,13 @@ public class QuestaoDAO {
         Connection con = null;
         try {
             con = getConnection();
-            String select_sql = "SELECT enunciado, tema, tipo, dificuldade, data_criacao, data_edicao, email_professor, nome_disciplina FROM questao";
+            String select_sql = "SELECT questao_id, enunciado, tema, tipo, dificuldade, data_criacao, data_edicao, email_professor, nome_disciplina FROM questao";
             PreparedStatement pst = con.prepareStatement(select_sql);
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
                 Questao questao = new Questao();
+                questao.setId(rs.getLong("questao_id"));
                 questao.setEnunciado(rs.getString("enunciado"));
                 questao.setTema(rs.getString("tema"));
                 questao.setTipo(rs.getString("tipo"));

@@ -26,7 +26,8 @@ public class MontagemProvaController {
 
         private CheckBox[] checkBoxes;
         private TextField[] camposValores;
-        private List<Questao> questoesCarregadas;
+        private List<Questao> questoesBancoGeral; // Guarda todas as questões do banco
+        private List<Questao> questoesFiltradas;   // Guarda apenas as questões que atendem aos filtros atuais
 
         @FXML private ComboBox<String> boxDisciplina;
         @FXML private ComboBox<String> box_filtro_dificuldade;
@@ -45,8 +46,8 @@ public class MontagemProvaController {
         @FXML
         public void initialize() {
                 inicializarArraysComponentes();
-                carregarFiltrosEDisciplinas();
-                inicializarCheckBoxesComBanco();
+                carregarDadosDoBanco();
+                configurarFiltrosDinamicos();
                 atualizacaoValorProva();
         }
 
@@ -64,10 +65,12 @@ public class MontagemProvaController {
                 };
         }
 
-        private void carregarFiltrosEDisciplinas() {
+        private void carregarDadosDoBanco() {
                 try {
-                        List<Questao> questoesBanco = questaoDAO.buscarQuestoes();
-                        List<String> disciplinasUnicas = questoesBanco.stream()
+                        questoesBancoGeral = questaoDAO.buscarQuestoes();
+
+                        // Preenche as disciplinas únicas no ComboBox principal da prova e no filtro
+                        List<String> disciplinasUnicas = questoesBancoGeral.stream()
                                 .map(Questao::getNomeDisciplina)
                                 .distinct()
                                 .collect(Collectors.toList());
@@ -76,39 +79,67 @@ public class MontagemProvaController {
                         if (boxDisciplina != null) boxDisciplina.setItems(obsDisciplinas);
                         if (box_filtro_disciplina != null) box_filtro_disciplina.setItems(obsDisciplinas);
 
-                        ObservableList<String> obsDificuldades = FXCollections.observableArrayList("fácil", "média", "difícil");
+                        // Preenche o filtro de dificuldades (respeitando o banco: 'Fácil', 'Média', 'Difícil')
+                        ObservableList<String> obsDificuldades = FXCollections.observableArrayList("Fácil", "Média", "Difícil");
                         if (box_filtro_dificuldade != null) box_filtro_dificuldade.setItems(obsDificuldades);
+
+                        // Inicialmente exibe todas as questões
+                        aplicarFiltros();
+
                 } catch (Exception e) {
                         e.printStackTrace();
                 }
         }
 
-        private void inicializarCheckBoxesComBanco() {
-                try {
-                        questoesCarregadas = questaoDAO.buscarQuestoes();
-                        for (int i = 0; i < checkBoxes.length; i++) {
-                                CheckBox chk = checkBoxes[i];
-                                TextField txtVal = camposValores[i];
+        private void configurarFiltrosDinamicos() {
+                // Sempre que o usuário alterar o filtro de disciplina ou de dificuldade, atualiza os checkboxes na tela
+                if (box_filtro_disciplina != null) {
+                        box_filtro_disciplina.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
+                }
+                if (box_filtro_dificuldade != null) {
+                        box_filtro_dificuldade.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
+                }
+        }
 
-                                if (i < questoesCarregadas.size()) {
-                                        Questao q = questoesCarregadas.get(i);
-                                        chk.setText(q.getEnunciado());
-                                        chk.setVisible(true);
-                                        chk.setDisable(false);
-                                        chk.setSelected(false);
-                                        txtVal.setVisible(true);
-                                        txtVal.setDisable(false);
-                                } else {
-                                        chk.setText("");
-                                        chk.setVisible(false);
-                                        chk.setDisable(true);
-                                        txtVal.setText("");
-                                        txtVal.setVisible(false);
-                                        txtVal.setDisable(true);
-                                }
+        private void aplicarFiltros() {
+                if (questoesBancoGeral == null) return;
+
+                String disciplinaSelecionada = box_filtro_disciplina != null ? box_filtro_disciplina.getValue() : null;
+                String dificuldadeSelecionada = box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null;
+
+                // Filtra a lista geral com base nos valores selecionados nos ComboBoxes de filtro
+                questoesFiltradas = questoesBancoGeral.stream().filter(q -> {
+                        boolean matchDisciplina = (disciplinaSelecionada == null || disciplinaSelecionada.isEmpty() || disciplinaSelecionada.equals(q.getNomeDisciplina()));
+                        boolean matchDificuldade = (dificuldadeSelecionada == null || dificuldadeSelecionada.isEmpty() || dificuldadeSelecionada.equalsIgnoreCase(q.getDificuldade()));
+                        return matchDisciplina && matchDificuldade;
+                }).collect(Collectors.toList());
+
+                atualizarExibicaoCheckBoxes();
+        }
+
+        private void atualizarExibicaoCheckBoxes() {
+                for (int i = 0; i < checkBoxes.length; i++) {
+                        CheckBox chk = checkBoxes[i];
+                        TextField txtVal = camposValores[i];
+
+                        if (i < questoesFiltradas.size()) {
+                                Questao q = questoesFiltradas.get(i);
+                                chk.setText(q.getEnunciado() + " (" + q.getDificuldade() + ")");
+                                chk.setVisible(true);
+                                chk.setDisable(false);
+                                chk.setSelected(false);
+                                txtVal.setText("");
+                                txtVal.setVisible(true);
+                                txtVal.setDisable(false);
+                        } else {
+                                chk.setText("");
+                                chk.setVisible(false);
+                                chk.setDisable(true);
+                                chk.setSelected(false);
+                                txtVal.setText("");
+                                txtVal.setVisible(false);
+                                txtVal.setDisable(true);
                         }
-                } catch (Exception e) {
-                        e.printStackTrace();
                 }
         }
 
@@ -183,21 +214,19 @@ public class MontagemProvaController {
                 }
 
                 try {
-                        String dificuldade = null;
+                        String dificuldadeProva = box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null;
                         String emailProfessor = "teresinha.fatima@prof.fatec.com";
 
                         // 1. Salva a prova e recupera o ID gerado automaticamente pelo banco
-                        Long provaId = montagemProvaDAO.nova(prova.getNomeProva(), dificuldade, prova.getValor(), emailProfessor, prova.getNomeDisciplina());
+                        Long provaId = montagemProvaDAO.nova(prova.getNomeProva(), dificuldadeProva, prova.getValor(), emailProfessor, prova.getNomeDisciplina());
 
-                        // 2. Percorre as questões marcadas e as associa na tabela 'prova_questao'
+                        // 2. Percorre as questões filtradas marcadas e as associa na tabela 'prova_questao'
                         for (int index : indicesSelecionados) {
-                                Questao q = questoesCarregadas.get(index);
+                                Questao q = questoesFiltradas.get(index);
 
-                                // Pega o peso/valor específico preenchido para esta questão
                                 String pesoStr = camposValores[index].getText().trim().replace(",", ".");
                                 BigDecimal pesoQuestao = pesoStr.isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesoStr);
 
-                                // Chama o DAO para gravar na tabela N para N
                                 montagemProvaDAO.associarQuestao(provaId, q.getId(), emailProfessor, prova.getNomeDisciplina(), pesoQuestao);
                         }
 

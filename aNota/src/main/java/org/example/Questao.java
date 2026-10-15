@@ -3,6 +3,7 @@ package org.example;
 import java.time.LocalDateTime;
 
 public class Questao {
+    private Long id;
     private String enunciado;
     private String tema;
     private String tipo;
@@ -13,6 +14,14 @@ public class Questao {
     private String nomeDisciplina;
 
     // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getEnunciado() {
         return enunciado;
     }
