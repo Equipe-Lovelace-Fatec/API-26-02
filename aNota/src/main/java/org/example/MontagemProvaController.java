@@ -30,8 +30,8 @@ public class MontagemProvaController {
 
         private CheckBox[] checkBoxes;
         private TextField[] camposValores;
-        private List<Questao> questoesBancoGeral;
-        private List<Questao> questoesFiltradas;
+        private List<Questao> questoesBancoGeral; // Guarda todas as questões do banco
+        private List<Questao> questoesFiltradas;   // Guarda apenas as questões que atendem aos filtros atuais
 
         // Listas temporárias para passar os dados para a tela de visualização
         public static List<String> perguntasTemporarias = new ArrayList<>();
@@ -77,6 +77,7 @@ public class MontagemProvaController {
                 try {
                         questoesBancoGeral = questaoDAO.buscarQuestoes();
 
+                        // Preenche as disciplinas únicas no ComboBox principal da prova e no filtro
                         List<String> disciplinasUnicas = questoesBancoGeral.stream()
                                 .map(Questao::getNomeDisciplina)
                                 .distinct()
@@ -86,16 +87,20 @@ public class MontagemProvaController {
                         if (boxDisciplina != null) boxDisciplina.setItems(obsDisciplinas);
                         if (box_filtro_disciplina != null) box_filtro_disciplina.setItems(obsDisciplinas);
 
+                        // Preenche o filtro de dificuldades (respeitando o banco: 'Fácil', 'Média', 'Difícil')
                         ObservableList<String> obsDificuldades = FXCollections.observableArrayList("Fácil", "Média", "Difícil");
                         if (box_filtro_dificuldade != null) box_filtro_dificuldade.setItems(obsDificuldades);
 
+                        // Inicialmente exibe todas as questões
                         aplicarFiltros();
+
                 } catch (Exception e) {
                         e.printStackTrace();
                 }
         }
 
         private void configurarFiltrosDinamicos() {
+                // Sempre que o usuário alterar o filtro de disciplina ou de dificuldade, atualiza os checkboxes na tela
                 if (box_filtro_disciplina != null) {
                         box_filtro_disciplina.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
                 }
@@ -110,6 +115,7 @@ public class MontagemProvaController {
                 String disciplinaSelecionada = box_filtro_disciplina != null ? box_filtro_disciplina.getValue() : null;
                 String dificuldadeSelecionada = box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null;
 
+                // Filtra a lista geral com base nos valores selecionados nos ComboBoxes de filtro
                 questoesFiltradas = questoesBancoGeral.stream().filter(q -> {
                         boolean matchDisciplina = (disciplinaSelecionada == null || disciplinaSelecionada.isEmpty() || disciplinaSelecionada.equals(q.getNomeDisciplina()));
                         boolean matchDificuldade = (dificuldadeSelecionada == null || dificuldadeSelecionada.isEmpty() || dificuldadeSelecionada.equalsIgnoreCase(q.getDificuldade()));
@@ -167,7 +173,7 @@ public class MontagemProvaController {
                                                         temValorInformado = true;
                                                 }
                                         } catch (NumberFormatException e) {
-                                                // Ignora durante a digitação
+                                                // Ignora temporariamente durante a digitação
                                         }
                                 }
                         }
@@ -256,11 +262,16 @@ public class MontagemProvaController {
                 }
 
                 try {
+                        String dificuldadeProva = box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null;
                         String emailProfessor = "teresinha.fatima@prof.fatec.com";
-                        Long provaId = montagemProvaDAO.nova(prova.getNomeProva(), null, prova.getValor(), emailProfessor, prova.getNomeDisciplina());
 
+                        // 1. Salva a prova e recupera o ID gerado automaticamente pelo banco
+                        Long provaId = montagemProvaDAO.nova(prova.getNomeProva(), dificuldadeProva, prova.getValor(), emailProfessor, prova.getNomeDisciplina());
+
+                        // 2. Percorre as questões filtradas marcadas e as associa na tabela 'prova_questao'
                         for (int index : indicesSelecionados) {
                                 Questao q = questoesFiltradas.get(index);
+
                                 String pesoStr = camposValores[index].getText().trim().replace(",", ".");
                                 BigDecimal pesoQuestao = pesoStr.isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesoStr);
 
@@ -290,5 +301,11 @@ public class MontagemProvaController {
         @FXML void irProva(ActionEvent event) {}
         @FXML void irProva_agendar(ActionEvent event) {}
         @FXML void irQuestao(ActionEvent event) {}
-        @FXML void irQuestao_consultar(ActionEvent event) {}
+        @FXML void irQuestao_consultar(ActionEvent event) {
+                try {
+                        App.setRoot("VisualizarQuestao");
+                } catch (java.io.IOException e) {
+                        e.printStackTrace();
+                }
+        }
 }

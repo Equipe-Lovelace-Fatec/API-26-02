@@ -16,7 +16,7 @@ public class VisualizarProvaController {
     @FXML private TextArea txtResposta1, txtResposta2, txtResposta3, txtResposta4;
 
     public void setDadosProva(String nomeProva, String disciplina, String valor,
-                              List<String> perguntasSelecionadas, List<String> valoresSelecionados) {
+                              List<String> perguntasSelecionadas, List<String> gabaritosSelecionados) {
 
         if (txtNomeProva != null && nomeProva != null) txtNomeProva.setText(nomeProva);
         if (txtDisciplina != null && disciplina != null) txtDisciplina.setText(disciplina);
@@ -28,10 +28,10 @@ public class VisualizarProvaController {
         for (int i = 0; i < camposPerguntas.length; i++) {
             if (i < perguntasSelecionadas.size()) {
                 if (camposPerguntas[i] != null) {
-                    camposPerguntas[i].setText("Questão " + (i + 1) + ": " + perguntasSelecionadas.get(i));
+                    camposPerguntas[i].setText("Pergunta " + (i + 1) + ": " + perguntasSelecionadas.get(i));
                 }
-                if (camposRespostas[i] != null && i < valoresSelecionados.size()) {
-                    camposRespostas[i].setText("Peso / Valor: " + valoresSelecionados.get(i));
+                if (camposRespostas[i] != null && i < gabaritosSelecionados.size()) {
+                    camposRespostas[i].setText("Gabarito: " + gabaritosSelecionados.get(i));
                 }
             } else {
                 if (camposPerguntas[i] != null) camposPerguntas[i].setText("");
