@@ -1,0 +1,41 @@
+/*MONTAGEM DE PROVA - ALTETAÇÕES (ALLANA, LIVIA, VITORIA) */
+
+
+/* Esconde o botão e o ícone da setinha  */
+.combo-box .arrow-button {
+    -fx-padding: 0;
+    -fx-width: 0;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-padding: 0;
+    -fx-shape: null;
+    -fx-background-color: transparent;
+}
+
+
+/* Altera o tamanho da fonte do item selecionado e das opções do menu */
+.combo-box .cell {
+    -fx-font-size: 20px;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-font-size: 20px;
+}
+
+
+/* COR DO CHECK BOX */
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #cccccc;
+}
+
+/* SELECIONADO */
+.check-box:selected .box {
+    -fx-background-color: #a0c340 !important;
+    -fx-border-color: #a0c340 !important;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #ffffff !important;
+}
