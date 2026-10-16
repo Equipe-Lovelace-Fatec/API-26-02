@@ -203,3 +203,23 @@ CONSTRAINT `fk_pt_prova` FOREIGN KEY (`prova_id`,`email_professor`,`nome_discipl
 CONSTRAINT `fk_pt_turma` FOREIGN KEY (`id_turma`) 
 REFERENCES `turma` (`id_turma`)
 );
+
+CREATE TABLE prova_aluno (
+    id_turma        BIGINT       NOT NULL,
+    prova_id		BIGINT       NOT NULL,
+    email_professor VARCHAR(150) NOT NULL,
+    nome_disciplina VARCHAR(100) NOT NULL,
+    data            DATE         NOT NULL,
+    horario         TIME         NOT NULL,
+    RA              VARCHAR(20)  NOT NULL,
+
+    PRIMARY KEY (id_turma, prova_id, email_professor, nome_disciplina, data, horario, RA),
+
+	CONSTRAINT fk_pa_prova_turma 
+		FOREIGN KEY (id_turma, prova_id, email_professor, nome_disciplina, data, horario)
+        	REFERENCES prova_turma (id_turma, prova_id, email_professor, nome_disciplina, data, horario),
+
+	CONSTRAINT fk_pa_pertence 
+		FOREIGN KEY (RA, id_turma)
+        	REFERENCES pertence (RA, id_turma)
+);
