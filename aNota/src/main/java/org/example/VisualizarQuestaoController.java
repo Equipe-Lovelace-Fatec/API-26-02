@@ -67,6 +67,8 @@ public class VisualizarQuestaoController {
     @FXML private TextField valor_questao118;
     @FXML private TextField valor_questao119;
 
+
+
     // Acesso ao banco de dados
     private final QuestaoDAO questaoDAO = new QuestaoDAO();
     private List<Questao> todasAsQuestoes;
@@ -389,36 +391,21 @@ public class VisualizarQuestaoController {
     }
 
     // Métodos dos botões e menus existentes
-    @FXML
-    void AddQuestao(ActionEvent event) {
-    }
 
     @FXML
-    void IrProva_montar(ActionEvent event) {
-    }
+    void IrProva_montar(ActionEvent event) throws IOException { App.setRoot("montagem"); }
+
+    @FXML void IrQuestao_criar(ActionEvent event) throws IOException { App.setRoot("CadastroQuestoes"); }
 
     @FXML
-    void IrQuestao_criar(ActionEvent event) {
-    }
-
-    @FXML
-    void SalvarProva(ActionEvent event) {
-    }
-
-    @FXML
-    void VerProva(ActionEvent event) {
-    }
-
-    @FXML
-    void irAlunos(ActionEvent event) {
-    }
+    void irAlunos(ActionEvent event){}
 
     @FXML
     void irAlunos_corrigir(ActionEvent event) {
     }
 
     @FXML
-    void irAlunos_notas(ActionEvent event) {
+    void irAlunos_notas(ActionEvent event) throws IOException { App.setRoot("Aluno");
     }
 
     @FXML

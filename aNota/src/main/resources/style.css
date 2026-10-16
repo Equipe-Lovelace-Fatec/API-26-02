@@ -60,3 +60,7 @@
 .checkbox-transparente:selected .mark {
     -fx-background-color: #00c1cf;
 }
+
+.menu-item {
+    -fx-pref-width: 185px;
+}

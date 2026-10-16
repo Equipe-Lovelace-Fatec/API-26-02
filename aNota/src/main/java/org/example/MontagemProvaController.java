@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class MontagemProvaController {
         private TextField[] camposValores;
         private List<Questao> questoesBancoGeral; // Guarda todas as questões do banco
         private List<Questao> questoesFiltradas;   // Guarda apenas as questões que atendem aos filtros atuais
+        private final RespostaDAO respostaDAO = new RespostaDAO();
 
         // Listas temporárias para passar os dados para a tela de visualização
         public static List<String> perguntasTemporarias = new ArrayList<>();
@@ -77,18 +79,20 @@ public class MontagemProvaController {
                 try {
                         questoesBancoGeral = questaoDAO.buscarQuestoes();
 
-                        // Preenche as disciplinas únicas no ComboBox principal da prova e no filtro
+                        // Preenche as disciplinas únicas e adiciona um espaço em branco no início
                         List<String> disciplinasUnicas = questoesBancoGeral.stream()
                                 .map(Questao::getNomeDisciplina)
                                 .distinct()
                                 .collect(Collectors.toList());
 
+                        disciplinasUnicas.add(0, ""); // Adiciona opção em branco para limpar o filtro
+
                         ObservableList<String> obsDisciplinas = FXCollections.observableArrayList(disciplinasUnicas);
                         if (boxDisciplina != null) boxDisciplina.setItems(obsDisciplinas);
                         if (box_filtro_disciplina != null) box_filtro_disciplina.setItems(obsDisciplinas);
 
-                        // Preenche o filtro de dificuldades (respeitando o banco: 'Fácil', 'Média', 'Difícil')
-                        ObservableList<String> obsDificuldades = FXCollections.observableArrayList("Fácil", "Média", "Difícil");
+                        // Preenche o filtro de dificuldades incluindo uma opção em branco no início
+                        ObservableList<String> obsDificuldades = FXCollections.observableArrayList("", "Fácil", "Média", "Difícil");
                         if (box_filtro_dificuldade != null) box_filtro_dificuldade.setItems(obsDificuldades);
 
                         // Inicialmente exibe todas as questões
@@ -134,18 +138,22 @@ public class MontagemProvaController {
                                 Questao q = questoesFiltradas.get(i);
                                 chk.setText(q.getEnunciado() + " (" + q.getDificuldade() + ")");
                                 chk.setVisible(true);
+                                chk.setManaged(true);
                                 chk.setDisable(false);
-                                chk.setSelected(false);
-                                txtVal.setText("");
+
                                 txtVal.setVisible(true);
+                                txtVal.setManaged(true);
                                 txtVal.setDisable(false);
                         } else {
                                 chk.setText("");
-                                chk.setVisible(false);
-                                chk.setDisable(true);
                                 chk.setSelected(false);
+                                chk.setVisible(false);
+                                chk.setManaged(false);
+                                chk.setDisable(true);
+
                                 txtVal.setText("");
                                 txtVal.setVisible(false);
+                                txtVal.setManaged(false);
                                 txtVal.setDisable(true);
                         }
                 }
@@ -163,7 +171,8 @@ public class MontagemProvaController {
                 boolean temValorInformado = false;
 
                 for (int i = 0; i < checkBoxes.length; i++) {
-                        if (checkBoxes[i].isSelected()) {
+                        // Considera apenas os checkboxes visíveis e selecionados
+                        if (checkBoxes[i].isVisible() && checkBoxes[i].isSelected()) {
                                 String texto = camposValores[i].getText().trim();
                                 if (!texto.isEmpty()) {
                                         try {
@@ -191,52 +200,12 @@ public class MontagemProvaController {
         }
 
         @FXML
-        void AddQuestao(ActionEvent event) {
-                perguntasTemporarias.clear();
-                valoresTemporarios.clear();
-
-                boolean selecionouAlguma = false;
-                for (int i = 0; i < checkBoxes.length; i++) {
-                        if (checkBoxes[i].isSelected() && i < questoesFiltradas.size()) {
-                                selecionouAlguma = true;
-                                perguntasTemporarias.add(questoesFiltradas.get(i).getEnunciado());
-                                valoresTemporarios.add(camposValores[i].getText());
-                        }
-                }
-
-                if (!selecionouAlguma) {
-                        mostrarAlerta("Atenção", "Selecione ao menos uma questão nos checkboxes!");
-                        return;
-                }
-
-                mostrarAlerta("Sucesso", "Questões adicionadas com sucesso para a prova!");
-        }
-
-        @FXML
-        void VerProva(ActionEvent event) throws IOException {
-                // Carrega a tela de visualização passando os dados consolidados
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("visualizacao.fxml"));
-                Parent root = loader.load();
-
-                VisualizarProvaController visualizadorController = loader.getController();
-
-                String nomeP = txtNomeProva != null ? txtNomeProva.getText() : "";
-                String discP = boxDisciplina != null && boxDisciplina.getValue() != null ? boxDisciplina.getValue() : "";
-                String valP = txtValorProva != null ? txtValorProva.getText() : "";
-
-                visualizadorController.setDadosProva(nomeP, discP, valP, perguntasTemporarias, valoresTemporarios);
-
-                // Substitui a cena atual
-                btnVerProva.getScene().setRoot(root);
-        }
-
-        @FXML
         void SalvarProva(ActionEvent event) {
                 List<Integer> indicesSelecionados = new ArrayList<>();
                 List<String> valoresTextuais = new ArrayList<>();
 
                 for (int i = 0; i < checkBoxes.length; i++) {
-                        if (checkBoxes[i].isSelected()) {
+                        if (checkBoxes[i].isVisible() && checkBoxes[i].isSelected()) {
                                 indicesSelecionados.add(i);
                         }
                         valoresTextuais.add(camposValores[i].getText());
@@ -263,7 +232,8 @@ public class MontagemProvaController {
 
                 try {
                         String dificuldadeProva = box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null;
-                        String emailProfessor = "teresinha.fatima@prof.fatec.com";
+                        //o código vai ser alterado após a implementação da tela de login
+                        String emailProfessor = "giuliano.bertoti@prof.fatec.com";
 
                         // 1. Salva a prova e recupera o ID gerado automaticamente pelo banco
                         Long provaId = montagemProvaDAO.nova(prova.getNomeProva(), dificuldadeProva, prova.getValor(), emailProfessor, prova.getNomeDisciplina());
@@ -278,7 +248,7 @@ public class MontagemProvaController {
                                 montagemProvaDAO.associarQuestao(provaId, q.getId(), emailProfessor, prova.getNomeDisciplina(), pesoQuestao);
                         }
 
-                        mostrarAlerta("Sucesso", "Prova e questões salvas com sucesso!\nValor total: " + txtValorProva.getText());
+                        mostrarAlerta("Sucesso", "Prova salva com sucesso!\nValor total: " + txtValorProva.getText());
                 } catch (Exception e) {
                         e.printStackTrace();
                         mostrarAlerta("Erro", "Erro ao salvar a prova: " + e.getMessage());
@@ -293,19 +263,87 @@ public class MontagemProvaController {
                 alert.showAndWait();
         }
 
+        @FXML
+        void AddQuestao(ActionEvent event) {
+                perguntasTemporarias.clear();
+                valoresTemporarios.clear();
+
+                boolean selecionouAlguma = false;
+                for (int i = 0; i < checkBoxes.length; i++) {
+                        if (checkBoxes[i].isSelected() && i < questoesFiltradas.size()) {
+                                selecionouAlguma = true;
+                                perguntasTemporarias.add(questoesFiltradas.get(i).getEnunciado());
+                                valoresTemporarios.add(camposValores[i].getText());
+                        }
+                }
+
+                if (!selecionouAlguma) {
+                        mostrarAlerta("Atenção", "Selecione ao menos uma questão nos checkboxes!");
+                        return;
+                }
+
+                mostrarAlerta("Sucesso", "Questões adicionadas com sucesso para a prova!");
+        }
         @FXML void IrProva_montar(ActionEvent event) {}
         @FXML void IrQuestao_criar(ActionEvent event) throws IOException { App.setRoot("CadastroQuestoes"); }
+        @FXML void VerProva(ActionEvent event) {
+                try {
+                        // Valida se o usuário chegou a adicionar alguma questão antes de visualizar
+                        if (perguntasTemporarias == null || perguntasTemporarias.isEmpty()) {
+                                mostrarAlerta("Atenção", "Nenhuma questão foi adicionada. Selecione e clique em 'Adicionar pergunta' primeiro!");
+                                return;
+                        }
+
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("visualizacao.fxml"));
+                        Parent root = loader.load();
+
+                        VisualizarProvaController visualizadorController = loader.getController();
+
+                        String nomeP = txtNomeProva != null ? txtNomeProva.getText() : "";
+                        String discP = boxDisciplina != null && boxDisciplina.getValue() != null ? boxDisciplina.getValue() : "";
+                        String valP = txtValorProva != null ? txtValorProva.getText() : "";
+
+                        List<String> perguntasComPeso = new ArrayList<>();
+                        List<String> respostasList = new ArrayList<>();
+
+                        // Percorre estritamente as questões que foram adicionadas temporariamente
+                        for (int i = 0; i < perguntasTemporarias.size(); i++) {
+                                String enunciado = perguntasTemporarias.get(i);
+
+                                // Pega o valor correspondente salvo no botão Adicionar Questão
+                                String peso = (valoresTemporarios != null && i < valoresTemporarios.size()) ? valoresTemporarios.get(i) : "";
+                                if (peso.trim().isEmpty()) peso = "0";
+
+                                String perguntaFormatada = enunciado + "\nValor: " + peso;
+                                perguntasComPeso.add(perguntaFormatada);
+
+                                // Busca o gabarito no banco baseado no enunciado oficial
+                                List<String> listaRespostasBanco = respostaDAO.buscarRespostasPorEnunciado(enunciado);
+                                String gabaritoFormatado = String.join(" / ", listaRespostasBanco);
+                                if (gabaritoFormatado.isEmpty()) {
+                                        gabaritoFormatado = "Nenhum gabarito cadastrado.";
+                                }
+                                respostasList.add(gabaritoFormatado);
+                        }
+
+                        visualizadorController.setDadosProva(nomeP, discP, valP, perguntasComPeso, respostasList);
+
+                        Stage stagePopup = new Stage();
+                        stagePopup.setTitle("Visualização da Prova");
+                        stagePopup.setScene(new Scene(root));
+                        stagePopup.initModality(Modality.APPLICATION_MODAL);
+                        stagePopup.showAndWait();
+
+                } catch (IOException e) {
+                        e.printStackTrace();
+                        mostrarAlerta("Erro", "Não foi possível abrir a tela de visualização: " + e.getMessage());
+                }
+        }
         @FXML void irAlunos(ActionEvent event) {}
         @FXML void irAlunos_corrigir(ActionEvent event) throws IOException { App.setRoot("Aluno"); }
         @FXML void irAlunos_notas(ActionEvent event) {}
         @FXML void irProva(ActionEvent event) {}
         @FXML void irProva_agendar(ActionEvent event) {}
         @FXML void irQuestao(ActionEvent event) {}
-        @FXML void irQuestao_consultar(ActionEvent event) {
-                try {
-                        App.setRoot("VisualizarQuestao");
-                } catch (java.io.IOException e) {
-                        e.printStackTrace();
-                }
-        }
+        @FXML void irQuestao_consultar(ActionEvent event) throws IOException { App.setRoot("VisualizarQuestao"); }
 }

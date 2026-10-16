@@ -101,4 +101,39 @@ public class RespostaDAO {
         }
         return respostas;
     }
+    public List<String> buscarRespostasPorEnunciado(String enunciadoQuestao) {
+        List<String> respostas = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = getConnection();
+            String sql = "SELECT texto, tipo, correta FROM resposta WHERE enunciado = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, enunciadoQuestao);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String tipo = rs.getString("tipo");
+                String texto = rs.getString("texto");
+                boolean correta = rs.getBoolean("correta");
+
+                if ("diss".equalsIgnoreCase(tipo)) {
+                    // Se for dissertativa, adiciona o texto direto
+                    respostas.add(texto);
+                } else if ("alt".equalsIgnoreCase(tipo) && correta) {
+                    // Se for alternativa, adiciona APENAS se correta for verdadeira
+                    respostas.add(texto);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao buscar gabarito da resposta!", e);
+        } finally {
+            try {
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return respostas;
+    }
 }
