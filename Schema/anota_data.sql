@@ -239,3 +239,25 @@ SELECT * FROM prova;
 
 SELECT * FROM prova_questao;
 SELECT * FROM prova_turma;
+
+
+USE anota_database;
+
+CREATE TABLE prova_aluno (
+    id_turma        INT          NOT NULL,
+    nome_prova      VARCHAR(100) NOT NULL,
+    email_professor VARCHAR(150) NOT NULL,
+    nome_disciplina VARCHAR(100) NOT NULL,
+    data            DATE         NOT NULL,
+    horario         TIME         NOT NULL,
+    RA              VARCHAR(20)  NOT NULL,
+
+    PRIMARY KEY (id_turma, nome_prova, email_professor, nome_disciplina, data, horario, RA),
+
+    CONSTRAINT fk_pa_prova_turma FOREIGN KEY
+        (id_turma, nome_prova, email_professor, nome_disciplina, data, horario)
+        REFERENCES prova_turma (id_turma, nome_prova, email_professor, nome_disciplina, data, horario)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_pa_aluno FOREIGN KEY (RA) REFERENCES aluno (RA)
+);
