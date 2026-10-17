@@ -233,7 +233,7 @@ public class MontagemProvaController {
                 try {
                         String dificuldadeProva = box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null;
                         //o código vai ser alterado após a implementação da tela de login
-                        String emailProfessor = "giuliano.bertoti@prof.fatec.com";
+                        String emailProfessor = Sessao.getUsuario() != null ? Sessao.getUsuario().getEmail() : "giuliano.bertoti@prof.fatec.com";
 
                         // 1. Salva a prova e recupera o ID gerado automaticamente pelo banco
                         Long provaId = montagemProvaDAO.nova(prova.getNomeProva(), dificuldadeProva, prova.getValor(), emailProfessor, prova.getNomeDisciplina());
@@ -343,7 +343,7 @@ public class MontagemProvaController {
         @FXML void irAlunos_corrigir(ActionEvent event) throws IOException { App.setRoot("Aluno"); }
         @FXML void irAlunos_notas(ActionEvent event) {}
         @FXML void irProva(ActionEvent event) {}
-        @FXML void irProva_agendar(ActionEvent event) {}
+        @FXML void irProva_agendar(ActionEvent event) throws IOException { App.abrirTela("SelecaoProva", "aNota", 1350, 1080); }
         @FXML void irQuestao(ActionEvent event) {}
         @FXML void irQuestao_consultar(ActionEvent event) throws IOException { App.setRoot("VisualizarQuestao"); }
 }
