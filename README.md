@@ -3,10 +3,10 @@
 ## API-26-02 - **aNota**
 
   
-  <img width="337" height="305" alt="image" src="https://github.com/user-attachments/assets/d446b835-299c-4777-a2bf-c9d114403136" />
+  <img width="500" height="250" alt="logo_aNota" src="https://github.com/user-attachments/assets/42125f8b-d927-4907-a851-851845e29249" />
  
   
-  <h2>Lovelace</h2>
+  <h2>Equipe Lovelace</h2>
 
 **Projeto Acadêmico | API 2° semestre 2026 | Fatec** <br>
 **Faculdade de Tecnologia de São José dos Campos - Prof. Jessen Vidal**
@@ -15,9 +15,9 @@
 
 ----
 
-## 🚀 Desafio
+## 🚀 Problema
 
-Desenvolver um sistema desktop em Java, integrado a um banco de dados relacional, que permita aos docentes cadastrar e armazenar um portfólio de materiais e questões utilizadas em avaliações. O objetivo é centralizar o processo de montagem de provas, manter o histórico de conteúdos ministrados, possibilitar o compartilhamento de questões entre professores e facilitar o processo de correção das avaliações aplicadas.
+O processo atual de gestão de avaliações impõe uma rotina operacional exaustiva aos docentes, caracterizada pela criação manual de provas, busca trabalhosa por conteúdos antigos em pastas descentralizadas e dificuldade em gerar questões inéditas. Além disso, a falta de histórico dificulta o acompanhamento do reuso de perguntas, o isolamento entre professores gera diferenças no nível das avaliações e a correção manual toma dias de trabalho, tornando todo o fluxo lento, repetitivo e engessado.
 
 ----
 
@@ -25,9 +25,9 @@ Desenvolver um sistema desktop em Java, integrado a um banco de dados relacional
 
 | Rank | Prioridade | User Story | Sprint | Story Points | Status |
 |:------:|:------------:|------------|:--------:|:--------:|:--------:|
-| 1 | Alta | Como professor, quero armazenar e consultar questões e respostas para ter um portfólio do meu material usado em avaliações. | 1 e 2 | 8 | ⬜ | 
-| 2 | Alta | Como professor, quero manter um histórico de quando utilizei uma questão para evitar repetição excessiva de conteúdo. | 1 e 2 | 8 | ⬜ | 
-| 3 | Alta | Como professor, quero selecionar e organizar questões para montar as provas e centralizar o processo de avaliação.  | 1 e 2 | 8 | ⬜ | 
+| 1 | Alta | Como professor, quero gerenciar questões e respostas para ter um portfólio do meu material usado em avaliações. | 1 e 2 | 8 | ✅ | 
+| 2 | Alta | Como professor, quero manter um histórico de quando utilizei uma questão para evitar repetição excessiva de conteúdo. | 1 e 2 | 8 | ✅ | 
+| 3 | Alta | Como professor, quero selecionar e organizar questões para montar as provas e centralizar o processo de avaliação.  | 1 e 2 | 8 | ✅ | 
 | 4 | Média | Como professor, quero aplicar provas com data e hora definidas para que todos os alunos da turma realizem a prova no mesmo período. | 1 e 2 | 5 | ⬜ | 
 | 5 | Média | Como professor, quero divulgar o gabarito da avaliação para que o aluno possa consultar. | 1 e 3 | 2 | ⬜ | 
 | 6 | Média | Como professor, quero que as provas sejam pré-corrigidas para evitar repetições desnecessárias. | 1 e 3 | 5 | ⬜ | 
@@ -59,9 +59,9 @@ Desenvolver um sistema desktop em Java, integrado a um banco de dados relacional
 
 | Sprint          |    Período    | Documentação                                     |
 | :-------------: | :-----------: | :----------------------------------------------: |
-|  **SPRINT 1** | 07/09 - 27/09 | [Ver Sprint 1] |
-|  **SPRINT 2** | 05/10 - 25/10 | [Ver Sprint 2] |
-|  **SPRINT 3** | 02/11 - 22/11 | [Ver Sprint 3] |
+|  **SPRINT 1** | 07/09 - 27/09 | [Ver Sprint 1](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/main/Docs/sprint1/sprint1.md)|
+|  **SPRINT 2** | 05/10 - 25/10 | [Ver Sprint 2](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/main/Docs/sprint2/sprint2.md) |
+|  **SPRINT 3** | 02/11 - 22/11 | [Ver Sprint 3](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/main/Docs/sprint3/sprint3.md) |
 
 </div>
 
@@ -94,15 +94,27 @@ Desenvolver um sistema desktop em Java, integrado a um banco de dados relacional
 
 ----
   
-### 📁 Manual de Instalação
+### 🛠️ Manual de Instalação
+Link para o manual de instalação: [Manual de instalação](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/main/Docs/Manuais/Manual%20de%20Instala%C3%A7%C3%A3o.md)
 
 
 ----
 
-### 🧑‍🤝‍🧑 Manual do Usuário
-
+### 📘 Manual do Usuário
+Link para o manual do usuário: [Manual do usuário](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/512f53e476a8e4cf674eaaf60cd3e0fb6be2e89e/Docs/Manuais/Manual%20do%20Usu%C3%A1rio.md)
 
 ----
+
+## 📁 Documentação da equipe
+
+<div align="center">
+
+|  [Critérios de Permanência](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/main/Docs/Diretrizes%20da%20Equipe/Crit%C3%A9rios%20de%20Perman%C3%AAncia.md)|
+|  [Estratégia de Branch](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/main/Docs/Diretrizes%20da%20Equipe/Estrat%C3%A9gia%20de%20Branch.md) | 
+|  [Padrão de Commit](https://github.com/Equipe-Lovelace-Fatec/API-26-02/blob/main/Docs/Diretrizes%20da%20Equipe/Padr%C3%A3o%20de%20Commit.md) |
+
+</div>
+
 
 ## 👩‍💻 Equipe
 
