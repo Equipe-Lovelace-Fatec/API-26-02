@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1318.0" prefWidth="1356.0" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.MontagemProvaController">
+    <content>
+        <AnchorPane prefHeight="1131.0" prefWidth="1366.0">
+            <children>
+            <ImageView fitHeight="1332.0" fitWidth="1380.0" layoutX="-2.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../telas.png/montar_prova_atualizado.png" />
+               </image>
+            </ImageView>
+            <MenuButton fx:id="btnQuestoes" layoutX="383.0" layoutY="32.0" mnemonicParsing="false" onAction="#irQuestao" prefHeight="46.0" prefWidth="185.0" style="-fx-background-color: transparent;">
+              <items>
+                <MenuItem fx:id="btquestoes_criar" mnemonicParsing="false" onAction="#IrQuestao_criar" text="Criar" />
+                <MenuItem fx:id="btquestoes_consultar" mnemonicParsing="false" onAction="#irQuestao_consultar" text="Consultar" />
+              </items>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </MenuButton>
+            <MenuButton fx:id="btnProva" layoutX="755.0" layoutY="31.0" mnemonicParsing="false" onAction="#irProva" prefHeight="46.0" prefWidth="185.0" style="-fx-background-color: transparent;">
+               <items>
+                  <MenuItem fx:id="btProva_montar" mnemonicParsing="false" onAction="#IrProva_montar" text="Montar" />
+                  <MenuItem fx:id="btProva_agendar" mnemonicParsing="false" onAction="#irProva_agendar" text="Agendar" />
+               </items>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </MenuButton>
+            <MenuButton fx:id="btnAlunos" layoutX="1127.0" layoutY="31.0" mnemonicParsing="false" onAction="#irAlunos" prefHeight="46.0" prefWidth="184.0" style="-fx-background-color: transparent;">
+               <items>
+                  <MenuItem fx:id="btalunos_notas" mnemonicParsing="false" onAction="#irAlunos_notas" text="Notas" />
+                  <MenuItem fx:id="btalunos_corrigir" mnemonicParsing="false" onAction="#irAlunos_corrigir" text="Corrigir" />
+               </items>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </MenuButton>
+                <Button fx:id="btnAddQuestao" layoutX="302.0" layoutY="1152.0" mnemonicParsing="false" onAction="#AddQuestao" opacity="0.0" prefHeight="60.0" prefWidth="221.0" text="adicionar questão">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Button>
+                <Button fx:id="btnVerProva" layoutX="608.0" layoutY="1150.0" mnemonicParsing="false" onAction="#VerProva" opacity="0.0" prefHeight="64.0" prefWidth="220.0" text="visualizar questão">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Button>
+                <TextField fx:id="txtNomeProva" layoutX="327.0" layoutY="281.0" prefHeight="56.0" prefWidth="149.0" style="-fx-background-color: transparent;">
+                    <font>
+                        <Font size="20.0" />
+                    </font></TextField>
+                <Button fx:id="btnSalvarProva" layoutX="911.0" layoutY="1152.0" mnemonicParsing="false" onAction="#SalvarProva" opacity="0.0" prefHeight="59.0" prefWidth="222.0" text="salvar prova">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+            </Button>
+                <ComboBox fx:id="boxDisciplina" layoutX="705.0" layoutY="283.0" prefHeight="53.0" prefWidth="138.0" style="-fx-background-color: transparent;">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></ComboBox>
+                <ScrollPane layoutX="115.0" layoutY="546.0" prefHeight="574.0" prefWidth="1134.0">
+                    <content>
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="766.0" prefWidth="1140.0">
+                            <children>
+                                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                                    <children>
+                                        <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="1">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </TextField>
+                                        <CheckBox fx:id="checkbox1" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </CheckBox>
+                                        <TextField fx:id="valor_questao1" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </TextField>
+                                    </children>
+                                </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                           <children>
+                              <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="2">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox fx:id="checkbox11" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField fx:id="valor_questao11" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                           <children>
+                              <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="3">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox fx:id="checkbox111" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField fx:id="valor_questao111" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                           <children>
+                              <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="4">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox fx:id="checkbox112" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField fx:id="valor_questao112" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                           <children>
+                              <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="5">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox fx:id="checkbox113" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField fx:id="valor_questao113" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                           <children>
+                              <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="6">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox fx:id="checkbox114" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField fx:id="valor_questao114" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                           <children>
+                              <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="7">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox fx:id="checkbox115" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField fx:id="valor_questao115" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                           <children>
+                              <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="8">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox fx:id="checkbox116" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField fx:id="valor_questao116" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                           <children>
+                              <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="9">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox fx:id="checkbox117" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField fx:id="valor_questao117" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                           <children>
+                              <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="10">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox fx:id="checkbox118" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField fx:id="valor_questao118" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="1140.0">
+                           <children>
+                              <TextField alignment="CENTER" prefHeight="54.0" prefWidth="55.0" text="11">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <CheckBox fx:id="checkbox119" mnemonicParsing="false" prefHeight="54.0" prefWidth="967.0" style="-fx-accent: #a0c340;">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </CheckBox>
+                              <TextField fx:id="valor_questao119" alignment="CENTER" prefHeight="54.0" prefWidth="101.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                            </children></VBox>
+                    </content>
+                </ScrollPane>
+            <ComboBox fx:id="box_filtro_disciplina" layoutX="690.0" layoutY="460.0" prefHeight="44.0" prefWidth="108.0" style="-fx-background-color: transparent;">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ComboBox>
+            <ComboBox fx:id="box_filtro_dificuldade" layoutX="402.0" layoutY="460.0" prefHeight="44.0" prefWidth="111.0" style="-fx-background-color: transparent;">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ComboBox>
+            <ComboBox fx:id="box_filtro_ultimo_uso" layoutX="978.0" layoutY="458.0" prefHeight="46.0" prefWidth="110.0" style="-fx-background-color: transparent;">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ComboBox>
+            <Label fx:id="txtValorProva" alignment="CENTER" layoutX="1046.0" layoutY="279.0" prefHeight="57.0" prefWidth="90.0" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+            </children>
+        </AnchorPane>
+    </content>
+</ScrollPane>
