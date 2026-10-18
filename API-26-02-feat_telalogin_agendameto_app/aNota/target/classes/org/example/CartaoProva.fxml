@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="136.0" minHeight="136.0" prefHeight="136.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #00596a; -fx-border-width: 2; -fx-border-radius: 8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.CartaoProvaController">
+   <padding>
+      <Insets right="14.0" />
+   </padding>
+   <VBox.margin>
+      <Insets left="16.0" right="16.0" />
+   </VBox.margin>
+   <children>
+      <Label fx:id="lbl_titulo" alignment="CENTER" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_disciplina" alignment="CENTER" maxWidth="257.0" minWidth="257.0" prefWidth="257.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_dificuldade" alignment="CENTER" maxWidth="190.0" minWidth="190.0" prefWidth="190.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_qtd" alignment="CENTER" maxWidth="129.0" minWidth="129.0" prefWidth="129.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_valor" alignment="CENTER" maxWidth="123.0" minWidth="123.0" prefWidth="123.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Region HBox.hgrow="ALWAYS" />
+      <VBox alignment="CENTER" spacing="12.0">
+         <children>
+            <Button fx:id="bt_visualizar" minHeight="38.0" minWidth="160.0" mnemonicParsing="false" onAction="#visualizar" prefHeight="38.0" prefWidth="160.0" style="-fx-background-color: #00596a; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="VISUALIZAR" />
+            <Button fx:id="bt_agendar" minHeight="38.0" minWidth="160.0" mnemonicParsing="false" onAction="#agendar" prefHeight="38.0" prefWidth="160.0" style="-fx-background-color: #00596a; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="AGENDAR" />
+         </children>
+      </VBox>
+   </children>
+</HBox>

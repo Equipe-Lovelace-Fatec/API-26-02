@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.AlunoController">
+   <content>
+      <AnchorPane fx:id="painel_fundo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1350.0" style="-fx-background-color: #00c1c0;">
+          <children>
+              <ImageView fitHeight="1080.0" fitWidth="1350.0" layoutY="-1.0" preserveRatio="true">
+                  <image>
+                      <Image url="@../../telas.png/fundo_verde.png" />
+                  </image>
+              </ImageView>
+              <ImageView fitHeight="393.0" fitWidth="1350.0" preserveRatio="true">
+                  <image>
+                      <Image url="@../../telas.png/menualuno.png" />
+                  </image>
+              </ImageView>
+              <Button fx:id="bt_questoes" layoutX="380.0" layoutY="35.0" mnemonicParsing="false" onAction="#vaiquestao" prefHeight="45.0" prefWidth="185.0" style="-fx-background-color: transparent;" textFill="TRANSPARENT">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+              <Button fx:id="bt_prova" layoutX="587.0" layoutY="35.0" mnemonicParsing="false" onAction="#vaiprova" prefHeight="45.0" prefWidth="185.0" style="-fx-background-color: transparent;" textFill="TRANSPARENT">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+              <Button fx:id="bt_alunos" layoutX="797.0" layoutY="32.0" mnemonicParsing="false" onAction="#vaialunos" prefHeight="45.0" prefWidth="190.0" style="-fx-background-color: transparent;" textFill="TRANSPARENT" />
+              <Button fx:id="bt_menu_ant" layoutX="25.0" layoutY="126.0" mnemonicParsing="false" onAction="#vaitelaescolheralunos" prefHeight="45.0" prefWidth="181.0" style="-fx-background-color: transparent;" textFill="TRANSPARENT" />
+              <ScrollPane fx:id="scroll_questao" layoutX="25.0" layoutY="351.0" prefHeight="706.0" prefWidth="1301.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #ffffff; -fx-border-color: #ffffff;">
+                  <effect>
+                      <DropShadow offsetX="3.0" offsetY="3.0">
+                          <color>
+                              <Color opacity="0.699999988079071" />
+                          </color>
+                      </DropShadow>
+                  </effect>
+                  <content>
+                      <Pane fx:id="painel_questoes" prefHeight="1911.0" prefWidth="1278.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
+                          <children>
+                              <ImageView fitHeight="58.0" fitWidth="224.0" layoutX="1013.0" layoutY="1839.0">
+                                  <image>
+                                      <Image url="@../../telas.png/salvar.png" />
+                                  </image>
+                              </ImageView>
+                              <Button fx:id="bt_salva" layoutX="1028.0" layoutY="1846.0" mnemonicParsing="false" onAction="#salvanotas" prefHeight="45.0" prefWidth="190.0" style="-fx-background-color: transparent;" textFill="TRANSPARENT" />
+                              <Pane fx:id="painel_questao_1" layoutX="25.0" layoutY="33.0" prefHeight="643.0" prefWidth="1252.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
+                                  <children>
+                                      <Text fx:id="txt_questao" fill="#005c6d" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questão" wrappingWidth="83.79121398925781">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_questao_num1" fill="#005c6d" layoutX="68.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" wrappingWidth="33.12458801269531">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_enunciado" fill="#005c6d" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enunciado:" wrappingWidth="171.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_enunciado" fill="#737373" layoutX="3.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Qual é a diferença entre os tipos de variáveis int e double?" textAlignment="JUSTIFY" wrappingWidth="1241.3333740234375">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_resp_aluno" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resposta do Aluno:" wrappingWidth="171.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_resp_aluno" fill="#737373" layoutX="1.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="int guarda números, double guarda aquivos." textAlignment="JUSTIFY" wrappingWidth="1237.3333129882812">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_resp_esperada" fill="#005c6d" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resposta Esperada:" wrappingWidth="171.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_resp_esperada" fill="#737373" layoutX="5.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="int armazena números inteiros; double armazena números com casas decimais." textAlignment="JUSTIFY" wrappingWidth="1238.6666870117188">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_coment" fill="#005c6d" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comentário do Professor - Não obrigatório - Obs.: O aluno lerá este comentário" wrappingWidth="610.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <TextArea fx:id="txt_area_coment" layoutX="5.0" layoutY="444.0" prefHeight="85.0" prefWidth="1250.0" promptText="Escreva seu comentário aqui. Não obrigatório. O aluno lerá este comentário" scrollLeft="10.0">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </TextArea>
+                                      <HBox fx:id="hbox_valor_questao" alignment="CENTER_LEFT" layoutX="393.0" layoutY="550.0" prefHeight="45.0" prefWidth="476.0">
+                                          <children>
+                                              <Text fx:id="txt_titulo_valor" fill="#005c6d" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor da questão:" wrappingWidth="139.7912139892578" x="8.0">
+                                                  <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                  </font>
+                                              </Text>
+                                              <Text fx:id="txt_valor_num" fill="#005c6d" strokeType="OUTSIDE" strokeWidth="0.0" text="4,00" wrappingWidth="143.79127502441406" x="8.0">
+                                                  <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                  </font>
+                                              </Text>
+                                              <Text fx:id="txt_titulo_pontuacao1" fill="#005c6d" strokeType="OUTSIDE" strokeWidth="0.0" text="Pontuação:" wrappingWidth="105.79121398925781" x="8.0">
+                                                  <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                  </font>
+                                              </Text>
+                                              <TextField fx:id="txt_field_nota1" onAction="#vainota1" prefHeight="45.0" prefWidth="85.0" promptText="0,00">
+                                                  <font>
+                                                      <Font size="16.0" />
+                                                  </font>
+                                              </TextField>
+                                          </children>
+                                      </HBox>
+                                      <Separator fx:id="separador" layoutX="2.0" layoutY="616.0" prefHeight="6.0" prefWidth="1241.0" style="-fx-border-color: #005c6d; -fx-background-color: #005c6d;" />
+                                  </children>
+                              </Pane>
+                              <Pane fx:id="painel_questao_111" layoutX="25.0" layoutY="1260.0" prefHeight="579.0" prefWidth="1256.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
+                                  <children>
+                                      <Text fx:id="txt_questao11" fill="#005c6d" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questão" wrappingWidth="83.79121398925781">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_questao_num3" fill="#005c6d" layoutX="68.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" wrappingWidth="33.12458801269531">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_enunciado11" fill="#005c6d" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enunciado:" wrappingWidth="171.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_enunciado11" fill="#737373" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Associe o pilar da Orientação a Objetos à sua definição:" textAlignment="JUSTIFY" wrappingWidth="1246.6666259765625">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_resp_aluno11" layoutX="-5.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resposta do Aluno:" wrappingWidth="171.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_resp_esperada11" fill="#005c6d" layoutX="-2.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resposta Esperada:" wrappingWidth="171.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_coment11" fill="#005c6d" layoutX="-2.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comentário do Professor - Não obrigatório - Obs.: O aluno lerá este comentário" wrappingWidth="610.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <TextArea fx:id="txt_area_coment11" layoutX="3.0" layoutY="357.0" prefHeight="85.0" prefWidth="1250.0" promptText="Escreva seu comentário aqui. Não obrigatório. O aluno lerá este comentário" scrollLeft="10.0">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </TextArea>
+                                      <HBox fx:id="hbox_valor_questao11" alignment="CENTER_LEFT" layoutX="391.0" layoutY="451.0" prefHeight="45.0" prefWidth="476.0">
+                                          <children>
+                                              <Text fx:id="txt_titulo_valor11" fill="#005c6d" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor da questão:" wrappingWidth="139.7912139892578" x="8.0">
+                                                  <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                  </font>
+                                              </Text>
+                                              <Text fx:id="txt_valor_num11" fill="#005c6d" strokeType="OUTSIDE" strokeWidth="0.0" text="3,00" wrappingWidth="143.79127502441406" x="8.0">
+                                                  <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                  </font>
+                                              </Text>
+                                              <Text fx:id="txt_titulo_pontuacao3" fill="#005c6d" strokeType="OUTSIDE" strokeWidth="0.0" text="Pontuação:" wrappingWidth="105.79121398925781" x="8.0">
+                                                  <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                  </font>
+                                              </Text>
+                                              <TextField fx:id="txt_field_nota3" editable="false" onAction="#vainota3" prefHeight="45.0" prefWidth="85.0" text="0,00">
+                                                  <font>
+                                                      <Font size="16.0" />
+                                                  </font>
+                                              </TextField>
+                                          </children>
+                                      </HBox>
+                                      <Separator fx:id="separador11" layoutX="2.0" layoutY="555.0" prefHeight="2.0" prefWidth="1244.0" style="-fx-border-color: #005c6d; -fx-background-color: #005c6d;" />
+                                      <Text layoutX="75.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                      <Text fx:id="txt_resp_esperada11" fill="#737373" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A2, B1, C3" textAlignment="JUSTIFY" wrappingWidth="840.0">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_resp_esperada111" fill="#737373" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A3, C2, B1" textAlignment="JUSTIFY" wrappingWidth="840.0">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </Text>
+                              <Text fx:id="txt_enunciado111" fill="#737373" layoutX="2.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conceitos:   A) Encapsulamento     B) Polimorfismo      C) Abstração" textAlignment="JUSTIFY" wrappingWidth="1246.6666259765625">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="txt_enunciado1111" fill="#737373" layoutX="3.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Definições: 1. Capacidade de um método assumir diferentes formas de execução." textAlignment="JUSTIFY" wrappingWidth="1246.6666259765625">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="txt_enunciado11111" fill="#737373" layoutX="3.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Esconder detalhes internos e proteger o acesso direto aos dados." textAlignment="JUSTIFY" wrappingWidth="1246.6666259765625">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="txt_enunciado111111" fill="#737373" layoutX="3.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Focar apenas nos elementos essenciais de um objeto, ignorando detalhes complexos." textAlignment="JUSTIFY" wrappingWidth="1246.6666259765625">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                                  </children>
+                              </Pane>
+                              <Pane fx:id="painel_questao_11" layoutX="25.0" layoutY="676.0" prefHeight="579.0" prefWidth="1256.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
+                                  <children>
+                                      <Text fx:id="txt_questao1" fill="#005c6d" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Questão" wrappingWidth="83.79121398925781">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_questao_num2" fill="#005c6d" layoutX="68.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" wrappingWidth="33.12458801269531">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_enunciado1" fill="#005c6d" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enunciado:" wrappingWidth="171.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_enunciado1" fill="#737373" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Qual palavra-chave em Java é usada para impedir que uma classe seja herdada ou um método seja sobrescrito?" textAlignment="JUSTIFY" wrappingWidth="1246.6666259765625">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </Text>
+                              <Text fx:id="txt_enunciado12" fill="#737373" layoutX="3.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A) static      B) final      C) abstract      D) public" textAlignment="JUSTIFY" wrappingWidth="1246.6666259765625">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                                      <Text fx:id="txt_titulo_resp_aluno1" layoutX="-2.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resposta do Aluno:" wrappingWidth="171.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_resp_aluno1" fill="#737373" layoutX="-2.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B) final" textAlignment="JUSTIFY" wrappingWidth="840.0">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_resp_esperada1" fill="#005c6d" layoutX="-2.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Resposta Esperada:" wrappingWidth="171.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_resp_esperada1" fill="#737373" layoutX="-2.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B) final" textAlignment="JUSTIFY" wrappingWidth="840.0">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <Text fx:id="txt_titulo_coment1" fill="#005c6d" layoutX="-2.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comentário do Professor - Não obrigatório - Obs.: O aluno lerá este comentário" wrappingWidth="610.7912139892578">
+                                          <font>
+                                              <Font name="System Bold" size="16.0" />
+                                          </font>
+                                      </Text>
+                                      <TextArea fx:id="txt_area_coment1" layoutX="3.0" layoutY="357.0" prefHeight="85.0" prefWidth="1250.0" promptText="Escreva seu comentário aqui. Não obrigatório. O aluno lerá este comentário" scrollLeft="10.0">
+                                          <font>
+                                              <Font size="16.0" />
+                                          </font>
+                                      </TextArea>
+                                      <HBox fx:id="hbox_valor_questao1" alignment="CENTER_LEFT" layoutX="391.0" layoutY="451.0" prefHeight="45.0" prefWidth="476.0">
+                                          <children>
+                                              <Text fx:id="txt_titulo_valor1" fill="#005c6d" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor da questão:" wrappingWidth="139.7912139892578" x="8.0">
+                                                  <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                  </font>
+                                              </Text>
+                                              <Text fx:id="txt_valor_num1" fill="#005c6d" strokeType="OUTSIDE" strokeWidth="0.0" text="3,00" wrappingWidth="143.79127502441406" x="8.0">
+                                                  <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                  </font>
+                                              </Text>
+                                              <Text fx:id="txt_titulo_pontuacao2" fill="#005c6d" strokeType="OUTSIDE" strokeWidth="0.0" text="Pontuação:" wrappingWidth="105.79121398925781" x="8.0">
+                                                  <font>
+                                                      <Font name="System Bold" size="16.0" />
+                                                  </font>
+                                              </Text>
+                                              <TextField fx:id="txt_field_nota2" editable="false" onAction="#vainota2" prefHeight="45.0" prefWidth="85.0" text="3,00">
+                                                  <font>
+                                                      <Font size="16.0" />
+                                                  </font>
+                                              </TextField>
+                                          </children>
+                                      </HBox>
+                                      <Separator fx:id="separador1" layoutX="2.0" layoutY="555.0" prefHeight="2.0" prefWidth="1244.0" style="-fx-border-color: #005c6d; -fx-background-color: #005c6d;" />
+                                  </children>
+                              </Pane>
+                          </children>
+                      </Pane>
+                  </content>
+              </ScrollPane>
+              <Pane fx:id="painel_cabecalho" layoutX="25.0" layoutY="211.0" prefHeight="112.0" prefWidth="1301.0" style="-fx-background-color: #dadada; -fx-background-radius: 10;">
+                  <children>
+                      <Pane fx:id="painel_info_prova" prefHeight="112.0" prefWidth="390.0" style="-fx-background-color: #dadada; -fx-background-radius: 10;">
+                          <children>
+                              <Circle fx:id="icone_turma" fill="#f05458" layoutX="58.0" layoutY="56.0" radius="34.0" stroke="#f05458" strokeType="INSIDE">
+                                  <effect>
+                                      <DropShadow offsetX="3.0" offsetY="3.0">
+                                          <color>
+                                              <Color opacity="0.699999988079071" />
+                                          </color>
+                                      </DropShadow>
+                                  </effect>
+                              </Circle>
+                              <Label fx:id="txt_iconeturma_1" layoutX="48.0" layoutY="44.0" text="LD" textFill="WHITE">
+                                  <font>
+                                      <Font name="System Bold" size="16.0" />
+                                  </font>
+                              </Label>
+                              <Text fx:id="txt_materia" layoutX="116.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Matéria: Laboratório de Desenvolvimento" wrappingWidth="320.2912139892578">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Text>
+                              <Text fx:id="txt_periodo" layoutX="117.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Período: Noturno" wrappingWidth="231.7912139892578">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Text>
+                              <Text fx:id="txt_semestre" layoutX="117.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Semestre: 1° semestre" wrappingWidth="231.7912139892578">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Text>
+                              <Text fx:id="txt_curso" layoutX="117.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Curso: Banco de Dados" wrappingWidth="231.7912139892578">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Text>
+                          </children>
+                      </Pane>
+                      <Pane fx:id="painel_aluno" layoutX="523.0" prefHeight="112.0" prefWidth="347.0" style="-fx-background-color: #dadada; -fx-background-radius: 10;">
+                          <children>
+                              <Circle fx:id="img_foto_perfil" fill="#f05458" layoutX="59.0" layoutY="56.0" radius="34.0" stroke="#f05458" strokeType="INSIDE">
+                                  <effect>
+                                      <DropShadow offsetX="3.0" offsetY="3.0">
+                                          <color>
+                                              <Color opacity="0.699999988079071" />
+                                          </color>
+                                      </DropShadow>
+                                  </effect>
+                              </Circle>
+                              <Label fx:id="txt_perfil" layoutX="49.0" layoutY="44.0" text="PP" textFill="WHITE">
+                                  <font>
+                                      <Font name="System Bold" size="16.0" />
+                                  </font>
+                              </Label>
+                              <Text fx:id="txt_nome_aluno" layoutX="117.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome: Ana Maria da Silva" wrappingWidth="231.7912139892578">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Text>
+                              <Text fx:id="txt_nasc" layoutX="117.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data de Nascimento: 29/04/2007" wrappingWidth="250.7912139892578">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Text>
+                              <Text fx:id="txt_ra" layoutX="118.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RA: 83247268" wrappingWidth="231.7912139892578">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Text>
+                          </children>
+                      </Pane>
+                      <Pane fx:id="painel_status" layoutX="936.0" layoutY="2.0" prefHeight="109.0" prefWidth="190.0">
+                          <children>
+                              <Label fx:id="txt_status" layoutX="64.0" layoutY="23.0" text="Status:">
+                                  <font>
+                                      <Font size="16.0" />
+                                  </font>
+                              </Label>
+                          </children>
+                      </Pane>
+                  </children>
+              </Pane>
+          </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>

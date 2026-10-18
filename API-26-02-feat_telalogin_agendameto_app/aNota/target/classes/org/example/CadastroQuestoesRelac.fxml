@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controller">
+    <content>
+        <AnchorPane prefHeight="1704.0" prefWidth="1312.0">
+
+            <children>
+
+                <ImageView fitHeight="1704.0" fitWidth="1350.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../telas.png/CadastroQuestoesRelac.png" />
+                    </image>
+                </ImageView>
+
+                <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="140.0" layoutY="532.0" prefHeight="136.0" prefWidth="1090.0" style="-fx-border-color: #00c1cf; -fx-border-radius: 10;">
+                    <content>
+                        <TextArea fx:id="txtPergunta" prefHeight="216.0" prefWidth="1072.0" promptText="Escreva o enunciado" style="-fx-border-color: transparent; -fx-border-radius: 10;" wrapText="true">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </TextArea>
+                    </content>
+                </ScrollPane>
+
+                <Button fx:id="btMultipla" layoutX="495.0" layoutY="351.0" mnemonicParsing="false" onAction="#abrirMultipla" prefHeight="15.0" prefWidth="24.0" style="-fx-background-color: transparent;" />
+
+                <MenuButton fx:id="btnAlunos" layoutX="774.0" layoutY="30.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" style="-fx-background-color: transparent;">
+                    <items>
+                        <MenuItem fx:id="btalunos_notas" mnemonicParsing="false" onAction="#irAlunos_notas" text="Notas" />
+                        <MenuItem fx:id="btalunos_corrigir" mnemonicParsing="false" onAction="#irAlunos_corrigir" text="Corrigir" />
+                    </items>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </MenuButton>
+
+                <Button fx:id="btAberta" layoutX="156.0" layoutY="351.0" mnemonicParsing="false" onAction="#abrirAberta" prefHeight="15.0" prefWidth="24.0" style="-fx-background-color: transparent;" />
+
+                <VBox fx:id="painelPares" fillWidth="true" layoutX="122.0" layoutY="806.0" prefHeight="590.0" prefWidth="1126.0" spacing="7.5" style="-fx-background-color: transparent;">
+
+                    <padding>
+                        <Insets bottom="7.5" left="15.0" right="9.0" top="7.5" />
+                    </padding>
+
+                    <HBox alignment="TOP_CENTER" fillHeight="false" spacing="13.0">
+                        <VBox prefWidth="434.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="A) Texto 1" />
+                            <TextArea fx:id="txtTexto1" maxHeight="87.0" minHeight="87.0" prefHeight="87.0" prefWidth="434.0" promptText="Escreva o texto 1" style="-fx-border-color: #00c1cf;" wrapText="true">
+                                <font>
+                                    <Font size="21.0" />
+                                </font>
+                            </TextArea>
+                        </VBox>
+
+                        <VBox alignment="CENTER" prefWidth="145.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="Associa a:" />
+                            <ComboBox fx:id="comboAssociacao1" maxWidth="139.0" prefHeight="43.5" prefWidth="139.0" promptText="Nº" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-border-color: #005c6d; -fx-border-radius: 8;" />
+                        </VBox>
+
+                        <VBox prefWidth="434.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="A) Conceito 1" />
+                            <TextArea fx:id="txtConceito1" maxHeight="87.0" minHeight="87.0" prefHeight="87.0" prefWidth="434.0" promptText="Escreva o conceito 1" style="-fx-border-color: #00c1cf;" wrapText="true">
+                                <font>
+                                    <Font size="21.0" />
+                                </font>
+                            </TextArea>
+                        </VBox>
+                    </HBox>
+
+                    <HBox alignment="TOP_CENTER" fillHeight="false" spacing="13.0">
+                        <VBox prefWidth="434.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="B) Texto 2" />
+                            <TextArea fx:id="txtTexto2" maxHeight="87.0" minHeight="87.0" prefHeight="87.0" prefWidth="434.0" promptText="Escreva o texto 2" style="-fx-border-color: #00c1cf;" wrapText="true">
+                                <font>
+                                    <Font size="21.0" />
+                                </font>
+                            </TextArea>
+                        </VBox>
+
+                        <VBox alignment="CENTER" prefWidth="145.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="Associa a:" />
+                            <ComboBox fx:id="comboAssociacao2" maxWidth="139.0" prefHeight="43.5" prefWidth="139.0" promptText="Nº" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-border-color: #005c6d; -fx-border-radius: 8;" />
+                        </VBox>
+
+                        <VBox prefWidth="434.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="B) Conceito 2" />
+                            <TextArea fx:id="txtConceito2" maxHeight="87.0" minHeight="87.0" prefHeight="87.0" prefWidth="434.0" promptText="Escreva o conceito 2" style="-fx-border-color: #00c1cf;" wrapText="true">
+                                <font>
+                                    <Font size="21.0" />
+                                </font>
+                            </TextArea>
+                        </VBox>
+                    </HBox>
+
+                    <HBox alignment="TOP_CENTER" fillHeight="false" spacing="13.0">
+                        <VBox prefWidth="434.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="C) Texto 3" />
+                            <TextArea fx:id="txtTexto3" maxHeight="87.0" minHeight="87.0" prefHeight="87.0" prefWidth="434.0" promptText="Escreva o texto 3" style="-fx-border-color: #00c1cf;" wrapText="true">
+                                <font>
+                                    <Font size="21.0" />
+                                </font>
+                            </TextArea>
+                        </VBox>
+
+                        <VBox alignment="CENTER" prefWidth="145.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="Associa a:" />
+                            <ComboBox fx:id="comboAssociacao3" maxWidth="139.0" prefHeight="43.5" prefWidth="139.0" promptText="Nº" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-border-color: #005c6d; -fx-border-radius: 8;" />
+                        </VBox>
+
+                        <VBox prefWidth="434.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="C) Conceito 3" />
+                            <TextArea fx:id="txtConceito3" maxHeight="87.0" minHeight="87.0" prefHeight="87.0" prefWidth="434.0" promptText="Escreva o conceito 3" style="-fx-border-color: #00c1cf;" wrapText="true">
+                                <font>
+                                    <Font size="21.0" />
+                                </font>
+                            </TextArea>
+                        </VBox>
+                    </HBox>
+
+                    <HBox alignment="TOP_CENTER" fillHeight="false" spacing="13.0">
+                        <VBox prefWidth="434.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="D) Texto 4" />
+                            <TextArea fx:id="txtTexto4" maxHeight="87.0" minHeight="87.0" prefHeight="87.0" prefWidth="434.0" promptText="Escreva o texto 4" style="-fx-border-color: #00c1cf;" wrapText="true">
+                                <font>
+                                    <Font size="21.0" />
+                                </font>
+                            </TextArea>
+                        </VBox>
+
+                        <VBox alignment="CENTER" prefWidth="145.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="Associa a:" />
+                            <ComboBox fx:id="comboAssociacao4" maxWidth="139.0" prefHeight="43.5" prefWidth="139.0" promptText="Nº" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-border-color: #005c6d; -fx-border-radius: 8;" />
+                        </VBox>
+
+                        <VBox prefWidth="434.0" spacing="4.5">
+                            <Label prefHeight="30.0" style="-fx-font-family: 'Roboto Slab'; -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #005c6d;" text="D) Conceito 4" />
+                            <TextArea fx:id="txtConceito4" maxHeight="87.0" minHeight="87.0" prefHeight="87.0" prefWidth="434.0" promptText="Escreva o conceito 4" style="-fx-border-color: #00c1cf;" wrapText="true">
+                                <font>
+                                    <Font size="21.0" />
+                                </font>
+                            </TextArea>
+                        </VBox>
+                    </HBox>
+
+                </VBox>
+
+                <Button layoutX="840.0" layoutY="1511.0" mnemonicParsing="false" onAction="#salvarQuestao" prefHeight="58.0" prefWidth="346.0" style="-fx-background-color: transparent;" />
+
+                <ComboBox fx:id="comboDisciplina" layoutX="259.0" layoutY="410.0" prefHeight="31.0" prefWidth="108.0" promptText="Selecione" style="-fx-background-color: transparent; -fx-background-radius: 60; -fx-border-color: #005c6d;" />
+
+                <ComboBox fx:id="comboDificuldade" layoutX="1000.0" layoutY="409.0" prefHeight="31.0" prefWidth="108.0" promptText="Selecione" style="-fx-background-color: transparent; -fx-background-radius: 60; -fx-border-color: #005c6d;" />
+
+                <ComboBox fx:id="comboTema" layoutX="600.0" layoutY="409.0" prefHeight="31.0" prefWidth="108.0" promptText="Selecione" style="-fx-background-color: transparent; -fx-background-radius: 60; -fx-border-color: #005c6d;" />
+
+                <MenuButton fx:id="btnProva" layoutX="574.0" layoutY="31.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="182.0" style="-fx-background-color: transparent;">
+                    <items>
+                        <MenuItem fx:id="btProva_montar" mnemonicParsing="false" onAction="#IrProva_montar" text="Montar" />
+                        <MenuItem fx:id="btProva_agendar" mnemonicParsing="false" onAction="#irProva_agendar" text="Agendar" />
+                    </items>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </MenuButton>
+                <MenuButton fx:id="btnQuestoes" layoutX="379.0" layoutY="30.0" mnemonicParsing="false" onAction="#irQuestao" prefHeight="43.0" prefWidth="184.0" style="-fx-background-color: transparent;">
+                    <items>
+                        <MenuItem fx:id="btquestoes_criar" mnemonicParsing="false" onAction="#IrQuestao_criar" text="Criar" />
+                        <MenuItem fx:id="btquestoes_consultar" mnemonicParsing="false" onAction="#irQuestao_consultar" text="Consultar" />
+                    </items>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </MenuButton>
+
+            </children>
+        </AnchorPane>
+    </content>
+</ScrollPane>
