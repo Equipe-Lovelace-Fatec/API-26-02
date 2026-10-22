@@ -95,6 +95,10 @@ public class MontagemProvaController {
                         ObservableList<String> obsDificuldades = FXCollections.observableArrayList("", "Fácil", "Média", "Difícil");
                         if (box_filtro_dificuldade != null) box_filtro_dificuldade.setItems(obsDificuldades);
 
+                        // Preenche o filtro de último uso incluindo uma opção em branco no início
+                        ObservableList<String> obsUltimoUso = FXCollections.observableArrayList("", "6 meses", "1 ano", "2 anos", "3 anos ou mais");
+                        if (box_filtro_ultimo_uso != null) box_filtro_ultimo_uso.setItems(obsUltimoUso);
+
                         // Inicialmente exibe todas as questões
                         aplicarFiltros();
 
@@ -104,12 +108,15 @@ public class MontagemProvaController {
         }
 
         private void configurarFiltrosDinamicos() {
-                // Sempre que o usuário alterar o filtro de disciplina ou de dificuldade, atualiza os checkboxes na tela
+                // Sempre que o usuário alterar os filtros, atualiza os checkboxes na tela
                 if (box_filtro_disciplina != null) {
                         box_filtro_disciplina.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
                 }
                 if (box_filtro_dificuldade != null) {
                         box_filtro_dificuldade.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
+                }
+                if (box_filtro_ultimo_uso != null) {
+                        box_filtro_ultimo_uso.valueProperty().addListener((obs, oldVal, newVal) -> aplicarFiltros());
                 }
         }
 
@@ -118,12 +125,16 @@ public class MontagemProvaController {
 
                 String disciplinaSelecionada = box_filtro_disciplina != null ? box_filtro_disciplina.getValue() : null;
                 String dificuldadeSelecionada = box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null;
+                String ultimoUsoSelecionado = box_filtro_ultimo_uso != null ? box_filtro_ultimo_uso.getValue() : null;
 
                 // Filtra a lista geral com base nos valores selecionados nos ComboBoxes de filtro
                 questoesFiltradas = questoesBancoGeral.stream().filter(q -> {
                         boolean matchDisciplina = (disciplinaSelecionada == null || disciplinaSelecionada.isEmpty() || disciplinaSelecionada.equals(q.getNomeDisciplina()));
                         boolean matchDificuldade = (dificuldadeSelecionada == null || dificuldadeSelecionada.isEmpty() || dificuldadeSelecionada.equalsIgnoreCase(q.getDificuldade()));
-                        return matchDisciplina && matchDificuldade;
+                        boolean matchUltimoUso = (ultimoUsoSelecionado == null || ultimoUsoSelecionado.isEmpty() ||
+                                (q.getUltimoUso() != null && q.getUltimoUso().equalsIgnoreCase(ultimoUsoSelecionado)));
+
+                        return matchDisciplina && matchDificuldade && matchUltimoUso;
                 }).collect(Collectors.toList());
 
                 atualizarExibicaoCheckBoxes();
@@ -171,7 +182,6 @@ public class MontagemProvaController {
                 boolean temValorInformado = false;
 
                 for (int i = 0; i < checkBoxes.length; i++) {
-                        // Considera apenas os checkboxes visíveis e selecionados
                         if (checkBoxes[i].isVisible() && checkBoxes[i].isSelected()) {
                                 String texto = camposValores[i].getText().trim();
                                 if (!texto.isEmpty()) {
@@ -232,13 +242,10 @@ public class MontagemProvaController {
 
                 try {
                         String dificuldadeProva = box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null;
-                        //o código vai ser alterado após a implementação da tela de login
                         String emailProfessor = Sessao.getUsuario() != null ? Sessao.getUsuario().getEmail() : "giuliano.bertoti@prof.fatec.com";
 
-                        // 1. Salva a prova e recupera o ID gerado automaticamente pelo banco
                         Long provaId = montagemProvaDAO.nova(prova.getNomeProva(), dificuldadeProva, prova.getValor(), emailProfessor, prova.getNomeDisciplina());
 
-                        // 2. Percorre as questões filtradas marcadas e as associa na tabela 'prova_questao'
                         for (int index : indicesSelecionados) {
                                 Questao q = questoesFiltradas.get(index);
 
@@ -284,11 +291,11 @@ public class MontagemProvaController {
 
                 mostrarAlerta("Sucesso", "Questões adicionadas com sucesso para a prova!");
         }
+
         @FXML void IrProva_montar(ActionEvent event) {}
         @FXML void IrQuestao_criar(ActionEvent event) throws IOException { App.setRoot("CadastroQuestoes"); }
         @FXML void VerProva(ActionEvent event) {
                 try {
-                        // Valida se o usuário chegou a adicionar alguma questão antes de visualizar
                         if (perguntasTemporarias == null || perguntasTemporarias.isEmpty()) {
                                 mostrarAlerta("Atenção", "Nenhuma questão foi adicionada. Selecione e clique em 'Adicionar pergunta' primeiro!");
                                 return;
@@ -306,18 +313,14 @@ public class MontagemProvaController {
                         List<String> perguntasComPeso = new ArrayList<>();
                         List<String> respostasList = new ArrayList<>();
 
-                        // Percorre estritamente as questões que foram adicionadas temporariamente
                         for (int i = 0; i < perguntasTemporarias.size(); i++) {
                                 String enunciado = perguntasTemporarias.get(i);
-
-                                // Pega o valor correspondente salvo no botão Adicionar Questão
                                 String peso = (valoresTemporarios != null && i < valoresTemporarios.size()) ? valoresTemporarios.get(i) : "";
                                 if (peso.trim().isEmpty()) peso = "0";
 
                                 String perguntaFormatada = enunciado + "\nValor: " + peso;
                                 perguntasComPeso.add(perguntaFormatada);
 
-                                // Busca o gabarito no banco baseado no enunciado oficial
                                 List<String> listaRespostasBanco = respostaDAO.buscarRespostasPorEnunciado(enunciado);
                                 String gabaritoFormatado = String.join(" / ", listaRespostasBanco);
                                 if (gabaritoFormatado.isEmpty()) {
@@ -339,6 +342,7 @@ public class MontagemProvaController {
                         mostrarAlerta("Erro", "Não foi possível abrir a tela de visualização: " + e.getMessage());
                 }
         }
+
         @FXML void irAlunos(ActionEvent event) {}
         @FXML void irAlunos_corrigir(ActionEvent event) throws IOException { App.setRoot("Aluno"); }
         @FXML void irAlunos_notas(ActionEvent event) {}

@@ -38,9 +38,9 @@
                     </content>
                 </ScrollPane>
 
-                <Button fx:id="btMultipla" layoutX="495.0" layoutY="351.0" mnemonicParsing="false" onAction="#abrirMultipla" prefHeight="15.0" prefWidth="24.0" style="-fx-background-color: transparent;" />
+                <Button fx:id="btMultipla" layoutX="479.0" layoutY="342.0" mnemonicParsing="false" onAction="#abrirMultipla" prefHeight="15.0" prefWidth="24.0" style="-fx-background-color: transparent;" />
 
-                <MenuButton fx:id="btnAlunos" layoutX="774.0" layoutY="30.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" style="-fx-background-color: transparent;">
+                <MenuButton fx:id="btnAlunos" layoutX="773.0" layoutY="30.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" style="-fx-background-color: transparent;">
                     <items>
                         <MenuItem fx:id="btalunos_notas" mnemonicParsing="false" onAction="#irAlunos_notas" text="Notas" />
                         <MenuItem fx:id="btalunos_corrigir" mnemonicParsing="false" onAction="#irAlunos_corrigir" text="Corrigir" />
@@ -50,7 +50,7 @@
                     </cursor>
                 </MenuButton>
 
-                <Button fx:id="btAberta" layoutX="156.0" layoutY="351.0" mnemonicParsing="false" onAction="#abrirAberta" prefHeight="15.0" prefWidth="24.0" style="-fx-background-color: transparent;" />
+                <Button fx:id="btAberta" layoutX="152.0" layoutY="344.0" mnemonicParsing="false" onAction="#abrirAberta" prefHeight="15.0" prefWidth="24.0" style="-fx-background-color: transparent;" />
 
                 <VBox fx:id="painelPares" fillWidth="true" layoutX="122.0" layoutY="806.0" prefHeight="590.0" prefWidth="1126.0" spacing="7.5" style="-fx-background-color: transparent;">
 
@@ -168,7 +168,7 @@
 
                 <ComboBox fx:id="comboTema" layoutX="600.0" layoutY="409.0" prefHeight="31.0" prefWidth="108.0" promptText="Selecione" style="-fx-background-color: transparent; -fx-background-radius: 60; -fx-border-color: #005c6d;" />
 
-                <MenuButton fx:id="btnProva" layoutX="574.0" layoutY="31.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="182.0" style="-fx-background-color: transparent;">
+                <MenuButton fx:id="btnProva" layoutX="570.0" layoutY="31.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="182.0" style="-fx-background-color: transparent;">
                     <items>
                         <MenuItem fx:id="btProva_montar" mnemonicParsing="false" onAction="#IrProva_montar" text="Montar" />
                         <MenuItem fx:id="btProva_agendar" mnemonicParsing="false" onAction="#irProva_agendar" text="Agendar" />
@@ -177,7 +177,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </MenuButton>
-                <MenuButton fx:id="btnQuestoes" layoutX="379.0" layoutY="30.0" mnemonicParsing="false" onAction="#irQuestao" prefHeight="43.0" prefWidth="184.0" style="-fx-background-color: transparent;">
+                <MenuButton fx:id="btnQuestoes" layoutX="373.0" layoutY="30.0" mnemonicParsing="false" onAction="#irQuestao" prefHeight="43.0" prefWidth="184.0" style="-fx-background-color: transparent;">
                     <items>
                         <MenuItem fx:id="btquestoes_criar" mnemonicParsing="false" onAction="#IrQuestao_criar" text="Criar" />
                         <MenuItem fx:id="btquestoes_consultar" mnemonicParsing="false" onAction="#irQuestao_consultar" text="Consultar" />

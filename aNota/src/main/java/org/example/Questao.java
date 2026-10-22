@@ -1,6 +1,7 @@
 package org.example;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class Questao {
     private Long id;
@@ -10,8 +11,28 @@ public class Questao {
     private String dificuldade;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataEdicao;
+    private LocalDateTime dataUltimoUso; // Armazena a data em que a questão foi usada pela última vez
     private String emailProfessor;
     private String nomeDisciplina;
+
+    // Método que retorna a categoria amigável baseada no tempo passado desde o último uso
+    public String getUltimoUso() {
+        if (dataUltimoUso == null) {
+            return "3 anos ou mais"; // Ou "Nunca usada", ajuste conforme sua preferência
+        }
+
+        long meses = ChronoUnit.MONTHS.between(dataUltimoUso, LocalDateTime.now());
+
+        if (meses <= 6) {
+            return "6 meses";
+        } else if (meses <= 12) {
+            return "1 ano";
+        } else if (meses <= 24) {
+            return "2 anos";
+        } else {
+            return "3 anos ou mais";
+        }
+    }
 
     // Getters e Setters
     public Long getId() {
@@ -68,6 +89,14 @@ public class Questao {
 
     public void setDataEdicao(LocalDateTime dataEdicao) {
         this.dataEdicao = dataEdicao;
+    }
+
+    public LocalDateTime getDataUltimoUso() {
+        return dataUltimoUso;
+    }
+
+    public void setDataUltimoUso(LocalDateTime dataUltimoUso) {
+        this.dataUltimoUso = dataUltimoUso;
     }
 
     public String getEmailProfessor() {
