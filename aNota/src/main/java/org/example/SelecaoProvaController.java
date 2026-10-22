@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -26,9 +25,6 @@ public class SelecaoProvaController {
     private static final double TOPO_LISTA = 118;
     private static final double MARGEM_INFERIOR = 30;
 
-    @FXML private Button bt_alunos;
-    @FXML private Button bt_prova;
-    @FXML private Button bt_questoes;
     @FXML private Pane painel_interno;
     @FXML private VBox lista_provas;
 
@@ -120,32 +116,52 @@ public class SelecaoProvaController {
 
         Sessao.setProvaParaAgendar(escolhida);
         try {
-            App.abrirTela("agendamento", "aNota", 1350, 1080);
+            App.abrirTela("agendamento", "aNota", 1350, 800);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void vaiquestao(ActionEvent event) {
-        try {
-            App.abrirTela("CadastroQuestoes", "aNota", 1350, 1500);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void IrQuestao_criar(ActionEvent event) {
+        navegar("CadastroQuestoes");
     }
 
     @FXML
-    void vaiprova(ActionEvent event) {
+    void irQuestao_consultar(ActionEvent event) {
+        navegar("VisualizarQuestao");
     }
 
     @FXML
-    void vaialunos(ActionEvent event) {
-        try {
-            App.abrirTela("Aluno", "aNota", 1350, 1080);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void IrProva_montar(ActionEvent event) {
+        navegar("montagem");
+    }
+
+    @FXML
+    void irProva_agendar(ActionEvent event) {
+        navegar("SelecaoProva");
+    }
+
+    @FXML
+    void irAlunos_notas(ActionEvent event) {
+        navegar("Aluno");
+    }
+
+    @FXML
+    void irAlunos_corrigir(ActionEvent event) {
+        navegar("Aluno");
+    }
+
+    @FXML
+    void irQuestao(ActionEvent event) {
+    }
+
+    @FXML
+    void irProva(ActionEvent event) {
+    }
+
+    @FXML
+    void irAlunos(ActionEvent event) {
     }
 
     private void navegar(String fxml) {
