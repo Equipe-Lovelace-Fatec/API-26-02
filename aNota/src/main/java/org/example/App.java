@@ -29,6 +29,16 @@ public class App extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
+    static void definirCenaAtual(Scene novaCena) {
+        scene = novaCena;
+        stage.setScene(scene);
+    }
+
+    static void abrirTela(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
+        stage.setScene(scene);
+    }
+
     static void abrirTela(String fxml, String titulo, double largura, double altura) throws IOException {
         scene = new Scene(loadFXML(fxml), largura, altura);
         stage.setTitle(titulo);

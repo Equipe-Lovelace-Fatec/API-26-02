@@ -1,4 +1,3 @@
-
 package org.example;
 
 import javafx.event.ActionEvent;
@@ -20,9 +19,8 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.util.stream.Collectors;
-import java.util.stream.Collectors;
 
+import java.util.stream.Collectors;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -32,7 +30,7 @@ public class VisualizarQuestaoController {
     // Componentes da tela
     @FXML private ComboBox<String> box_filtro_dificuldade;
     @FXML private ComboBox<String> box_filtro_disciplina;
-    @FXML private ComboBox<?> box_filtro_ultimo_uso;
+    @FXML private ComboBox<String> box_filtro_ultimo_uso;
 
     @FXML private MenuItem btProva_agendar;
     @FXML private MenuItem btProva_montar;
@@ -67,8 +65,6 @@ public class VisualizarQuestaoController {
     @FXML private TextField valor_questao118;
     @FXML private TextField valor_questao119;
 
-
-
     // Acesso ao banco de dados
     private final QuestaoDAO questaoDAO = new QuestaoDAO();
     private List<Questao> todasAsQuestoes;
@@ -92,11 +88,9 @@ public class VisualizarQuestaoController {
     }
 
     // Executado quando a tela abre
-
     @FXML
     public void initialize() {
         carregarQuestoes();
-
 
         box_filtro_disciplina.valueProperty().addListener(
                 (observable, valorAntigo, valorNovo) -> aplicarFiltros()
@@ -105,16 +99,20 @@ public class VisualizarQuestaoController {
         box_filtro_dificuldade.valueProperty().addListener(
                 (observable, valorAntigo, valorNovo) -> aplicarFiltros()
         );
+
+        box_filtro_ultimo_uso.valueProperty().addListener(
+                (observable, valorAntigo, valorNovo) -> aplicarFiltros()
+        );
     }
 
     // Carrega as questões do banco
-
     private void carregarQuestoes() {
         try {
             todasAsQuestoes = questaoDAO.buscarQuestoes();
 
             carregarOpcoesFiltros();
             aplicarFiltros();
+
             System.out.println(
                     "Questões carregadas: " + todasAsQuestoes.size()
             );
@@ -131,13 +129,13 @@ public class VisualizarQuestaoController {
         }
     }
 
-
-
+    // Carrega as opções dos filtros
     private void carregarOpcoesFiltros() {
         if (todasAsQuestoes == null) {
             return;
         }
 
+        // Disciplinas dinâmicas, com opção em branco
         List<String> disciplinas = todasAsQuestoes.stream()
                 .map(Questao::getNomeDisciplina)
                 .filter(d -> d != null && !d.isBlank())
@@ -145,22 +143,28 @@ public class VisualizarQuestaoController {
                 .sorted()
                 .collect(Collectors.toList());
 
-        List<String> dificuldades = todasAsQuestoes.stream()
-                .map(Questao::getDificuldade)
-                .filter(d -> d != null && !d.isBlank())
-                .distinct()
-                .sorted()
-                .collect(Collectors.toList());
+        disciplinas.add(0, "");
 
         box_filtro_disciplina.setItems(
-                javafx.collections.FXCollections.observableArrayList(disciplinas)
+                FXCollections.observableArrayList(disciplinas)
         );
 
-        box_filtro_dificuldade.setItems(
-                javafx.collections.FXCollections.observableArrayList(dificuldades)
-        );
+        // Dificuldades fixas, com opção em branco
+        ObservableList<String> dificuldades =
+                FXCollections.observableArrayList(
+                        "", "Fácil", "Média", "Difícil"
+                );
+
+        box_filtro_dificuldade.setItems(dificuldades);
+
+        // Últimos usos fixos, com opção em branco
+        ObservableList<String> ultimosUsos =
+                FXCollections.observableArrayList(
+                        "", "6 meses", "1 ano", "2 anos", "3 anos ou mais"
+                );
+
+        box_filtro_ultimo_uso.setItems(ultimosUsos);
     }
-
 
     private void atualizarExibicaoQuestoes() {
         CheckBox[] checkBoxes = obterCheckBoxes();
@@ -181,6 +185,7 @@ public class VisualizarQuestaoController {
                 checkBox.setDisable(false);
             } else {
                 checkBox.setText("");
+                checkBox.setSelected(false);
                 checkBox.setVisible(false);
                 checkBox.setManaged(false);
             }
@@ -191,31 +196,47 @@ public class VisualizarQuestaoController {
         );
     }
 
-
-
+    // Aplica os três filtros simultaneamente
     private void aplicarFiltros() {
         if (todasAsQuestoes == null) {
             return;
         }
 
-        String disciplinaSelecionada = box_filtro_disciplina.getValue();
-        String dificuldadeSelecionada = box_filtro_dificuldade.getValue();
+        String disciplinaSelecionada =
+                box_filtro_disciplina.getValue();
+
+        String dificuldadeSelecionada =
+                box_filtro_dificuldade.getValue();
+
+        String ultimoUsoSelecionado =
+                box_filtro_ultimo_uso.getValue();
 
         questoesCarregadas = todasAsQuestoes.stream()
                 .filter(q ->
                         disciplinaSelecionada == null
-                                || disciplinaSelecionada.equals(q.getNomeDisciplina())
+                                || disciplinaSelecionada.isEmpty()
+                                || disciplinaSelecionada.equals(
+                                q.getNomeDisciplina()
+                        )
                 )
                 .filter(q ->
                         dificuldadeSelecionada == null
-                                || dificuldadeSelecionada.equalsIgnoreCase(q.getDificuldade())
+                                || dificuldadeSelecionada.isEmpty()
+                                || dificuldadeSelecionada.equalsIgnoreCase(
+                                q.getDificuldade()
+                        )
+                )
+                .filter(q ->
+                        ultimoUsoSelecionado == null
+                                || ultimoUsoSelecionado.isEmpty()
+                                || ultimoUsoSelecionado.equalsIgnoreCase(
+                                q.getUltimoUso()
+                        )
                 )
                 .collect(Collectors.toList());
 
         atualizarExibicaoQuestoes();
     }
-
-
 
     // Identifica a questão da linha em que o ícone foi clicado
     private Questao obterQuestaoClicada(MouseEvent event) {
@@ -290,6 +311,8 @@ public class VisualizarQuestaoController {
     }
 
     // Abre o formulário correspondente para editar uma questão
+
+// Abre o formulário correspondente para editar uma questão
     @FXML
     void edicaoQuestao(MouseEvent event) {
         Questao questao = obterQuestaoClicada(event);
@@ -334,9 +357,7 @@ public class VisualizarQuestaoController {
                 mostrarAlerta(
                         Alert.AlertType.ERROR,
                         "Arquivo FXML não encontrado",
-                        "Não encontrei o arquivo:\n"
-                                + caminhoFXML
-                                + "\n\nConfira o nome e a localização do arquivo."
+                        "Não encontrei o arquivo:\n" + caminhoFXML
                 );
                 return;
             }
@@ -355,15 +376,11 @@ public class VisualizarQuestaoController {
                 return;
             }
 
-            // Envia a questão selecionada para o formulário
+            // Preenche os campos com os dados da questão selecionada
             controller.prepararEdicao(questao);
 
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
-
-            stage.setScene(new Scene(root));
-            stage.show();
+            // Abre exatamente a tela que já recebeu os dados
+            App.definirCenaAtual(new Scene(root));
 
         } catch (IOException | RuntimeException e) {
             e.printStackTrace();
@@ -376,7 +393,6 @@ public class VisualizarQuestaoController {
             );
         }
     }
-
     // Exibe mensagens
     private void mostrarAlerta(
             Alert.AlertType tipo,
@@ -391,21 +407,27 @@ public class VisualizarQuestaoController {
     }
 
     // Métodos dos botões e menus existentes
+    @FXML
+    void IrProva_montar(ActionEvent event) throws IOException {
+        App.setRoot("montagem");
+    }
 
     @FXML
-    void IrProva_montar(ActionEvent event) throws IOException { App.setRoot("montagem"); }
-
-    @FXML void IrQuestao_criar(ActionEvent event) throws IOException { App.setRoot("CadastroQuestoes"); }
+    void IrQuestao_criar(ActionEvent event) throws IOException {
+        App.setRoot("CadastroQuestoes");
+    }
 
     @FXML
-    void irAlunos(ActionEvent event){}
+    void irAlunos(ActionEvent event) {
+    }
 
     @FXML
     void irAlunos_corrigir(ActionEvent event) {
     }
 
     @FXML
-    void irAlunos_notas(ActionEvent event) throws IOException { App.setRoot("Aluno");
+    void irAlunos_notas(ActionEvent event) throws IOException {
+        App.setRoot("Aluno");
     }
 
     @FXML
@@ -414,6 +436,17 @@ public class VisualizarQuestaoController {
 
     @FXML
     void irProva_agendar(ActionEvent event) {
+        try {
+            App.setRoot("agendamento");
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            mostrarAlerta(
+                    Alert.AlertType.ERROR,
+                    "Erro de navegação",
+                    "Não foi possível abrir a tela de agendamento."
+            );
+        }
     }
 
     @FXML

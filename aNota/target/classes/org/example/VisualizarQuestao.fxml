@@ -20,10 +20,10 @@
             <children>
             <ImageView fitHeight="1332.0" fitWidth="1380.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../telas.png/visualizar_questao.png" />
+                  <Image url="@../../telas.png/visualizar_questoes.png" />
                </image>
             </ImageView>
-            <MenuButton fx:id="btnQuestoes" layoutX="392.0" layoutY="38.0" mnemonicParsing="false" onAction="#irQuestao" prefHeight="46.0" prefWidth="185.0" style="-fx-background-color: transparent;" visible="false">
+            <MenuButton fx:id="btnQuestoes" layoutX="392.0" layoutY="38.0" mnemonicParsing="false" onAction="#irQuestao" prefHeight="46.0" prefWidth="185.0" style="-fx-background-color: transparent;">
               <items>
                 <MenuItem fx:id="btquestoes_criar" mnemonicParsing="false" onAction="#IrQuestao_criar" text="Criar" />
                 <MenuItem fx:id="btquestoes_consultar" mnemonicParsing="false" onAction="#irQuestao_consultar" text="Consultar" />

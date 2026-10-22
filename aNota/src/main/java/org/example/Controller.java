@@ -716,8 +716,18 @@ public class Controller {
 
     @FXML
     void irProva_agendar(ActionEvent event) {
-    }
+        try {
+            App.setRoot("agendamento");
+        } catch (IOException e) {
+            e.printStackTrace();
 
+            mostrarAlerta(
+                    Alert.AlertType.ERROR,
+                    "Erro de navegação",
+                    "Não foi possível abrir a tela de agendamento."
+            );
+        }
+    }
     @FXML
     void irQuestao(ActionEvent event) {
     }
