@@ -21,7 +21,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MontagemProvaController {
@@ -32,8 +34,12 @@ public class MontagemProvaController {
         private CheckBox[] checkBoxes;
         private TextField[] camposValores;
         private List<Questao> questoesBancoGeral; // Guarda todas as questões do banco
-        private List<Questao> questoesFiltradas;   // Guarda apenas as questões que atendem aos filtros atuais
+        private List<Questao> questoesFiltradas = new ArrayList<>();   // Guarda apenas as questões que atendem aos filtros atuais
         private final RespostaDAO respostaDAO = new RespostaDAO();
+
+        // Estruturas para reter o estado de seleção e valores por ID da Questão
+        private final Map<Long, Boolean> estadosSelecionados = new HashMap<>();
+        private final Map<Long, String> valoresQuestaoMap = new HashMap<>();
 
         // Listas temporárias para passar os dados para a tela de visualização
         public static List<String> perguntasTemporarias = new ArrayList<>();
@@ -120,8 +126,23 @@ public class MontagemProvaController {
                 }
         }
 
+        private void salvarEstadoAtualNaUI() {
+                if (questoesFiltradas == null) return;
+
+                for (int i = 0; i < checkBoxes.length; i++) {
+                        if (i < questoesFiltradas.size()) {
+                                Questao q = questoesFiltradas.get(i);
+                                estadosSelecionados.put(q.getId(), checkBoxes[i].isSelected());
+                                valoresQuestaoMap.put(q.getId(), camposValores[i].getText());
+                        }
+                }
+        }
+
         private void aplicarFiltros() {
                 if (questoesBancoGeral == null) return;
+
+                // Salva o estado atual dos campos visíveis antes de mudar o filtro
+                salvarEstadoAtualNaUI();
 
                 String disciplinaSelecionada = box_filtro_disciplina != null ? box_filtro_disciplina.getValue() : null;
                 String dificuldadeSelecionada = box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null;
@@ -155,7 +176,12 @@ public class MontagemProvaController {
                                 txtVal.setVisible(true);
                                 txtVal.setManaged(true);
                                 txtVal.setDisable(false);
+
+                                // Atribui corretamente os valores salvos específicos da questão atual da linha
+                                chk.setSelected(estadosSelecionados.getOrDefault(q.getId(), false));
+                                txtVal.setText(valoresQuestaoMap.getOrDefault(q.getId(), ""));
                         } else {
+                                // Limpa e oculta linhas excedentes para não misturar dados visuais antigos
                                 chk.setText("");
                                 chk.setSelected(false);
                                 chk.setVisible(false);
@@ -172,8 +198,22 @@ public class MontagemProvaController {
 
         private void atualizacaoValorProva() {
                 for (int i = 0; i < checkBoxes.length; i++) {
-                        checkBoxes[i].selectedProperty().addListener((obs, oldVal, newVal) -> recalcularValorTela());
-                        camposValores[i].textProperty().addListener((obs, oldVal, newVal) -> recalcularValorTela());
+                        final int index = i;
+                        checkBoxes[i].selectedProperty().addListener((obs, oldVal, newVal) -> {
+                                if (index < questoesFiltradas.size()) {
+                                        Questao q = questoesFiltradas.get(index);
+                                        estadosSelecionados.put(q.getId(), newVal);
+                                }
+                                recalcularValorTela();
+                        });
+
+                        camposValores[i].textProperty().addListener((obs, oldVal, newVal) -> {
+                                if (index < questoesFiltradas.size()) {
+                                        Questao q = questoesFiltradas.get(index);
+                                        valoresQuestaoMap.put(q.getId(), newVal);
+                                }
+                                recalcularValorTela();
+                        });
                 }
         }
 
@@ -181,9 +221,10 @@ public class MontagemProvaController {
                 double somaTotal = 0.0;
                 boolean temValorInformado = false;
 
-                for (int i = 0; i < checkBoxes.length; i++) {
-                        if (checkBoxes[i].isVisible() && checkBoxes[i].isSelected()) {
-                                String texto = camposValores[i].getText().trim();
+                // Percorre todos os mapas globais em vez de depender apenas dos índices da tela atual
+                for (Map.Entry<Long, Boolean> entry : estadosSelecionados.entrySet()) {
+                        if (entry.getValue()) { // Se estiver selecionado
+                                String texto = valoresQuestaoMap.getOrDefault(entry.getKey(), "").trim();
                                 if (!texto.isEmpty()) {
                                         try {
                                                 double valor = Double.parseDouble(texto.replace(",", "."));
@@ -211,15 +252,20 @@ public class MontagemProvaController {
 
         @FXML
         void SalvarProva(ActionEvent event) {
-                List<Integer> indicesSelecionados = new ArrayList<>();
-                List<String> valoresTextuais = new ArrayList<>();
+                salvarEstadoAtualNaUI();
 
-                for (int i = 0; i < checkBoxes.length; i++) {
-                        if (checkBoxes[i].isVisible() && checkBoxes[i].isSelected()) {
-                                indicesSelecionados.add(i);
-                        }
-                        valoresTextuais.add(camposValores[i].getText());
+                List<Long> idsSelecionados = estadosSelecionados.entrySet().stream()
+                        .filter(Map.Entry::getValue)
+                        .map(Map.Entry::getKey)
+                        .collect(Collectors.toList());
+
+                List<String> valoresTextuais = new ArrayList<>();
+                for (Long id : idsSelecionados) {
+                        valoresTextuais.add(valoresQuestaoMap.getOrDefault(id, ""));
                 }
+
+                List<Integer> indicesDummy = new ArrayList<>();
+                for (int i = 0; i < idsSelecionados.size(); i++) indicesDummy.add(i);
 
                 MontagemProva prova = new MontagemProva();
                 prova.setNomeProva(txtNomeProva != null ? txtNomeProva.getText() : "");
@@ -227,32 +273,40 @@ public class MontagemProvaController {
 
                 String valorStr = txtValorProva.getText().trim().replace(",", ".");
                 if (!valorStr.isEmpty()) {
-                        prova.setValor(new BigDecimal(valorStr));
+                        try {
+                                prova.setValor(new BigDecimal(valorStr));
+                        } catch (NumberFormatException e) {
+                                prova.setValor(null);
+                        }
                 }
 
-                String resultadoValidacao = prova.validarProva(indicesSelecionados, valoresTextuais);
-
-                if ("RASCUNHO".equals(resultadoValidacao)) {
-                        mostrarAlerta("Sucesso", "Prova salva como rascunho (sem valores definidos).");
-                        return;
-                } else if (resultadoValidacao != null) {
+                // Valida a prova (exigindo valor total igual a 10 e sem rascunho)
+                String resultadoValidacao = prova.validarProva(indicesDummy, valoresTextuais);
+                if (resultadoValidacao != null) {
                         mostrarAlerta("Atenção!", resultadoValidacao);
                         return;
                 }
 
                 try {
                         String dificuldadeProva = box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null;
-                        String emailProfessor = Sessao.getUsuario() != null ? Sessao.getUsuario().getEmail() : "giuliano.bertoti@prof.fatec.com";
+
+                        // Pega o e-mail dinamicamente da sessão do usuário logado
+                        if (Sessao.getUsuario() == null || Sessao.getUsuario().getEmail() == null) {
+                                mostrarAlerta("Erro", "Nenhum usuário logado encontrado. Faça o login novamente.");
+                                return;
+                        }
+                        String emailProfessor = Sessao.getUsuario().getEmail();
 
                         Long provaId = montagemProvaDAO.nova(prova.getNomeProva(), dificuldadeProva, prova.getValor(), emailProfessor, prova.getNomeDisciplina());
 
-                        for (int index : indicesSelecionados) {
-                                Questao q = questoesFiltradas.get(index);
+                        for (Long questaoId : idsSelecionados) {
+                                Questao q = questoesBancoGeral.stream().filter(item -> item.getId().equals(questaoId)).findFirst().orElse(null);
+                                if (q != null) {
+                                        String pesoStr = valoresQuestaoMap.getOrDefault(questaoId, "").trim().replace(",", ".");
+                                        BigDecimal pesoQuestao = pesoStr.isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesoStr);
 
-                                String pesoStr = camposValores[index].getText().trim().replace(",", ".");
-                                BigDecimal pesoQuestao = pesoStr.isEmpty() ? BigDecimal.ZERO : new BigDecimal(pesoStr);
-
-                                montagemProvaDAO.associarQuestao(provaId, q.getId(), emailProfessor, prova.getNomeDisciplina(), pesoQuestao);
+                                        montagemProvaDAO.associarQuestao(provaId, q.getId(), emailProfessor, prova.getNomeDisciplina(), pesoQuestao);
+                                }
                         }
 
                         mostrarAlerta("Sucesso", "Prova salva com sucesso!\nValor total: " + txtValorProva.getText());
@@ -272,20 +326,26 @@ public class MontagemProvaController {
 
         @FXML
         void AddQuestao(ActionEvent event) {
+                salvarEstadoAtualNaUI();
                 perguntasTemporarias.clear();
                 valoresTemporarios.clear();
 
                 boolean selecionouAlguma = false;
-                for (int i = 0; i < checkBoxes.length; i++) {
-                        if (checkBoxes[i].isSelected() && i < questoesFiltradas.size()) {
-                                selecionouAlguma = true;
-                                perguntasTemporarias.add(questoesFiltradas.get(i).getEnunciado());
-                                valoresTemporarios.add(camposValores[i].getText());
+
+                for (Map.Entry<Long, Boolean> entry : estadosSelecionados.entrySet()) {
+                        if (entry.getValue()) {
+                                Long qId = entry.getKey();
+                                Questao q = questoesBancoGeral.stream().filter(item -> item.getId().equals(qId)).findFirst().orElse(null);
+                                if (q != null) {
+                                        selecionouAlguma = true;
+                                        perguntasTemporarias.add(q.getEnunciado());
+                                        valoresTemporarios.add(valoresQuestaoMap.getOrDefault(qId, ""));
+                                }
                         }
                 }
 
                 if (!selecionouAlguma) {
-                        mostrarAlerta("Atenção", "Selecione ao menos uma questão nos checkboxes!");
+                        mostrarAlerta("Atenção", "Selecione ao menos uma questão!");
                         return;
                 }
 
@@ -294,8 +354,32 @@ public class MontagemProvaController {
 
         @FXML void IrProva_montar(ActionEvent event) {}
         @FXML void IrQuestao_criar(ActionEvent event) throws IOException { App.setRoot("CadastroQuestoes"); }
+
         @FXML void VerProva(ActionEvent event) {
                 try {
+                        salvarEstadoAtualNaUI();
+
+                        perguntasTemporarias.clear();
+                        valoresTemporarios.clear();
+
+                        // Lista para guardar os autores correspondentes às questões temporárias
+                        List<String> autoresTemporarios = new ArrayList<>();
+
+                        for (Map.Entry<Long, Boolean> entry : estadosSelecionados.entrySet()) {
+                                if (entry.getValue()) {
+                                        Long qId = entry.getKey();
+                                        Questao q = questoesBancoGeral.stream().filter(item -> item.getId().equals(qId)).findFirst().orElse(null);
+                                        if (q != null) {
+                                                perguntasTemporarias.add(q.getEnunciado());
+                                                valoresTemporarios.add(valoresQuestaoMap.getOrDefault(qId, ""));
+
+                                                // Pega o autor da questão (substitua getEmailProfessor() pelo metodo real da sua classe Questao se for diferente)
+                                                String autor = q.getEmailProfessor() != null ? q.getEmailProfessor() : "Desconhecido";
+                                                autoresTemporarios.add(autor);
+                                        }
+                                }
+                        }
+
                         if (perguntasTemporarias == null || perguntasTemporarias.isEmpty()) {
                                 mostrarAlerta("Atenção", "Nenhuma questão foi adicionada. Selecione e clique em 'Adicionar pergunta' primeiro!");
                                 return;
@@ -318,7 +402,10 @@ public class MontagemProvaController {
                                 String peso = (valoresTemporarios != null && i < valoresTemporarios.size()) ? valoresTemporarios.get(i) : "";
                                 if (peso.trim().isEmpty()) peso = "0";
 
-                                String perguntaFormatada = enunciado + "\nValor: " + peso;
+                                String autor = (autoresTemporarios != null && i < autoresTemporarios.size()) ? autoresTemporarios.get(i) : "Desconhecido";
+
+                                // Formata o enunciado incluindo o valor e logo abaixo o autor da questão
+                                String perguntaFormatada = enunciado + "\nValor: " + peso + "\nAutor: " + autor;
                                 perguntasComPeso.add(perguntaFormatada);
 
                                 List<String> listaRespostasBanco = respostaDAO.buscarRespostasPorEnunciado(enunciado);

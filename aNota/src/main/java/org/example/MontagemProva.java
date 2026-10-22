@@ -25,31 +25,40 @@ public class MontagemProva {
         this.questoes = questoes;
     }
 
-    /**
-     * Regra de negócio: Valida se os dados da prova estão corretos antes de salvar.
-     * Retorna uma mensagem de erro/aviso se houver inconsistência, ou null se estiver tudo OK.
-     */
     public String validarProva(List<Integer> indicesSelecionados, List<String> valoresDigitados) {
         if (indicesSelecionados.isEmpty()) {
             return "Selecione ao menos uma questão para a prova.";
         }
 
-        boolean provaTemValor = this.valor != null && this.valor.compareTo(BigDecimal.ZERO) > 0;
-
-        for (int index : indicesSelecionados) {
-            String textoValor = valoresDigitados.get(index).trim();
-            boolean questaoTemValor = !textoValor.isEmpty();
-
-            if (provaTemValor && !questaoTemValor) {
-                return "Há questões selecionadas sem valor definido.";
-            }
-            if (!provaTemValor && questaoTemValor) {
-                return "A prova está sem valor total calculado.";
-            }
+        // Valida se a prova tem valor informado
+        if (this.valor == null || this.valor.compareTo(BigDecimal.ZERO) <= 0) {
+            return "A prova precisa ter um valor total definido.";
         }
 
-        if (!provaTemValor) {
-            return "RASCUNHO"; // Sinaliza que é um rascunho sem valores
+        // Valida se o valor total da prova é exatamente igual a 10
+        if (this.valor.compareTo(new BigDecimal("10")) != 0) {
+            return "O valor total da prova deve ser 10.";
+        }
+
+        // Valida cada questão selecionada
+        for (int index : indicesSelecionados) {
+            if (index < 0 || index >= valoresDigitados.size()) {
+                return "Erro nos índices das questões selecionadas.";
+            }
+
+            String textoValor = valoresDigitados.get(index).trim();
+            if (textoValor.isEmpty()) {
+                return "Há questões selecionadas sem valor definido.";
+            }
+
+            try {
+                BigDecimal questaoVal = new BigDecimal(textoValor.replace(",", "."));
+                if (questaoVal.compareTo(BigDecimal.ZERO) <= 0) {
+                    return "Todas as questões selecionadas devem ter um valor maior que zero.";
+                }
+            } catch (NumberFormatException e) {
+                return "Formato de valor inválido em uma das questões.";
+            }
         }
 
         return null; // Tudo válido!
