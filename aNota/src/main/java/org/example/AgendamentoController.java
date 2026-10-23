@@ -31,10 +31,7 @@ public class AgendamentoController {
 
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    @FXML private Button bt_alunos;
     @FXML private Button bt_confirmar;
-    @FXML private Button bt_prova;
-    @FXML private Button bt_questoes;
     @FXML private ChoiceBox<Turma> choice_box_turma;
     @FXML private MenuButton menu_alunos;
     @FXML private ChoiceBox<String> choice_box_disciplina;
@@ -328,22 +325,57 @@ public class AgendamentoController {
     }
 
     @FXML
-    void vaiquestao(ActionEvent event) {
-        abrir("CadastroQuestoes", 1350, 1500);
+    void IrQuestao_criar(ActionEvent event) {
+        navegar("CadastroQuestoes");
     }
 
     @FXML
-    void vaiprova(ActionEvent event) {
+    void irQuestao_consultar(ActionEvent event) {
+        navegar("VisualizarQuestao");
+    }
+
+    @FXML
+    void IrProva_montar(ActionEvent event) {
+        navegar("montagem");
+    }
+
+    @FXML
+    void irProva_agendar(ActionEvent event) {
         voltarParaLista();
     }
 
     @FXML
-    void vaialunos(ActionEvent event) {
-        abrir("Aluno", 1350, 1080);
+    void irAlunos_notas(ActionEvent event) {
+        navegar("Aluno");
+    }
+
+    @FXML
+    void irAlunos_corrigir(ActionEvent event) {
+        navegar("Aluno");
+    }
+
+    @FXML
+    void irQuestao(ActionEvent event) {
+    }
+
+    @FXML
+    void irProva(ActionEvent event) {
+    }
+
+    @FXML
+    void irAlunos(ActionEvent event) {
+    }
+
+    private void navegar(String fxml) {
+        try {
+            App.setRoot(fxml);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void voltarParaLista() {
-        abrir("SelecaoProva", 1350, 1080);
+        abrir("SelecaoProva", 1350, 800);
     }
 
     private void abrir(String fxml, double largura, double altura) {

@@ -14,17 +14,17 @@
 
 <ScrollPane stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controller">
     <content>
-        <AnchorPane prefHeight="1190.0" prefWidth="1312.0">
+        <AnchorPane prefHeight="1166.0" prefWidth="1348.0">
 
             <children>
 
-                <ImageView fitHeight="1190.0" fitWidth="1350.0" layoutX="-5.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="1178.0" fitWidth="1352.0" layoutX="-5.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../telas.png/CadastroQuestoes.png" />
                     </image>
                 </ImageView>
 
-                <MenuButton fx:id="btnProva" layoutX="581.0" layoutY="37.0" mnemonicParsing="false" onAction="#irProva" prefHeight="39.0" prefWidth="182.0" style="-fx-background-color: transparent;">
+                <MenuButton fx:id="btnProva" layoutX="746.0" layoutY="37.0" mnemonicParsing="false" onAction="#irProva" prefHeight="39.0" prefWidth="182.0" style="-fx-background-color: transparent;">
                     <items>
                         <MenuItem fx:id="btProva_montar" mnemonicParsing="false" onAction="#IrProva_montar" text="Montar" />
                         <MenuItem fx:id="btProva_agendar" mnemonicParsing="false" onAction="#irProva_agendar" text="Agendar" />
@@ -34,7 +34,7 @@
                     </cursor>
                 </MenuButton>
 
-                <MenuButton fx:id="btnAlunos" layoutX="798.0" layoutY="37.0" mnemonicParsing="false" onAction="#irAlunos" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: transparent;">
+                <MenuButton fx:id="btnAlunos" layoutX="1115.0" layoutY="37.0" mnemonicParsing="false" onAction="#irAlunos" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: transparent;">
                     <items>
                         <MenuItem fx:id="btalunos_notas" mnemonicParsing="false" onAction="#irAlunos_notas" text="Notas" />
                         <MenuItem fx:id="btalunos_corrigir" mnemonicParsing="false" onAction="#irAlunos_corrigir" text="Corrigir" />
@@ -44,11 +44,11 @@
                     </cursor>
                 </MenuButton>
 
-                <ScrollPane layoutX="140.0" layoutY="565.0" prefHeight="111.0" prefWidth="1096.0" style="-fx-border-color: #00c1cf; -fx-border-radius: 10;">
+                <ScrollPane layoutX="133.0" layoutY="564.0" prefHeight="137.0" prefWidth="1094.0" style="-fx-border-color: #00c1cf; -fx-border-radius: 10;">
                     <content>
-                        <TextArea fx:id="txtPergunta" prefHeight="178.0" prefWidth="1078.0" promptText="Digite o enunciado" style="-fx-border-radius: 10;">
+                        <TextArea fx:id="txtPergunta" prefHeight="178.0" prefWidth="1074.0" promptText="Digite o enunciado" style="-fx-border-radius: 10;">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="24.0" />
                             </font>
                         </TextArea>
                     </content>
@@ -56,14 +56,14 @@
 
                 <Button fx:id="btMultipla" layoutX="487.0" layoutY="344.0" mnemonicParsing="false" onAction="#abrirMultipla" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" />
 
-                <Button layoutX="880.0" layoutY="998.0" mnemonicParsing="false" onAction="#salvarQuestao" prefHeight="60.0" prefWidth="343.0" style="-fx-background-color: transparent;" />
+                <Button layoutX="890.0" layoutY="979.0" mnemonicParsing="false" onAction="#salvarQuestao" prefHeight="60.0" prefWidth="343.0" style="-fx-background-color: transparent;" />
 
                 <Button fx:id="btRelac" layoutX="837.0" layoutY="345.0" mnemonicParsing="false" onAction="#abrirRelac" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" />
-                <ScrollPane layoutX="140.0" layoutY="765.0" prefHeight="111.0" prefWidth="1096.0" style="-fx-border-color: #00c1cf; -fx-border-radius: 10;">
+                <ScrollPane layoutX="132.0" layoutY="783.0" prefHeight="137.0" prefWidth="1094.0" style="-fx-border-color: #00c1cf; -fx-border-radius: 10;">
                     <content>
-                        <TextArea fx:id="txtGabarito" prefHeight="178.0" prefWidth="1078.0" promptText="Digite a resposta" style="-fx-border-radius: 10;">
+                        <TextArea fx:id="txtGabarito" prefHeight="178.0" prefWidth="1074.0" promptText="Digite a resposta" style="-fx-border-radius: 10;">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="24.0" />
                             </font>
                         </TextArea>
                     </content>

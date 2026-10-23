@@ -144,9 +144,14 @@ public class Controller {
 
 
     private void carregarDisciplinasETemas() {
+        String emailProfessor = Sessao.getUsuario() != null
+                ? Sessao.getUsuario().getEmail()
+                : "giuliano.bertoti@prof.fatec.com";
+
         if (comboDisciplina != null) {
             try {
-                comboDisciplina.getItems().setAll(disciplinaDAO.listarTodas());
+                comboDisciplina.getItems().setAll(
+                        disciplinaDAO.listarPorProfessor(emailProfessor));
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }
@@ -154,8 +159,11 @@ public class Controller {
 
         if (comboTema != null) {
             try {
-                List<Questao> todas = questaoDAO.buscarQuestoes();
-                comboTema.getItems().setAll(valoresDistintos(todas, false));
+                List<Questao> doProfessor = questaoDAO.buscarQuestoes().stream()
+                        .filter(q -> emailProfessor.equals(q.getEmailProfessor()))
+                        .collect(Collectors.toList());
+
+                comboTema.getItems().setAll(valoresDistintos(doProfessor, false));
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }
@@ -420,6 +428,37 @@ public class Controller {
                 "Questão salva",
                 "Questão salva com sucesso!"
         );
+
+        limparCampos();
+    }
+
+    private void limparCampos() {
+        if (txtPergunta != null) txtPergunta.clear();
+        if (txtGabarito != null) txtGabarito.clear();
+
+        for (TextArea alt : alternativas()) {
+            if (alt != null) alt.clear();
+        }
+
+        for (CheckBox check : checksAlternativas()) {
+            if (check != null) check.setSelected(false);
+        }
+
+        for (TextArea t : textosPares()) {
+            if (t != null) t.clear();
+        }
+
+        for (TextArea c : conceitosPares()) {
+            if (c != null) c.clear();
+        }
+
+        for (ComboBox<String> combo : combosAssociacao()) {
+            if (combo != null) combo.setValue(null);
+        }
+
+        if (comboDisciplina != null) comboDisciplina.setValue(null);
+        if (comboTema != null) comboTema.setValue(null);
+        if (comboDificuldade != null) comboDificuldade.setValue(null);
     }
 
     private String detectarTipoNovaQuestao() {
@@ -703,33 +742,29 @@ public class Controller {
     void irAlunos(ActionEvent event){}
 
     @FXML
-    void irAlunos_corrigir(ActionEvent event) {
+    void irAlunos_corrigir(ActionEvent event) throws IOException { App.setRoot("Aluno");
+
     }
 
     @FXML
-    void irAlunos_notas(ActionEvent event) throws IOException { App.setRoot("Aluno");
+    void irAlunos_notas(ActionEvent event) {
+
     }
 
     @FXML
     void irProva(ActionEvent event) {
+
     }
 
     @FXML
-    void irProva_agendar(ActionEvent event) {
-        try {
-            App.setRoot("agendamento");
-        } catch (IOException e) {
-            e.printStackTrace();
+    void irProva_agendar(ActionEvent event) throws IOException{ App.setRoot("SelecaoProva");
 
-            mostrarAlerta(
-                    Alert.AlertType.ERROR,
-                    "Erro de navegação",
-                    "Não foi possível abrir a tela de agendamento."
-            );
-        }
     }
+
+
     @FXML
     void irQuestao(ActionEvent event) {
+
     }
 
     @FXML

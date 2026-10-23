@@ -25,4 +25,28 @@ public class DisciplinaDAO {
         }
         return lista;
     }
+
+    public List<String> listarPorProfessor(String emailProfessor) {
+        List<String> lista = new ArrayList<>();
+        String sql = "SELECT m.nome_disciplina "
+                + "FROM ministra m "
+                + "JOIN professor p ON p.matricula = m.matricula "
+                + "WHERE p.email = ? "
+                + "ORDER BY m.nome_disciplina";
+
+        try (Connection con = ConexaoBD.conectar();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setString(1, emailProfessor);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(rs.getString("nome_disciplina"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar disciplinas do professor!", e);
+        }
+        return lista;
+    }
 }
