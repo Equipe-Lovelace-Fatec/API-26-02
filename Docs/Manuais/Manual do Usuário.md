@@ -7,15 +7,19 @@
    - [Questão Aberta](#-21-questão-aberta)
    - [Questão de Múltipla Escolha](#-22-questão-de-múltipla-escolha)
    - [Questão de Relacionamento entre Colunas](#-23-questão-de-relacionamento-entre-colunas)
-3. [Montagem de Provas e Gabaritos](#-3-montagem-de-provas-e-gabaritos)
-4. [Alunos e Correção de Provas](#-4-alunos-e-correção-de-provas)
-5. [Navegação entre as Telas](#-5-navegação-entre-as-telas)
+3. [Consulta de questões cadastradas](#-3-consulta-de-questões-cadastradas)
+   - [Edição de questões](#-31-edição-de-questões)
+   - [Duplicar questão](#32-duplicar-questão)
+4. [Montagem de Provas e Gabaritos](#-4-montagem-de-provas-e-gabaritos)
+5. [Agendamento de provas](#-5-agendamento-de-provas)
+6. [Alunos e Correção de Provas](#-6-alunos-e-correção-de-provas)
+7. [Navegação entre as Telas](#-7-navegação-entre-as-telas)
 
 ---
 
 ## 📌 1. Visão Geral
 
-O sistema permite ao professor **cadastrar questões, montar provas, visualizar avaliações e realizar a correção das provas dos alunos**.
+O sistema permite ao professor **cadastrar e consultar questões, montar e agendar provas, visualizar avaliações e realizar a correção das provas dos alunos**.
 
 Todas as principais telas possuem acesso às áreas de:
 
@@ -37,13 +41,17 @@ Para cadastrar uma questão aberta:
 
 #### 📌 1º Passo
 
-Preencha o campo **Enunciado** com a pergunta que será apresentada ao aluno.
+Selecione, nos menus no início da página, a **disciplina**, **tema** e **dificuldade** desejados.
 
 #### 📌 2º Passo
 
-No campo abaixo, informe a **resposta esperada (gabarito)** da questão.
+Preencha o campo **Enunciado** com a pergunta que será apresentada ao aluno.
 
 #### 📌 3º Passo
+
+No campo abaixo, informe a **resposta esperada (gabarito)** da questão.
+
+#### 📌 4º Passo
 
 Clique em **Salvar Questão**.
 
@@ -57,17 +65,21 @@ Para cadastrar uma questão de múltipla escolha:
 
 #### 📌 1º Passo
 
-Preencha o campo **Enunciado** com a pergunta da questão.
+Selecione, nos menus no início da página, a **disciplina**, **tema** e **dificuldade** desejados.
 
 #### 📌 2º Passo
 
-Preencha **todas as quatro alternativas** disponíveis.
+Preencha o campo **Enunciado** com a pergunta da questão.
 
 #### 📌 3º Passo
 
-Selecione a alternativa que corresponde à resposta correta.
+Preencha **todas as quatro alternativas** disponíveis.
 
 #### 📌 4º Passo
+
+Selecione a alternativa que corresponde à resposta correta.
+
+#### 📌 5º Passo
 
 Clique em **Salvar Questão**.
 
@@ -98,9 +110,13 @@ As alternativas devem ser apresentadas no próprio **enunciado da questão**, id
 
 #### 📌 1º Passo
 
-Preencha os campos de **Conceito 1, Conceito 2, Conceito 3 e Conceito 4** com os itens que deverão ser relacionados.
+Selecione, nos menus no início da página, a **disciplina**, **tema** e **dificuldade** desejados.
 
 #### 📌 2º Passo
+
+Preencha os campos de **Conceito 1, Conceito 2, Conceito 3 e Conceito 4** com os itens que deverão ser relacionados.
+
+#### 📌 3º Passo
 
 Utilize os campos de seleção ao lado de cada conceito para indicar a alternativa correspondente.
 
@@ -117,9 +133,33 @@ Dessa forma, o sistema registra a relação entre cada conceito e a alternativa 
 
 ---
 
-## 📋 3. Montagem de Provas e Gabaritos
+## 🔎 3. Consulta de questões cadastradas
 
-Na tela de **Montagem de Provas e Gabaritos**, o usuario pode criar uma avaliação utilizando as questões já disponíveis no sistema.
+Na tela de **Consulta de questões cadastradas**, o usuário pode verificar as questões criadas, editá-las ou duplicá-las.
+
+### ✏ 3.1 Edição de questões
+
+#### 📌 1º Passo
+
+Escolha na lista a questão que deseja editar e clique no **lápis** ao lado da questão.
+
+#### 📌 2º Passo
+
+Na nova tela aberta, é possível editar as informações da questão, como enunciado, respostas, disciplina, tema e dificuldade.
+
+### 3.2 Duplicar questão
+
+#### 📌 1º Passo
+
+Escolha na lista a questão que deseja editar e clique no **item de cópia** ao lado da questão.
+
+A questão será salva com o mesmo enunciado, porém com o parêntese escrito **cópia** na frente.
+
+---
+
+## 📋 4. Montagem de Provas e Gabaritos
+
+Na tela de **Montagem de Provas e Gabaritos**, o usuário pode criar uma avaliação utilizando as questões já disponíveis no sistema.
 
 #### 📌 1º Passo
 
@@ -131,23 +171,57 @@ Selecione a **disciplina** correspondente.
 
 #### 📌 3º Passo
 
-Informe o **valor da avaliação**.
+Adicione as questões desejadas a partir do **banco de questões**.
 
 #### 📌 4º Passo
 
-Adicione as questões desejadas a partir do **banco de questões**.
+Indique a **nota de cada questão** no campo correspondente.
 
 #### 📌 5º Passo
 
-Utilize o botão **Visualizar Prova** para conferir a avaliação.
+Clique no botão **adicionar questão**, caso deseje adicionar questões à prova em momentos diferentes.
 
 #### 📌 6º Passo
+
+Utilize o botão **Visualizar Prova** para conferir a avaliação.
+
+#### 📌 7º Passo
 
 Após conferir a prova, clique em **Salvar Prova** para finalizar o cadastro.
 
 ---
 
-## 👥 4. Alunos e Correção de Provas
+## 📅 5. Agendamento de provas
+
+Na tela de **Agendamento de Provas**, o usuário visualiza a lista de provas salvas e agenda datas para aplicação de provas.
+
+#### 📌 1º Passo
+
+Selecione na lista a prova que deseja agendar e clique em **visualizar** para poder verificar as questões.
+
+#### 📌 2º Passo
+
+Feche o menu de visualização após confirmar as questões.
+
+#### 📌 3º Passo
+
+Na prova escolhida, clique no botão **agendar** para abrir a tela de agendamento.
+
+#### 📌 4º Passo
+
+Na nova tela aberta, selecione nos menus disponíveis **turma**, **alunos** que irão realizar a prova, **data** e **horário** de realização da prova.
+
+#### 📌 5º Passo
+
+Confira no menu lateral as informações da prova montada.
+
+#### 📌 6º Passo
+
+Clique no botão **confirmar** para agendar a prova.
+
+---
+
+## 👥 6. Alunos e Correção de Provas
 
 A área de **Alunos** permite ao usuário acessar as avaliações dos estudantes e realizar suas correções.
 
@@ -175,26 +249,32 @@ As questões de alternativas possuem **correção automática**, sendo sua pontu
 
 Nas questões abertas, o professor pode:
 
-- informar a **pontuação** obtida pelo aluno;
+- informar a **pontuação** obtida pelo aluno.
 
 ### 💬 Comentários
 
 O professor pode adicionar **comentários às questões corrigidas**, quando necessário.
 
-### 📌 5º Passo
+#### 📌 5º Passo
 
 Após finalizar a correção, clique em **Salvar** para registrar as informações.
 
 ---
 
-## 🧭 5. Navegação entre as Telas
+## 🧭 7. Navegação entre as Telas
 
-As telas principais possuem botões de navegação que permitem acessar as diferentes funcionalidades do sistema.
+As telas principais possuem botões de navegação que permitem acessar as diferentes funcionalidades do sistema, cada botão da duas opções de tela possível.
 
 Para acessar uma funcionalidade, basta clicar no botão correspondente:
 
 - 📝 **Questões**
+  - Criar
+  - Consultar
 - 📋 **Provas**
+  - Montar
+  - Agendar
 - 👥 **Alunos**
+  - Notas
+  - Corrigir
 
 O usuário pode utilizar esses botões para alternar entre as diferentes áreas do sistema durante sua utilização.
