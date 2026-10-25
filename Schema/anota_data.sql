@@ -210,12 +210,6 @@ INSERT INTO disciplina (nome_disciplina, sigla_disciplina) VALUES
 ('Inglês V', 'Ing V'),
 ('Inglês VI', 'Ing VI'),
 
-('Arquitetura e Organização I', 'Arq I'),
-('Arquitetura e Organização II', 'Arq II'),
-('Arquitetura e Organização III', 'Arq III'),
-('Arquitetura e Organização IV', 'Arq IV'),
-('Arquitetura e Organização V', 'Arq V'),
-('Arquitetura e Organização VI', 'Arq VI'),
  
 ('Engenharia de Software I', 'Eng I'),
 ('Engenharia de Software II', 'Eng II'),
@@ -578,36 +572,274 @@ INSERT INTO curso_disciplina (nome_curso, nome_disciplina) VALUES
 ('Desenvolvimento de Software Multiplataforma', 'Engenharia de Software V'),
 ('Desenvolvimento de Software Multiplataforma', 'Engenharia de Software VI');
  
--- DISCIPLINAS DE CADA TURMA
+-- DISCIPLINAS DE CADA TURMA (semestre N cursa a disciplina N de cada área)
 INSERT INTO turma_disciplina (id_turma, nome_disciplina) VALUES
-(1, 'Arquitetura e Organização I'),
-(2, 'Inglês I'),
+-- Banco de Dados
+(1, 'Inglês I'),
+(1, 'Engenharia de Software I'),
+(1, 'Análise e desenvolvimento de Banco de Dados I'),
+(2, 'Inglês II'),
+(2, 'Engenharia de Software II'),
+(2, 'Análise e desenvolvimento de Banco de Dados II'),
+(3, 'Inglês III'),
+(3, 'Engenharia de Software III'),
 (3, 'Análise e desenvolvimento de Banco de Dados III'),
-(3, 'Engenharia de Software I'),
-(4, 'Inglês II');
- 
--- ALUNOS EM TURMAS (pertence)
--- Todos: turmas 1 e 3. Só Jonas e Márcia: também as turmas 2 e 4 (Inglês).
+(4, 'Inglês IV'),
+(4, 'Engenharia de Software IV'),
+(4, 'Análise e desenvolvimento de Banco de Dados IV'),
+(5, 'Inglês V'),
+(5, 'Engenharia de Software V'),
+(5, 'Análise e desenvolvimento de Banco de Dados V'),
+(6, 'Inglês VI'),
+(6, 'Engenharia de Software VI'),
+(6, 'Análise e desenvolvimento de Banco de Dados VI'),
+
+-- Análise e Desenvolvimento de Sistemas
+(7, 'Inglês I'),
+(7, 'Engenharia de Software I'),
+(7, 'Sistemas Operacionais I'),
+(8, 'Inglês II'),
+(8, 'Engenharia de Software II'),
+(8, 'Sistemas Operacionais II'),
+(9, 'Inglês III'),
+(9, 'Engenharia de Software III'),
+(9, 'Sistemas Operacionais III'),
+(10, 'Inglês IV'),
+(10, 'Engenharia de Software IV'),
+(10, 'Sistemas Operacionais IV'),
+(11, 'Inglês V'),
+(11, 'Engenharia de Software V'),
+(11, 'Sistemas Operacionais V'),
+(12, 'Inglês VI'),
+(12, 'Engenharia de Software VI'),
+(12, 'Sistemas Operacionais VI'),
+
+-- Desenvolvimento de Software Multiplataforma
+(13, 'Inglês I'),
+(13, 'Engenharia de Software I'),
+(13, 'Desenvolvimento Web I'),
+(14, 'Inglês II'),
+(14, 'Engenharia de Software II'),
+(14, 'Desenvolvimento Web II'),
+(15, 'Inglês III'),
+(15, 'Engenharia de Software III'),
+(15, 'Desenvolvimento Web III'),
+(16, 'Inglês IV'),
+(16, 'Engenharia de Software IV'),
+(16, 'Desenvolvimento Web IV'),
+(17, 'Inglês V'),
+(17, 'Engenharia de Software V'),
+(17, 'Desenvolvimento Web V'),
+(18, 'Inglês VI'),
+(18, 'Engenharia de Software VI'),
+(18, 'Desenvolvimento Web VI');
+
+-- ALUNOS EM TURMAS (pertence): 10 alunos por semestre por curso, cada aluno em uma única turma
 INSERT INTO pertence (RA, id_turma, nome_curso) VALUES
-('3429843806', 1, 'Banco de Dados'),  
-('3429843806', 3, 'Banco de Dados'),
-('8089811057', 1, 'Banco de Dados'),  
-('8089811057', 3, 'Banco de Dados'),
-('3534589347', 1, 'Banco de Dados'),  
-('3534589347', 3, 'Banco de Dados'),
-('3534589347', 2, 'Banco de Dados'),
-('3534589347', 4, 'Banco de Dados'),
-('7070353682', 1, 'Banco de Dados'),  
-('7070353682', 3, 'Banco de Dados'),
-('3955057679', 1, 'Banco de Dados'),  
-('3955057679', 3, 'Banco de Dados'),
-('3737564015', 1, 'Banco de Dados'),  
-('3737564015', 3, 'Banco de Dados'),
-('3737564015', 2, 'Banco de Dados'),
-('3737564015', 4, 'Banco de Dados'),
-('3480944395', 1, 'Banco de Dados'),  
-('3480944395', 3, 'Banco de Dados');
- 
+-- Banco de Dados
+-- turma 1 · 1º semestre
+('3429843806', 1, 'Banco de Dados'),
+('8089811057', 1, 'Banco de Dados'),
+('3534589347', 1, 'Banco de Dados'),
+('7070353682', 1, 'Banco de Dados'),
+('3955057679', 1, 'Banco de Dados'),
+('3737564015', 1, 'Banco de Dados'),
+('5969515932', 1, 'Banco de Dados'),
+('3480944395', 1, 'Banco de Dados'),
+('6569811650', 1, 'Banco de Dados'),
+('9930486087', 1, 'Banco de Dados'),
+-- turma 2 · 2º semestre
+('8024522884', 2, 'Banco de Dados'),
+('3927562060', 2, 'Banco de Dados'),
+('7179172084', 2, 'Banco de Dados'),
+('9526336484', 2, 'Banco de Dados'),
+('4205345363', 2, 'Banco de Dados'),
+('7443539651', 2, 'Banco de Dados'),
+('9281826781', 2, 'Banco de Dados'),
+('3988033444', 2, 'Banco de Dados'),
+('9690770493', 2, 'Banco de Dados'),
+('4706330313', 2, 'Banco de Dados'),
+-- turma 3 · 3º semestre
+('1331331252', 3, 'Banco de Dados'),
+('2816870293', 3, 'Banco de Dados'),
+('3758626180', 3, 'Banco de Dados'),
+('8148949375', 3, 'Banco de Dados'),
+('1982038995', 3, 'Banco de Dados'),
+('9934821335', 3, 'Banco de Dados'),
+('8458685742', 3, 'Banco de Dados'),
+('3125811937', 3, 'Banco de Dados'),
+('4011695303', 3, 'Banco de Dados'),
+('3579364582', 3, 'Banco de Dados'),
+-- turma 4 · 4º semestre
+('3899135890', 4, 'Banco de Dados'),
+('6219092064', 4, 'Banco de Dados'),
+('3198079198', 4, 'Banco de Dados'),
+('5731223225', 4, 'Banco de Dados'),
+('7404062798', 4, 'Banco de Dados'),
+('2617503656', 4, 'Banco de Dados'),
+('1534158322', 4, 'Banco de Dados'),
+('3702425549', 4, 'Banco de Dados'),
+('6737242722', 4, 'Banco de Dados'),
+('4044117721', 4, 'Banco de Dados'),
+-- turma 5 · 5º semestre
+('6919217917', 5, 'Banco de Dados'),
+('3433375690', 5, 'Banco de Dados'),
+('2126169813', 5, 'Banco de Dados'),
+('6108470784', 5, 'Banco de Dados'),
+('6292698104', 5, 'Banco de Dados'),
+('3941151293', 5, 'Banco de Dados'),
+('5826407098', 5, 'Banco de Dados'),
+('3634601147', 5, 'Banco de Dados'),
+('6743034899', 5, 'Banco de Dados'),
+('7055136268', 5, 'Banco de Dados'),
+-- turma 6 · 6º semestre
+('9203927982', 6, 'Banco de Dados'),
+('7984483890', 6, 'Banco de Dados'),
+('6577874081', 6, 'Banco de Dados'),
+('1874411302', 6, 'Banco de Dados'),
+('7016356676', 6, 'Banco de Dados'),
+('4796159040', 6, 'Banco de Dados'),
+('7903520853', 6, 'Banco de Dados'),
+('2978628489', 6, 'Banco de Dados'),
+('5828303732', 6, 'Banco de Dados'),
+('5328996712', 6, 'Banco de Dados'),
+
+-- Análise e Desenvolvimento de Sistemas
+-- turma 7 · 1º semestre
+('4983904732', 7, 'Análise e Desenvolvimento de Sistemas'),
+('6713431421', 7, 'Análise e Desenvolvimento de Sistemas'),
+('5805419190', 7, 'Análise e Desenvolvimento de Sistemas'),
+('3443546879', 7, 'Análise e Desenvolvimento de Sistemas'),
+('6274336167', 7, 'Análise e Desenvolvimento de Sistemas'),
+('9643865189', 7, 'Análise e Desenvolvimento de Sistemas'),
+('1281403268', 7, 'Análise e Desenvolvimento de Sistemas'),
+('8692956300', 7, 'Análise e Desenvolvimento de Sistemas'),
+('9990599891', 7, 'Análise e Desenvolvimento de Sistemas'),
+('5172307004', 7, 'Análise e Desenvolvimento de Sistemas'),
+-- turma 8 · 2º semestre
+('4966568372', 8, 'Análise e Desenvolvimento de Sistemas'),
+('1384981895', 8, 'Análise e Desenvolvimento de Sistemas'),
+('3659876009', 8, 'Análise e Desenvolvimento de Sistemas'),
+('7437242970', 8, 'Análise e Desenvolvimento de Sistemas'),
+('2533873233', 8, 'Análise e Desenvolvimento de Sistemas'),
+('4981828632', 8, 'Análise e Desenvolvimento de Sistemas'),
+('8125184634', 8, 'Análise e Desenvolvimento de Sistemas'),
+('2541109206', 8, 'Análise e Desenvolvimento de Sistemas'),
+('2433316179', 8, 'Análise e Desenvolvimento de Sistemas'),
+('6301605268', 8, 'Análise e Desenvolvimento de Sistemas'),
+-- turma 9 · 3º semestre
+('5760070824', 9, 'Análise e Desenvolvimento de Sistemas'),
+('8402601735', 9, 'Análise e Desenvolvimento de Sistemas'),
+('4263230461', 9, 'Análise e Desenvolvimento de Sistemas'),
+('7931203832', 9, 'Análise e Desenvolvimento de Sistemas'),
+('1969951096', 9, 'Análise e Desenvolvimento de Sistemas'),
+('9583455925', 9, 'Análise e Desenvolvimento de Sistemas'),
+('5586995943', 9, 'Análise e Desenvolvimento de Sistemas'),
+('2836752811', 9, 'Análise e Desenvolvimento de Sistemas'),
+('8298241456', 9, 'Análise e Desenvolvimento de Sistemas'),
+('3233405222', 9, 'Análise e Desenvolvimento de Sistemas'),
+-- turma 10 · 4º semestre
+('4600276726', 10, 'Análise e Desenvolvimento de Sistemas'),
+('4826543793', 10, 'Análise e Desenvolvimento de Sistemas'),
+('1898252980', 10, 'Análise e Desenvolvimento de Sistemas'),
+('6193392816', 10, 'Análise e Desenvolvimento de Sistemas'),
+('7621945483', 10, 'Análise e Desenvolvimento de Sistemas'),
+('6127779544', 10, 'Análise e Desenvolvimento de Sistemas'),
+('2941618304', 10, 'Análise e Desenvolvimento de Sistemas'),
+('7296018500', 10, 'Análise e Desenvolvimento de Sistemas'),
+('4126018231', 10, 'Análise e Desenvolvimento de Sistemas'),
+('1967968385', 10, 'Análise e Desenvolvimento de Sistemas'),
+-- turma 11 · 5º semestre
+('4998970920', 11, 'Análise e Desenvolvimento de Sistemas'),
+('7066210620', 11, 'Análise e Desenvolvimento de Sistemas'),
+('2954740469', 11, 'Análise e Desenvolvimento de Sistemas'),
+('2511480169', 11, 'Análise e Desenvolvimento de Sistemas'),
+('9478562432', 11, 'Análise e Desenvolvimento de Sistemas'),
+('8451955303', 11, 'Análise e Desenvolvimento de Sistemas'),
+('1853829199', 11, 'Análise e Desenvolvimento de Sistemas'),
+('9621038293', 11, 'Análise e Desenvolvimento de Sistemas'),
+('9887155308', 11, 'Análise e Desenvolvimento de Sistemas'),
+('2720413571', 11, 'Análise e Desenvolvimento de Sistemas'),
+-- turma 12 · 6º semestre
+('1696605532', 12, 'Análise e Desenvolvimento de Sistemas'),
+('1734895161', 12, 'Análise e Desenvolvimento de Sistemas'),
+('9347684007', 12, 'Análise e Desenvolvimento de Sistemas'),
+('5737244976', 12, 'Análise e Desenvolvimento de Sistemas'),
+('3369141624', 12, 'Análise e Desenvolvimento de Sistemas'),
+('8899017781', 12, 'Análise e Desenvolvimento de Sistemas'),
+('6912379286', 12, 'Análise e Desenvolvimento de Sistemas'),
+('7147642604', 12, 'Análise e Desenvolvimento de Sistemas'),
+('1527049672', 12, 'Análise e Desenvolvimento de Sistemas'),
+('9169062828', 12, 'Análise e Desenvolvimento de Sistemas'),
+
+-- Desenvolvimento de Software Multiplataforma
+-- turma 13 · 1º semestre
+('9118963418', 13, 'Desenvolvimento de Software Multiplataforma'),
+('4690225340', 13, 'Desenvolvimento de Software Multiplataforma'),
+('2599882663', 13, 'Desenvolvimento de Software Multiplataforma'),
+('3141493429', 13, 'Desenvolvimento de Software Multiplataforma'),
+('3764266186', 13, 'Desenvolvimento de Software Multiplataforma'),
+('8328313238', 13, 'Desenvolvimento de Software Multiplataforma'),
+('9756440498', 13, 'Desenvolvimento de Software Multiplataforma'),
+('1569316437', 13, 'Desenvolvimento de Software Multiplataforma'),
+('6896499318', 13, 'Desenvolvimento de Software Multiplataforma'),
+('7322942813', 13, 'Desenvolvimento de Software Multiplataforma'),
+-- turma 14 · 2º semestre
+('2300921847', 14, 'Desenvolvimento de Software Multiplataforma'),
+('2567039762', 14, 'Desenvolvimento de Software Multiplataforma'),
+('7187337704', 14, 'Desenvolvimento de Software Multiplataforma'),
+('3941758207', 14, 'Desenvolvimento de Software Multiplataforma'),
+('9518667015', 14, 'Desenvolvimento de Software Multiplataforma'),
+('7658921492', 14, 'Desenvolvimento de Software Multiplataforma'),
+('6083832609', 14, 'Desenvolvimento de Software Multiplataforma'),
+('7346671935', 14, 'Desenvolvimento de Software Multiplataforma'),
+('8979422830', 14, 'Desenvolvimento de Software Multiplataforma'),
+('9668640009', 14, 'Desenvolvimento de Software Multiplataforma'),
+-- turma 15 · 3º semestre
+('3541357922', 15, 'Desenvolvimento de Software Multiplataforma'),
+('2393869649', 15, 'Desenvolvimento de Software Multiplataforma'),
+('3135957520', 15, 'Desenvolvimento de Software Multiplataforma'),
+('4181112860', 15, 'Desenvolvimento de Software Multiplataforma'),
+('6644591146', 15, 'Desenvolvimento de Software Multiplataforma'),
+('7690959096', 15, 'Desenvolvimento de Software Multiplataforma'),
+('1943285476', 15, 'Desenvolvimento de Software Multiplataforma'),
+('3552229120', 15, 'Desenvolvimento de Software Multiplataforma'),
+('7627603225', 15, 'Desenvolvimento de Software Multiplataforma'),
+('5343498251', 15, 'Desenvolvimento de Software Multiplataforma'),
+-- turma 16 · 4º semestre
+('3373307717', 16, 'Desenvolvimento de Software Multiplataforma'),
+('4838316777', 16, 'Desenvolvimento de Software Multiplataforma'),
+('2512402277', 16, 'Desenvolvimento de Software Multiplataforma'),
+('2052560105', 16, 'Desenvolvimento de Software Multiplataforma'),
+('3495095277', 16, 'Desenvolvimento de Software Multiplataforma'),
+('9945788247', 16, 'Desenvolvimento de Software Multiplataforma'),
+('6888235036', 16, 'Desenvolvimento de Software Multiplataforma'),
+('3269570964', 16, 'Desenvolvimento de Software Multiplataforma'),
+('8500831937', 16, 'Desenvolvimento de Software Multiplataforma'),
+('5319078605', 16, 'Desenvolvimento de Software Multiplataforma'),
+-- turma 17 · 5º semestre
+('3727840933', 17, 'Desenvolvimento de Software Multiplataforma'),
+('3903316950', 17, 'Desenvolvimento de Software Multiplataforma'),
+('8499398447', 17, 'Desenvolvimento de Software Multiplataforma'),
+('4781953868', 17, 'Desenvolvimento de Software Multiplataforma'),
+('9709979134', 17, 'Desenvolvimento de Software Multiplataforma'),
+('3905520660', 17, 'Desenvolvimento de Software Multiplataforma'),
+('1673761695', 17, 'Desenvolvimento de Software Multiplataforma'),
+('2486926956', 17, 'Desenvolvimento de Software Multiplataforma'),
+('5615757279', 17, 'Desenvolvimento de Software Multiplataforma'),
+('2541589589', 17, 'Desenvolvimento de Software Multiplataforma'),
+-- turma 18 · 6º semestre
+('4370871999', 18, 'Desenvolvimento de Software Multiplataforma'),
+('1988951832', 18, 'Desenvolvimento de Software Multiplataforma'),
+('5897092176', 18, 'Desenvolvimento de Software Multiplataforma'),
+('9863767041', 18, 'Desenvolvimento de Software Multiplataforma'),
+('7399493395', 18, 'Desenvolvimento de Software Multiplataforma'),
+('3198492880', 18, 'Desenvolvimento de Software Multiplataforma'),
+('8847334882', 18, 'Desenvolvimento de Software Multiplataforma'),
+('3382005162', 18, 'Desenvolvimento de Software Multiplataforma'),
+('2553052969', 18, 'Desenvolvimento de Software Multiplataforma'),
+('1484042211', 18, 'Desenvolvimento de Software Multiplataforma');
+
 -- ========== QUESTÕES ==========
 INSERT INTO questao (enunciado, tema, tipo, dificuldade, email_professor, nome_disciplina) VALUES
 -- Teresinha (Inglês I)
@@ -722,35 +954,251 @@ JOIN questao q
   ON q.enunciado = v.enunciado
  AND q.tipo = v.tipo;
 
+-- ========== PROVAS DE RECUPERAÇÃO (só para alguns alunos) ==========
+INSERT INTO prova (nome_prova, dificuldade, valor, email_professor, nome_disciplina) VALUES
+('Recuperação', 'media', 10.00, 'teresinha.fatima@prof.fatec.com', 'Inglês I'),
+('Recuperação', 'media', 10.00, 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I'),
+('Recuperação', 'media', 10.00, 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III');
+
+INSERT INTO prova_questao (prova_id, questao_id, email_professor, nome_disciplina, peso)
+SELECT p.prova_id, q.questao_id, p.email_professor, p.nome_disciplina, v.peso
+FROM (
+    SELECT 'Recuperação' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina,
+           'Qual é o plural correto de "child" em inglês?' AS enunciado, 'alt' AS tipo, 3.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina,
+           'Escreva em inglês uma frase se apresentando com nome, idade e profissão.' AS enunciado, 'diss' AS tipo, 4.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina,
+           'Relacione cada palavra em inglês à sua tradução em português.' AS enunciado, 'rela' AS tipo, 3.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'giuliano.bertoti@prof.fatec.com' AS email_professor, 'Engenharia de Software I' AS nome_disciplina,
+           'Qual metodologia ágil organiza o trabalho em sprints?' AS enunciado, 'alt' AS tipo, 3.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'giuliano.bertoti@prof.fatec.com' AS email_professor, 'Engenharia de Software I' AS nome_disciplina,
+           'Cite duas diferenças entre requisitos funcionais e não funcionais.' AS enunciado, 'diss' AS tipo, 4.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'giuliano.bertoti@prof.fatec.com' AS email_professor, 'Engenharia de Software I' AS nome_disciplina,
+           'Relacione cada papel do Scrum à sua responsabilidade.' AS enunciado, 'rela' AS tipo, 3.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'emanuel.mineda@prof.fatec.com' AS email_professor, 'Análise e desenvolvimento de Banco de Dados III' AS nome_disciplina,
+           'Qual forma normal exige que não haja dependências parciais da chave primária?' AS enunciado, 'alt' AS tipo, 3.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'emanuel.mineda@prof.fatec.com' AS email_professor, 'Análise e desenvolvimento de Banco de Dados III' AS nome_disciplina,
+           'Explique a diferença entre chave primária e chave estrangeira.' AS enunciado, 'diss' AS tipo, 4.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'emanuel.mineda@prof.fatec.com' AS email_professor, 'Análise e desenvolvimento de Banco de Dados III' AS nome_disciplina,
+           'Relacione cada comando SQL à sua categoria.' AS enunciado, 'rela' AS tipo, 3.00 AS peso
+) AS v
+JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_professor AND p.nome_disciplina = v.nome_disciplina
+JOIN questao q ON q.enunciado = v.enunciado AND q.tipo = v.tipo;
+
 -- ========= PROVA aplicada TURMA =============
+-- Provas 1 e 2 e recuperação, cada uma na turma do semestre da disciplina:
+-- Inglês I e Eng. de Software I = BD 1º sem. (turma 1) | Análise e Desenv. de BD III = BD 3º sem. (turma 3)
 INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario)
 SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario
 FROM (
-    SELECT 2 AS id_turma, 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina, '2026-09-18' AS data, '19:30:00' AS horario
+    SELECT 1 AS id_turma, 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina, '2026-09-18' AS data, '19:30:00' AS horario
     UNION ALL
-    SELECT 2, 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-08-20', '19:30:00'
+    SELECT 1, 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-08-20', '19:30:00'
     UNION ALL
     SELECT 3, 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-10-14', '19:30:00'
     UNION ALL
     SELECT 3, 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-11-18', '19:30:00'
     UNION ALL
-    SELECT 3, 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-10-15', '19:30:00'
+    SELECT 1, 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-10-15', '19:30:00'
     UNION ALL
-    SELECT 3, 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-11-19', '19:30:00'
+    SELECT 1, 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-11-19', '19:30:00'
+    UNION ALL
+    SELECT 1, 'Recuperação', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-12-02', '19:30:00'
+    UNION ALL
+    SELECT 1, 'Recuperação', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-12-03', '19:30:00'
+    UNION ALL
+    SELECT 3, 'Recuperação', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-12-04', '19:30:00'
 ) AS v
-JOIN prova p
-  ON p.nome_prova = v.nome_prova
- AND p.email_professor = v.email_professor
- AND p.nome_disciplina = v.nome_disciplina;
- 
- 
- -- ========== ALUNOS CONVOCADOS PARA CADA APLICAÇÃO ==========
+JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_professor AND p.nome_disciplina = v.nome_disciplina;
+
+-- ========== ALUNOS CONVOCADOS PARA CADA APLICAÇÃO ==========
+-- Provas 1 e 2: a turma inteira
 INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
 SELECT pt.id_aplicacao, pt.id_turma, pe.RA
 FROM prova_turma pt
-JOIN pertence pe ON pe.id_turma = pt.id_turma;
- 
- 
+JOIN prova p ON p.prova_id = pt.prova_id
+JOIN pertence pe ON pe.id_turma = pt.id_turma
+WHERE p.nome_prova <> 'Recuperação';
+
+-- Recuperação: só alguns alunos da turma
+-- Inglês I (turma 1): claudia.barbosa@aluno.fatec.com, alexandre.assis@aluno.fatec.com, daiane.teixeira@aluno.fatec.com
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, a.RA
+FROM prova_turma pt
+JOIN prova p ON p.prova_id = pt.prova_id
+JOIN aluno a ON a.email IN ('claudia.barbosa@aluno.fatec.com', 'alexandre.assis@aluno.fatec.com', 'daiane.teixeira@aluno.fatec.com')
+JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
+WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'teresinha.fatima@prof.fatec.com' AND p.nome_disciplina = 'Inglês I';
+
+-- Engenharia de Software I (turma 1): alexandre.assis@aluno.fatec.com, marco.carvalho@aluno.fatec.com
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, a.RA
+FROM prova_turma pt
+JOIN prova p ON p.prova_id = pt.prova_id
+JOIN aluno a ON a.email IN ('alexandre.assis@aluno.fatec.com', 'marco.carvalho@aluno.fatec.com')
+JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
+WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'giuliano.bertoti@prof.fatec.com' AND p.nome_disciplina = 'Engenharia de Software I';
+
+-- Análise e desenvolvimento de Banco de Dados III (turma 3): david.matos@aluno.fatec.com, larissa.garcia@aluno.fatec.com, alessandra.braga@aluno.fatec.com
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, a.RA
+FROM prova_turma pt
+JOIN prova p ON p.prova_id = pt.prova_id
+JOIN aluno a ON a.email IN ('david.matos@aluno.fatec.com', 'larissa.garcia@aluno.fatec.com', 'alessandra.braga@aluno.fatec.com')
+JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
+WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'emanuel.mineda@prof.fatec.com' AND p.nome_disciplina = 'Análise e desenvolvimento de Banco de Dados III';
+
+
+-- ========== PROVAS DA ADRIANA (Desenvolvimento Web I) E DO FABIANO (Sistemas Operacionais I) ==========
+
+-- QUESTÕES
+INSERT INTO questao (enunciado, tema, tipo, dificuldade, email_professor, nome_disciplina) VALUES
+-- Fabiano (Sistemas Operacionais I)
+('Qual é a principal função do kernel em um sistema operacional?', 'Conceitos de SO', 'alt', 'Fácil', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
+('Explique a diferença entre processo e thread.', 'Processos e threads', 'diss', 'Média', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
+('Relacione cada comando do Linux à sua função.', 'Linha de comando Linux', 'rela', 'Média', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
+-- Adriana (Desenvolvimento Web I)
+('Qual tag HTML define o título principal de uma página?', 'Estrutura HTML', 'alt', 'Fácil', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I'),
+('Explique a diferença entre HTML e CSS.', 'Fundamentos da web', 'diss', 'Média', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I'),
+('Relacione cada tecnologia web à sua função.', 'Fundamentos da web', 'rela', 'Média', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I');
+
+-- RESPOSTAS (rela: texto = item | conceito = par correto)
+INSERT INTO resposta (enunciado, tipo, texto, correta, conceito) VALUES
+-- Fabiano
+('Qual é a principal função do kernel em um sistema operacional?', 'alt', 'Gerenciar os recursos de hardware e os processos', 1, NULL),
+('Qual é a principal função do kernel em um sistema operacional?', 'alt', 'Editar documentos de texto', 0, NULL),
+('Qual é a principal função do kernel em um sistema operacional?', 'alt', 'Navegar na internet', 0, NULL),
+('Qual é a principal função do kernel em um sistema operacional?', 'alt', 'Compilar programas em linguagem C', 0, NULL),
+('Explique a diferença entre processo e thread.', 'diss', 'Processo tem memória própria; as threads de um processo compartilham memória e recursos.', NULL, NULL),
+('Relacione cada comando do Linux à sua função.', 'rela', 'ls', NULL, 'Lista arquivos e diretórios'),
+('Relacione cada comando do Linux à sua função.', 'rela', 'cd', NULL, 'Muda de diretório'),
+('Relacione cada comando do Linux à sua função.', 'rela', 'mkdir', NULL, 'Cria um diretório'),
+('Relacione cada comando do Linux à sua função.', 'rela', 'rm', NULL, 'Remove arquivos'),
+-- Adriana
+('Qual tag HTML define o título principal de uma página?', 'alt', '<h1>', 1, NULL),
+('Qual tag HTML define o título principal de uma página?', 'alt', '<p>', 0, NULL),
+('Qual tag HTML define o título principal de uma página?', 'alt', '<div>', 0, NULL),
+('Qual tag HTML define o título principal de uma página?', 'alt', '<span>', 0, NULL),
+('Explique a diferença entre HTML e CSS.', 'diss', 'HTML define a estrutura e o conteúdo da página; CSS define a aparência e o layout.', NULL, NULL),
+('Relacione cada tecnologia web à sua função.', 'rela', 'HTML', NULL, 'Estrutura da página'),
+('Relacione cada tecnologia web à sua função.', 'rela', 'CSS', NULL, 'Estilo e layout'),
+('Relacione cada tecnologia web à sua função.', 'rela', 'JavaScript', NULL, 'Comportamento e interatividade'),
+('Relacione cada tecnologia web à sua função.', 'rela', 'HTTP', NULL, 'Protocolo de comunicação entre cliente e servidor');
+
+-- PROVAS
+INSERT INTO prova (nome_prova, dificuldade, valor, email_professor, nome_disciplina) VALUES
+('Prova 1', 'facil', 10.00, 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
+('Prova 2', 'media', 10.00, 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
+('Recuperação', 'media', 10.00, 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
+('Prova 1', 'facil', 10.00, 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I'),
+('Prova 2', 'media', 10.00, 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I'),
+('Recuperação', 'media', 10.00, 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I');
+
+-- QUESTÕES DAS PROVAS (Prova 1: alt+diss | Prova 2: alt+diss | Recuperação: alt+diss+rela)
+INSERT INTO prova_questao (prova_id, questao_id, email_professor, nome_disciplina, peso)
+SELECT p.prova_id, q.questao_id, p.email_professor, p.nome_disciplina, v.peso
+FROM (
+    SELECT 'Prova 1' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina,
+           'Qual é a principal função do kernel em um sistema operacional?' AS enunciado, 'alt' AS tipo, 4.00 AS peso
+    UNION ALL
+    SELECT 'Prova 1' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina,
+           'Explique a diferença entre processo e thread.' AS enunciado, 'diss' AS tipo, 6.00 AS peso
+    UNION ALL
+    SELECT 'Prova 2' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina,
+           'Qual é a principal função do kernel em um sistema operacional?' AS enunciado, 'alt' AS tipo, 5.00 AS peso
+    UNION ALL
+    SELECT 'Prova 2' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina,
+           'Explique a diferença entre processo e thread.' AS enunciado, 'diss' AS tipo, 5.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina,
+           'Qual é a principal função do kernel em um sistema operacional?' AS enunciado, 'alt' AS tipo, 3.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina,
+           'Explique a diferença entre processo e thread.' AS enunciado, 'diss' AS tipo, 4.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina,
+           'Relacione cada comando do Linux à sua função.' AS enunciado, 'rela' AS tipo, 3.00 AS peso
+    UNION ALL
+    SELECT 'Prova 1' AS nome_prova, 'adriana.silva@prof.fatec.com' AS email_professor, 'Desenvolvimento Web I' AS nome_disciplina,
+           'Qual tag HTML define o título principal de uma página?' AS enunciado, 'alt' AS tipo, 4.00 AS peso
+    UNION ALL
+    SELECT 'Prova 1' AS nome_prova, 'adriana.silva@prof.fatec.com' AS email_professor, 'Desenvolvimento Web I' AS nome_disciplina,
+           'Explique a diferença entre HTML e CSS.' AS enunciado, 'diss' AS tipo, 6.00 AS peso
+    UNION ALL
+    SELECT 'Prova 2' AS nome_prova, 'adriana.silva@prof.fatec.com' AS email_professor, 'Desenvolvimento Web I' AS nome_disciplina,
+           'Qual tag HTML define o título principal de uma página?' AS enunciado, 'alt' AS tipo, 5.00 AS peso
+    UNION ALL
+    SELECT 'Prova 2' AS nome_prova, 'adriana.silva@prof.fatec.com' AS email_professor, 'Desenvolvimento Web I' AS nome_disciplina,
+           'Explique a diferença entre HTML e CSS.' AS enunciado, 'diss' AS tipo, 5.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'adriana.silva@prof.fatec.com' AS email_professor, 'Desenvolvimento Web I' AS nome_disciplina,
+           'Qual tag HTML define o título principal de uma página?' AS enunciado, 'alt' AS tipo, 3.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'adriana.silva@prof.fatec.com' AS email_professor, 'Desenvolvimento Web I' AS nome_disciplina,
+           'Explique a diferença entre HTML e CSS.' AS enunciado, 'diss' AS tipo, 4.00 AS peso
+    UNION ALL
+    SELECT 'Recuperação' AS nome_prova, 'adriana.silva@prof.fatec.com' AS email_professor, 'Desenvolvimento Web I' AS nome_disciplina,
+           'Relacione cada tecnologia web à sua função.' AS enunciado, 'rela' AS tipo, 3.00 AS peso
+) AS v
+JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_professor AND p.nome_disciplina = v.nome_disciplina
+JOIN questao q ON q.enunciado = v.enunciado AND q.tipo = v.tipo;
+
+-- PROVA APLICADA À TURMA (turmas matutinas: 08:00)
+-- Fabiano: Sistemas Operacionais I = ADS 1º sem. (turma 7) | Adriana: Desenvolvimento Web I = DSM 1º sem. (turma 13)
+INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario)
+SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario
+FROM (
+    SELECT 7 AS id_turma, 'Prova 1' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina, '2026-10-16' AS data, '08:00:00' AS horario
+    UNION ALL
+    SELECT 7, 'Prova 2', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-11-20', '08:00:00'
+    UNION ALL
+    SELECT 7, 'Recuperação', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-12-07', '08:00:00'
+    UNION ALL
+    SELECT 13, 'Prova 1', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-10-19', '08:00:00'
+    UNION ALL
+    SELECT 13, 'Prova 2', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-11-23', '08:00:00'
+    UNION ALL
+    SELECT 13, 'Recuperação', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-12-08', '08:00:00'
+) AS v
+JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_professor AND p.nome_disciplina = v.nome_disciplina;
+
+-- ALUNOS CONVOCADOS
+-- Provas 1 e 2: a turma inteira
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, pe.RA
+FROM prova_turma pt
+JOIN prova p ON p.prova_id = pt.prova_id
+JOIN pertence pe ON pe.id_turma = pt.id_turma
+WHERE p.email_professor IN ('fabiano.sabha@prof.fatec.com', 'adriana.silva@prof.fatec.com') AND p.nome_prova <> 'Recuperação';
+
+-- Recuperação: só alguns alunos da turma
+-- Sistemas Operacionais I (turma 7): daniele.teixeira@aluno.fatec.com, gabriela.monteiro@aluno.fatec.com, geraldo.castro@aluno.fatec.com
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, a.RA
+FROM prova_turma pt
+JOIN prova p ON p.prova_id = pt.prova_id
+JOIN aluno a ON a.email IN ('daniele.teixeira@aluno.fatec.com', 'gabriela.monteiro@aluno.fatec.com', 'geraldo.castro@aluno.fatec.com')
+JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
+WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'fabiano.sabha@prof.fatec.com' AND p.nome_disciplina = 'Sistemas Operacionais I';
+
+-- Desenvolvimento Web I (turma 13): yasmin.alves@aluno.fatec.com, joaquim.brito@aluno.fatec.com, gabriel.carvalho@aluno.fatec.com
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, a.RA
+FROM prova_turma pt
+JOIN prova p ON p.prova_id = pt.prova_id
+JOIN aluno a ON a.email IN ('yasmin.alves@aluno.fatec.com', 'joaquim.brito@aluno.fatec.com', 'gabriel.carvalho@aluno.fatec.com')
+JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
+WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'adriana.silva@prof.fatec.com' AND p.nome_disciplina = 'Desenvolvimento Web I';
+
+
 -- ========== CONFERÊNCIA ==========
 
 SELECT * FROM usuario;
