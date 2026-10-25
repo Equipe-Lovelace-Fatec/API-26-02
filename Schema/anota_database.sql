@@ -167,6 +167,7 @@ CREATE TABLE `prova` ( -- PROVA (monta: professor 1:N | avalia: disciplina 1:N)
     PRIMARY KEY (`prova_id`),
     UNIQUE (`nome_prova`, `email_professor`, `nome_disciplina`),
     UNIQUE KEY `uq_prova_id_disciplina` (`prova_id`, `email_professor`, `nome_disciplina`),
+    UNIQUE KEY `uq_prova_id_nome` (`prova_id`, `nome_prova`, `email_professor`, `nome_disciplina`),
 
     CONSTRAINT `fk_prova_professor` FOREIGN KEY (`email_professor`)
         REFERENCES `professor` (`email`),
@@ -192,20 +193,22 @@ CREATE TABLE `prova_questao` (
 );
 
 CREATE TABLE prova_turma ( -- aplicação da prova a uma turma (qual prova, qual turma, quando)
-    id_aplicacao    BIGINT       NOT NULL AUTO_INCREMENT,
     prova_id        BIGINT       NOT NULL,
     id_turma        BIGINT       NOT NULL,
+    nome_prova      VARCHAR(100) NOT NULL,
     email_professor VARCHAR(150) NOT NULL,
     nome_disciplina VARCHAR(100) NOT NULL,
     data            DATE         NOT NULL,
     horario         TIME         NOT NULL,
 
-    PRIMARY KEY (id_aplicacao),
-    UNIQUE (id_turma, prova_id, data, horario),
-    UNIQUE (id_aplicacao, id_turma),
+    PRIMARY KEY (id_turma, prova_id, email_professor, nome_disciplina, data, horario),
 
-    CONSTRAINT fk_pt_prova FOREIGN KEY (prova_id, email_professor, nome_disciplina)
-        REFERENCES prova (prova_id, email_professor, nome_disciplina),
+    -- prova_id, nome_prova, professor e disciplina têm que ser da MESMA prova
+    CONSTRAINT fk_pt_prova FOREIGN KEY (prova_id, nome_prova, email_professor, nome_disciplina)
+        REFERENCES prova (prova_id, nome_prova, email_professor, nome_disciplina),
+
+    CONSTRAINT fk_pt_turma FOREIGN KEY (id_turma)
+        REFERENCES turma (id_turma),
 
     -- garante que a disciplina da prova faz parte da turma
     CONSTRAINT fk_pt_turma_disciplina FOREIGN KEY (id_turma, nome_disciplina)
@@ -213,16 +216,22 @@ CREATE TABLE prova_turma ( -- aplicação da prova a uma turma (qual prova, qual
 );
 
 CREATE TABLE prova_aluno ( -- alunos convocados para a aplicação (turma toda ou só alguns, ex.: recuperação)
-    id_aplicacao BIGINT      NOT NULL,
-    id_turma     BIGINT      NOT NULL,
-    RA           VARCHAR(20) NOT NULL,
+    prova_id        BIGINT       NOT NULL,
+    id_turma        BIGINT       NOT NULL,
+    email_professor VARCHAR(150) NOT NULL,
+    nome_disciplina VARCHAR(100) NOT NULL,
+    data            DATE         NOT NULL,
+    horario         TIME         NOT NULL,
+    RA              VARCHAR(20)  NOT NULL,
 
-    PRIMARY KEY (id_aplicacao, RA),
+    PRIMARY KEY (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA),
 
-    CONSTRAINT fk_pa_aplicacao FOREIGN KEY (id_aplicacao, id_turma)
-        REFERENCES prova_turma (id_aplicacao, id_turma),
+    -- a aplicação existe (prova + turma + data + horário)
+    CONSTRAINT fk_pa_prova_turma FOREIGN KEY (id_turma, prova_id, email_professor, nome_disciplina, data, horario)
+        REFERENCES prova_turma (id_turma, prova_id, email_professor, nome_disciplina, data, horario)
+        ON DELETE CASCADE,
 
-    -- garante que o aluno pertence à turma da aplicação
+    -- o aluno pertence à turma da aplicação
     CONSTRAINT fk_pa_pertence FOREIGN KEY (RA, id_turma)
         REFERENCES pertence (RA, id_turma)
 );
