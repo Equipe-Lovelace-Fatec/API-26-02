@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
@@ -21,16 +23,16 @@ import java.util.function.DoubleConsumer;
 public class AlunoController {
 
     @FXML
-    private Button bt_alunos;
+    private MenuButton btnQuestoes, btnProva, btnAlunos;
+    @FXML
+    private MenuItem btquestoes_criar, btquestoes_consultar;
+    @FXML
+    private MenuItem btprova_montar, btprova_agendar;
+    @FXML
+    private MenuItem btalunos_notas, btalunos_corrigir;
 
     @FXML
     private Button bt_menu_ant;
-
-    @FXML
-    private Button bt_prova;
-
-    @FXML
-    private Button bt_questoes;
 
     @FXML
     private Button bt_salva;
@@ -281,12 +283,7 @@ public class AlunoController {
         System.out.println("Nota 3: " + aluno.getNota3());
         System.out.println("Total: " + total);
 
-        // Quando tiver BD, aqui entra o INSERT/UPDATE.
-    }
 
-    @FXML
-    void vaialunos(ActionEvent event) {
-        // Já estamos na tela de alunos, não faz nada.
     }
 
     @FXML
@@ -301,6 +298,7 @@ public class AlunoController {
     @FXML
     void vainota3(ActionEvent event) {
     }
+
     private void validarEAtualizar(TextField campo, double max, DoubleConsumer setter) {
         String texto = campo.getText().trim();
         if (texto.isEmpty() || texto.equals("-") || texto.equals(".") || texto.equals(",")) {
@@ -340,17 +338,37 @@ public class AlunoController {
     }
 
     @FXML
-    void vaiprova(ActionEvent event) throws IOException {
+    void vaitelaescolheralunos(ActionEvent event) {
+
+    }
+
+    @FXML
+    void irQuestao_criar(ActionEvent event) throws IOException {
+        App.setRoot("CadastroQuestoes");
+    }
+
+    @FXML
+    void irQuestao_consultar(ActionEvent event) throws IOException {
+        App.setRoot("VisualizarQuestao");
+    }
+
+    @FXML
+    void irProva_montar(ActionEvent event) throws IOException {
         App.setRoot("montagem");
     }
 
     @FXML
-    void vaiquestao(ActionEvent event) {
-        /*    trocar tela */
+    void irProva_agendar(ActionEvent event) throws IOException {
+        App.setRoot("SelecaoProva");
     }
 
     @FXML
-    void vaitelaescolheralunos(ActionEvent event) {
-        /*    trocar tela */
+    void irAlunos_notas(ActionEvent event) {
+
+    }
+
+    @FXML
+    void irAlunos_corrigir(ActionEvent event) throws IOException {
+        App.setRoot("Aluno");
     }
 }

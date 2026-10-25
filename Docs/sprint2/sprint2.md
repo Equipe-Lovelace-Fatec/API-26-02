@@ -9,10 +9,10 @@ Melhorias das telas criadas na sprint 1, criação do banco de dados do programa
 
 | Rank | Prioridade | User Story | Sprint | Estimativa | Status |
 |------|------------|------------|--------|------------|--------|
-| 1 | Alta | Como professor, quero gerenciar questões e respostas para ter um portfólio do meu material usado em avaliações. | 1 e 2 | 8 | ⏳ |
-| 2 | Alta | Como professor, quero manter um histórico de quando utilizei uma questão para evitar repetição excessiva de conteúdo. | 1 e 2 | 8 | ⏳ |
-| 3 | Alta | Como professor, quero selecionar e organizar questões para montar as provas e centralizar o processo de avaliação. | 1 e 2 | 8 | ⏳ |
-| 4 | Média | Como professor, quero aplicar provas com data e hora definidas para que todos os alunos da turma realizem a prova no mesmo período. | 1 e 2 | 5 | ⏳ |
+| 1 | Alta | Como professor, quero gerenciar questões e respostas para ter um portfólio do meu material usado em avaliações. | 1 e 2 | 8 | ✅ |
+| 2 | Alta | Como professor, quero manter um histórico de quando utilizei uma questão para evitar repetição excessiva de conteúdo. | 1 e 2 | 8 | ✅ |
+| 3 | Alta | Como professor, quero selecionar e organizar questões para montar as provas e centralizar o processo de avaliação. | 1 e 2 | 8 | ✅ |
+| 4 | Média | Como professor, quero aplicar provas com data e hora definidas para que todos os alunos da turma realizem a prova no mesmo período. | 1 e 2 | 5 | ✅ |
 ----
 
 ## 📑 Backlog Sprint 2

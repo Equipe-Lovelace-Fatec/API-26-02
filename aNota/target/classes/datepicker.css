@@ -1,0 +1,27 @@
+.date-picker > .arrow-button {
+    -fx-background-color: transparent !important;
+    -fx-background-insets: 0 !important;
+    -fx-background-radius: 0 !important;
+    -fx-border-color: transparent !important;
+    -fx-border-width: 0 !important;
+    -fx-padding: 0 !important;
+    -fx-effect: none !important;
+    -fx-pref-width: 25px !important;
+    -fx-min-width: 25px !important;
+    -fx-max-width: 25px !important;
+}
+
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: transparent !important;
+    -fx-pref-width: 25px !important;
+    -fx-min-width: 25px !important;
+    -fx-max-width: 25px !important;
+}
+
+.date-picker > .arrow-button:hover,
+.date-picker > .arrow-button:pressed,
+.date-picker > .arrow-button:focused,
+.date-picker > .arrow-button:armed {
+    -fx-background-color: transparent !important;
+    -fx-background-insets: 0 !important;
+}

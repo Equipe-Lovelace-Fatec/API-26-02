@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fitToWidth="true" prefHeight="800.0" prefWidth="1350.0" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.AgendamentoController">
+<content>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1350.0">
+   <children>
+      <ImageView fx:id="img_fundoverde1350x1080" fitHeight="1082.0" fitWidth="1352.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../telas.png/fundoverde1350x1080.jpg.jpeg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="img_menu_elaboradas" fitHeight="207.0" fitWidth="1352.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../telas.png/Menu.agendamento.png" />
+         </image>
+      </ImageView>
+      <MenuButton fx:id="btnQuestoes" layoutX="378.0" layoutY="41.0" mnemonicParsing="false" onAction="#irQuestao" prefHeight="39.0" prefWidth="187.0" snapToPixel="false" style="-fx-background-color: transparent;">
+         <items>
+            <MenuItem fx:id="btquestoes_criar" mnemonicParsing="false" onAction="#IrQuestao_criar" text="Criar" />
+            <MenuItem fx:id="btquestoes_consultar" mnemonicParsing="false" onAction="#irQuestao_consultar" text="Consultar" />
+         </items>
+      </MenuButton>
+      <MenuButton fx:id="btnProva" layoutX="752.0" layoutY="41.0" mnemonicParsing="false" onAction="#irProva" prefHeight="39.0" prefWidth="175.0" style="-fx-background-color: transparent;">
+         <items>
+            <MenuItem fx:id="btProva_montar" mnemonicParsing="false" onAction="#IrProva_montar" text="Montar" />
+            <MenuItem fx:id="btProva_agendar" mnemonicParsing="false" onAction="#irProva_agendar" text="Agendar" />
+         </items>
+      </MenuButton>
+      <MenuButton fx:id="btnAlunos" layoutX="1119.0" layoutY="43.0" mnemonicParsing="false" onAction="#irAlunos" prefHeight="39.0" prefWidth="175.0" style="-fx-background-color: transparent;">
+         <items>
+            <MenuItem fx:id="btalunos_notas" mnemonicParsing="false" onAction="#irAlunos_notas" text="Notas" />
+            <MenuItem fx:id="btalunos_corrigir" mnemonicParsing="false" onAction="#irAlunos_corrigir" text="Corrigir" />
+         </items>
+      </MenuButton>
+      <Pane fx:id="pane_principal" layoutX="75.0" layoutY="274.0" prefHeight="695.0" prefWidth="1200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-border-color: #ffffff; -fx-border-radius: 10;">
+         <children>
+            <ImageView fx:id="img_tela_elaboradas" fitHeight="684.0" fitWidth="1200.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../telas.png/AGENDAMENTO.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="bt_confirmar" layoutX="769.0" layoutY="558.0" mnemonicParsing="false" onAction="#salva_agendamento" opacity="0.0" prefHeight="60.0" prefWidth="270.0" text="Button" />
+            <ChoiceBox fx:id="choice_box_disciplina" layoutX="162.0" layoutY="172.0" prefHeight="42.0" prefWidth="330.0" style="-fx-background-radius: 10; -fx-background-color: transparent;" />
+            <ChoiceBox fx:id="choice_box_turma" layoutX="162.0" layoutY="283.0" prefHeight="42.0" prefWidth="330.0" style="-fx-background-radius: 10; -fx-background-color: transparent;" />
+            <MenuButton fx:id="menu_alunos" layoutX="173.0" layoutY="383.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="321.0" style="-fx-background-radius: 10; -fx-background-color: transparent;">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <DatePicker fx:id="date_picker" cacheHint="SPEED" layoutX="168.0" layoutY="486.0" onAction="#escolhe_data_prova" prefHeight="40.0" prefWidth="321.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../../telas.png/datepicker.css">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </DatePicker>
+            <ChoiceBox fx:id="choice_box_hora" layoutX="162.0" layoutY="594.0" prefHeight="42.0" prefWidth="330.0" style="-fx-background-radius: 10; -fx-background-color: transparent;" />
+            <Label fx:id="titulo_pagina_nome_prova_selecionada" layoutX="536.0" layoutY="23.0" text="Prova 1" textFill="#005c6d">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="nome_prova_selecionada" layoutX="855.0" layoutY="270.0" prefHeight="32.0" prefWidth="251.0" text="Prova 1" wrapText="true">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="nome_disciplina_selecionada" layoutX="855.0" layoutY="298.0" prefHeight="32.0" prefWidth="251.0" text="Disciplina 1" wrapText="true">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="nome_turma_selecionada" layoutX="855.0" layoutY="328.0" prefHeight="32.0" prefWidth="251.0" text="Turma 1" wrapText="true">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="nome_alunos_selecionados" layoutX="855.0" layoutY="358.0" prefHeight="32.0" prefWidth="251.0" text="Todos" wrapText="true">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="nome_data_selecionada" layoutX="855.0" layoutY="386.0" prefHeight="32.0" prefWidth="251.0" text="14/11/2026" wrapText="true">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="nome_hora_selecionada" layoutX="855.0" layoutY="414.0" prefHeight="32.0" prefWidth="251.0" text="19:35" wrapText="true">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
+</content>
+</ScrollPane>
