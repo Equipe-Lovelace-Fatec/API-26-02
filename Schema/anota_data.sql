@@ -996,8 +996,8 @@ JOIN questao q ON q.enunciado = v.enunciado AND q.tipo = v.tipo;
 -- ========= PROVA aplicada TURMA =============
 -- Provas 1 e 2 e recuperação, cada uma na turma do semestre da disciplina:
 -- Inglês I e Eng. de Software I = BD 1º sem. (turma 1) | Análise e Desenv. de BD III = BD 3º sem. (turma 3)
-INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario)
-SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario
+INSERT INTO prova_turma (prova_id, id_turma, nome_prova, email_professor, nome_disciplina, data, horario)
+SELECT p.prova_id, v.id_turma, p.nome_prova, p.email_professor, p.nome_disciplina, v.data, v.horario
 FROM (
     SELECT 1 AS id_turma, 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina, '2026-09-18' AS data, '19:30:00' AS horario
     UNION ALL
@@ -1021,8 +1021,8 @@ JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_prof
 
 -- ========== ALUNOS CONVOCADOS PARA CADA APLICAÇÃO ==========
 -- Provas 1 e 2: a turma inteira
-INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
-SELECT pt.id_aplicacao, pt.id_turma, pe.RA
+INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
+SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, pe.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN pertence pe ON pe.id_turma = pt.id_turma
@@ -1030,8 +1030,8 @@ WHERE p.nome_prova <> 'Recuperação';
 
 -- Recuperação: só alguns alunos da turma
 -- Inglês I (turma 1): claudia.barbosa@aluno.fatec.com, alexandre.assis@aluno.fatec.com, daiane.teixeira@aluno.fatec.com
-INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
-SELECT pt.id_aplicacao, pt.id_turma, a.RA
+INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
+SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, a.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN aluno a ON a.email IN ('claudia.barbosa@aluno.fatec.com', 'alexandre.assis@aluno.fatec.com', 'daiane.teixeira@aluno.fatec.com')
@@ -1039,8 +1039,8 @@ JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
 WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'teresinha.fatima@prof.fatec.com' AND p.nome_disciplina = 'Inglês I';
 
 -- Engenharia de Software I (turma 1): alexandre.assis@aluno.fatec.com, marco.carvalho@aluno.fatec.com
-INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
-SELECT pt.id_aplicacao, pt.id_turma, a.RA
+INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
+SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, a.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN aluno a ON a.email IN ('alexandre.assis@aluno.fatec.com', 'marco.carvalho@aluno.fatec.com')
@@ -1048,8 +1048,8 @@ JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
 WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'giuliano.bertoti@prof.fatec.com' AND p.nome_disciplina = 'Engenharia de Software I';
 
 -- Análise e desenvolvimento de Banco de Dados III (turma 3): david.matos@aluno.fatec.com, larissa.garcia@aluno.fatec.com, alessandra.braga@aluno.fatec.com
-INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
-SELECT pt.id_aplicacao, pt.id_turma, a.RA
+INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
+SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, a.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN aluno a ON a.email IN ('david.matos@aluno.fatec.com', 'larissa.garcia@aluno.fatec.com', 'alessandra.braga@aluno.fatec.com')
@@ -1153,8 +1153,8 @@ JOIN questao q ON q.enunciado = v.enunciado AND q.tipo = v.tipo;
 
 -- PROVA APLICADA À TURMA (turmas matutinas: 08:00)
 -- Fabiano: Sistemas Operacionais I = ADS 1º sem. (turma 7) | Adriana: Desenvolvimento Web I = DSM 1º sem. (turma 13)
-INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario)
-SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario
+INSERT INTO prova_turma (prova_id, id_turma, nome_prova, email_professor, nome_disciplina, data, horario)
+SELECT p.prova_id, v.id_turma, p.nome_prova, p.email_professor, p.nome_disciplina, v.data, v.horario
 FROM (
     SELECT 7 AS id_turma, 'Prova 1' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina, '2026-10-16' AS data, '08:00:00' AS horario
     UNION ALL
@@ -1172,8 +1172,8 @@ JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_prof
 
 -- ALUNOS CONVOCADOS
 -- Provas 1 e 2: a turma inteira
-INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
-SELECT pt.id_aplicacao, pt.id_turma, pe.RA
+INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
+SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, pe.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN pertence pe ON pe.id_turma = pt.id_turma
@@ -1181,8 +1181,8 @@ WHERE p.email_professor IN ('fabiano.sabha@prof.fatec.com', 'adriana.silva@prof.
 
 -- Recuperação: só alguns alunos da turma
 -- Sistemas Operacionais I (turma 7): daniele.teixeira@aluno.fatec.com, gabriela.monteiro@aluno.fatec.com, geraldo.castro@aluno.fatec.com
-INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
-SELECT pt.id_aplicacao, pt.id_turma, a.RA
+INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
+SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, a.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN aluno a ON a.email IN ('daniele.teixeira@aluno.fatec.com', 'gabriela.monteiro@aluno.fatec.com', 'geraldo.castro@aluno.fatec.com')
@@ -1190,8 +1190,8 @@ JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
 WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'fabiano.sabha@prof.fatec.com' AND p.nome_disciplina = 'Sistemas Operacionais I';
 
 -- Desenvolvimento Web I (turma 13): yasmin.alves@aluno.fatec.com, joaquim.brito@aluno.fatec.com, gabriel.carvalho@aluno.fatec.com
-INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
-SELECT pt.id_aplicacao, pt.id_turma, a.RA
+INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
+SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, a.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN aluno a ON a.email IN ('yasmin.alves@aluno.fatec.com', 'joaquim.brito@aluno.fatec.com', 'gabriel.carvalho@aluno.fatec.com')
@@ -1212,7 +1212,6 @@ SELECT * FROM ministra;
 SELECT * FROM curso_disciplina;
 SELECT * FROM turma_disciplina;
 SELECT * FROM pertence;
- 
  
 SELECT * FROM questao;
 SELECT * FROM resposta;
