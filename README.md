@@ -32,8 +32,8 @@ O processo atual de gestão de avaliações impõe uma rotina operacional exaust
 | 5 | Média | Como professor, quero divulgar o gabarito da avaliação para que o aluno possa consultar. | 1 e 3 | 2 | ⬜ | 
 | 6 | Média | Como professor, quero que as provas sejam pré-corrigidas para evitar repetições desnecessárias. | 1 e 3 | 5 | ⬜ | 
 | 7 | Média | Como professor, desejo que as alternativas das respostas de múltipla escolha e associação sejam embaralhadas para evitar o compartilhamento de respostas entre os alunos. | 1 e 3 | 5 | ⬜ | 
-| 8 | Baixa | Como professor, quero filtrar as minhas questões por matéria, nível de dificuldade e tipo de pergunta para que eu encontre o meu material com mais facilidade. | 1 e 3 | 8 | ⬜ | 
-| 9 | Baixa | Como professor, quero acessar o material de outros professores para analisar o nível de avaliação de outros cursos e disciplinas. | 1 e 3 | 3 | ⬜ | 
+| 8 | Baixa | Como professor, quero filtrar as minhas questões por matéria, nível de dificuldade e tipo de pergunta para que eu encontre o meu material com mais facilidade. | 1 e 3 | 8 | ✅ | 
+| 9 | Baixa | Como professor, quero acessar o material de outros professores para analisar o nível de avaliação de outros cursos e disciplinas. | 1 e 3 | 3 | ✅ | 
 | 10 | Baixa | Como professor, quero cadastrar o peso das avaliações para facilitar o cálculo da média final. | 1 e 3 | 2 | ⬜ | 
 | 11 | Baixa | Como aluno, quero ter acesso ao gabarito da avaliação para avaliar meu desempenho. | 1 e 3 | 2 | ⬜ | 
 | 12 | Baixa | Como aluno, quero ver a minha média final para acompanhar meu desempenho ao longo do semestre. | 1 e 3 | 2 | ⬜ | 
