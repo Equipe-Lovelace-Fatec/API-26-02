@@ -19,7 +19,7 @@ Melhorias das telas criadas na sprint 1, criação do banco de dados do programa
 
 | | |
 |---|---|
-| Capacidade estimada da Equipe para a sprint | * Story Points <br> (ainda não temos estimativa) |
+| Capacidade estimada da Equipe para a sprint | 29 Story Points |
 | Meta da Sprint | US de rank 1, 2 e 3 (total de 24 Story Points) |
 | Previsão da Sprint (extra, sem compromisso de entrega) | US de rank 4 (5 Story Points) |
 ----

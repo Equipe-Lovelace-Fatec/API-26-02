@@ -118,7 +118,7 @@ public class LoginController {
 
     private void abrirTelaPrincipal() {
         try {
-            App.abrirTela("CadastroQuestoes", "aNota", 1350, 1500);
+            App.abrirTela("VisualizarQuestao", "aNota", 1350, 1500);
         } catch (IOException e) {
             e.printStackTrace();
             lbl_erro.setText("Erro ao abrir a tela principal.");
