@@ -841,59 +841,56 @@ INSERT INTO pertence (RA, id_turma, nome_curso) VALUES
 ('1484042211', 18, 'Desenvolvimento de Software Multiplataforma');
 
 -- ========== QUESTÕES ==========
-INSERT INTO questao (enunciado, tema, tipo, dificuldade, email_professor, nome_disciplina) VALUES
--- Teresinha (Inglês I)
-('Qual é o plural correto de "child" em inglês?', 'Plural de substantivos', 'alt', 'Fácil', 'teresinha.fatima@prof.fatec.com', 'Inglês I'),
-('Escreva em inglês uma frase se apresentando com nome, idade e profissão.', 'Apresentação pessoal', 'diss', 'Média', 'teresinha.fatima@prof.fatec.com', 'Inglês I'),
-('Relacione cada palavra em inglês à sua tradução em português.', 'Vocabulário básico', 'rela', 'Fácil', 'teresinha.fatima@prof.fatec.com', 'Inglês I'),
--- Emanuel (Análise e desenvolvimento de BD III)
-('Qual forma normal exige que não haja dependências parciais da chave primária?', 'Normalização', 'alt', 'Média', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III'),
-('Explique a diferença entre chave primária e chave estrangeira.', 'Chaves e integridade', 'diss', 'Média', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III'),
-('Relacione cada comando SQL à sua categoria.', 'Linguagem SQL', 'rela', 'Média', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III'),
--- Giuliano (Eng. de Software I)
-('Qual metodologia ágil organiza o trabalho em sprints?', 'Metodologias ágeis', 'alt', 'Fácil', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I'),
-('Cite duas diferenças entre requisitos funcionais e não funcionais.', 'Requisitos de software', 'diss', 'Média', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I'),
-('Relacione cada papel do Scrum à sua responsabilidade.', 'Metodologias ágeis', 'rela', 'Média', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I');
+INSERT INTO questao (questao_id, enunciado, tema, tipo, dificuldade, email_professor, nome_disciplina) VALUES
+(1, 'Qual é o plural correto de "child" em inglês?', 'Plural de substantivos', 'alt', 'Fácil', 'teresinha.fatima@prof.fatec.com', 'Inglês I'),
+(2, 'Escreva em inglês uma frase se apresentando com nome, idade e profissão.', 'Apresentação pessoal', 'diss', 'Média', 'teresinha.fatima@prof.fatec.com', 'Inglês I'),
+(3, 'Relacione cada palavra em inglês à sua tradução em português.', 'Vocabulário básico', 'rela', 'Fácil', 'teresinha.fatima@prof.fatec.com', 'Inglês I'),
+(4, 'Qual forma normal exige que não haja dependências parciais da chave primária?', 'Normalização', 'alt', 'Média', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III'),
+(5, 'Explique a diferença entre chave primária e chave estrangeira.', 'Chaves e integridade', 'diss', 'Média', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III'),
+(6, 'Relacione cada comando SQL à sua categoria.', 'Linguagem SQL', 'rela', 'Média', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III'),
+(7, 'Qual metodologia ágil organiza o trabalho em sprints?', 'Metodologias ágeis', 'alt', 'Fácil', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I'),
+(8, 'Cite duas diferenças entre requisitos funcionais e não funcionais.', 'Requisitos de software', 'diss', 'Média', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I'),
+(9, 'Relacione cada papel do Scrum à sua responsabilidade.', 'Metodologias ágeis', 'rela', 'Média', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I');
 
 -- ========== RESPOSTAS ==========
-INSERT INTO resposta (enunciado, tipo, texto, correta, conceito) VALUES
--- Teresinha: alternativa
-('Qual é o plural correto de "child" em inglês?', 'alt', 'children', 1, NULL),
-('Qual é o plural correto de "child" em inglês?', 'alt', 'childs', 0, NULL),
-('Qual é o plural correto de "child" em inglês?', 'alt', 'childrens', 0, NULL),
-('Qual é o plural correto de "child" em inglês?', 'alt', 'childes', 0, NULL),
--- Teresinha: dissertativa
-('Escreva em inglês uma frase se apresentando com nome, idade e profissão.', 'diss', 'My name is Ana, I am 25 years old and I am a student.', NULL, NULL),
--- Teresinha: relacional (texto = item | conceito = par correto)
-('Relacione cada palavra em inglês à sua tradução em português.', 'rela', 'Dog', NULL, 'Cachorro'),
-('Relacione cada palavra em inglês à sua tradução em português.', 'rela', 'House', NULL, 'Casa'),
-('Relacione cada palavra em inglês à sua tradução em português.', 'rela', 'Book', NULL, 'Livro'),
-('Relacione cada palavra em inglês à sua tradução em português.', 'rela', 'Water', NULL, 'Água'),
+INSERT INTO resposta (questao_id, texto, correta, conceito) VALUES
+-- Teresinha: alternativa (questão 1)
+(1, 'children', 1, NULL),
+(1, 'childs', 0, NULL),
+(1, 'childrens', 0, NULL),
+(1, 'childes', 0, NULL),
+-- Teresinha: dissertativa (questão 2)
+(2, 'My name is Ana, I am 25 years old and I am a student.', NULL, NULL),
+-- Teresinha: relacional (questão 3) (texto = item | conceito = par correto)
+(3, 'Dog', NULL, 'Cachorro'),
+(3, 'House', NULL, 'Casa'),
+(3, 'Book', NULL, 'Livro'),
+(3, 'Water', NULL, 'Água'),
 
--- Emanuel: alternativa
-('Qual forma normal exige que não haja dependências parciais da chave primária?', 'alt', 'Segunda Forma Normal (2FN)', 1, NULL),
-('Qual forma normal exige que não haja dependências parciais da chave primária?', 'alt', 'Primeira Forma Normal (1FN)', 0, NULL),
-('Qual forma normal exige que não haja dependências parciais da chave primária?', 'alt', 'Terceira Forma Normal (3FN)', 0, NULL),
-('Qual forma normal exige que não haja dependências parciais da chave primária?', 'alt', 'Forma Normal de Boyce-Codd (BCNF)', 0, NULL),
--- Emanuel: dissertativa
-('Explique a diferença entre chave primária e chave estrangeira.', 'diss', 'A PK identifica cada registro; a FK referencia a PK de outra tabela e garante integridade.', NULL, NULL),
--- Emanuel: relacional
-('Relacione cada comando SQL à sua categoria.', 'rela', 'CREATE TABLE', NULL, 'DDL'),
-('Relacione cada comando SQL à sua categoria.', 'rela', 'INSERT', NULL, 'DML'),
-('Relacione cada comando SQL à sua categoria.', 'rela', 'GRANT', NULL, 'DCL'),
-('Relacione cada comando SQL à sua categoria.', 'rela', 'COMMIT', NULL, 'TCL'),
+-- Emanuel: alternativa (questão 4)
+(4, 'Segunda Forma Normal (2FN)', 1, NULL),
+(4, 'Primeira Forma Normal (1FN)', 0, NULL),
+(4, 'Terceira Forma Normal (3FN)', 0, NULL),
+(4, 'Forma Normal de Boyce-Codd (BCNF)', 0, NULL),
+-- Emanuel: dissertativa (questão 5)
+(5, 'A PK identifica cada registro; a FK referencia a PK de outra tabela e garante integridade.', NULL, NULL),
+-- Emanuel: relacional (questão 6)
+(6, 'CREATE TABLE', NULL, 'DDL'),
+(6, 'INSERT', NULL, 'DML'),
+(6, 'GRANT', NULL, 'DCL'),
+(6, 'COMMIT', NULL, 'TCL'),
 
--- Giuliano: alternativa
-('Qual metodologia ágil organiza o trabalho em sprints?', 'alt', 'Scrum', 1, NULL),
-('Qual metodologia ágil organiza o trabalho em sprints?', 'alt', 'Cascata', 0, NULL),
-('Qual metodologia ágil organiza o trabalho em sprints?', 'alt', 'Modelo em V', 0, NULL),
-('Qual metodologia ágil organiza o trabalho em sprints?', 'alt', 'Espiral', 0, NULL),
--- Giuliano: dissertativa
-('Cite duas diferenças entre requisitos funcionais e não funcionais.', 'diss', 'Funcionais descrevem o que o sistema faz; não funcionais definem qualidade, como desempenho.', NULL, NULL),
--- Giuliano: relacional
-('Relacione cada papel do Scrum à sua responsabilidade.', 'rela', 'Product Owner', NULL, 'Prioriza o backlog do produto'),
-('Relacione cada papel do Scrum à sua responsabilidade.', 'rela', 'Scrum Master', NULL, 'Facilita o processo e remove impedimentos'),
-('Relacione cada papel do Scrum à sua responsabilidade.', 'rela', 'Developers', NULL, 'Constroem o incremento do produto');
+-- Giuliano: alternativa (questão 7)
+(7, 'Scrum', 1, NULL),
+(7, 'Cascata', 0, NULL),
+(7, 'Modelo em V', 0, NULL),
+(7, 'Espiral', 0, NULL),
+-- Giuliano: dissertativa (questão 8)
+(8, 'Funcionais descrevem o que o sistema faz; não funcionais definem qualidade, como desempenho.', NULL, NULL),
+-- Giuliano: relacional (questão 9)
+(9, 'Product Owner', NULL, 'Prioriza o backlog do produto'),
+(9, 'Scrum Master', NULL, 'Facilita o processo e remove impedimentos'),
+(9, 'Developers', NULL, 'Constroem o incremento do produto');
  
 -- ========== PROVAS ==========
 INSERT INTO prova (nome_prova, dificuldade, valor, email_professor, nome_disciplina) VALUES
@@ -996,33 +993,33 @@ JOIN questao q ON q.enunciado = v.enunciado AND q.tipo = v.tipo;
 -- ========= PROVA aplicada TURMA =============
 -- Provas 1 e 2 e recuperação, cada uma na turma do semestre da disciplina:
 -- Inglês I e Eng. de Software I = BD 1º sem. (turma 1) | Análise e Desenv. de BD III = BD 3º sem. (turma 3)
-INSERT INTO prova_turma (prova_id, id_turma, nome_prova, email_professor, nome_disciplina, data, horario)
-SELECT p.prova_id, v.id_turma, p.nome_prova, p.email_professor, p.nome_disciplina, v.data, v.horario
+INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim)
+SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario, v.horario_fim
 FROM (
-    SELECT 1 AS id_turma, 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina, '2026-09-18' AS data, '19:30:00' AS horario
+    SELECT 1 AS id_turma, 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina, '2026-09-18' AS data, '19:35:00' AS horario, '21:15:00' AS horario_fim
     UNION ALL
-    SELECT 1, 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-08-20', '19:30:00'
+    SELECT 1, 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-10-20', '19:35:00', '21:15:00'
     UNION ALL
-    SELECT 3, 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-10-14', '19:30:00'
+    SELECT 3, 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-10-14', '21:25:00', '23:05:00'
     UNION ALL
-    SELECT 3, 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-11-18', '19:30:00'
+    SELECT 3, 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-11-18', '21:25:00', '23:05:00'
     UNION ALL
-    SELECT 1, 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-10-15', '19:30:00'
+    SELECT 1, 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-10-15', '19:35:00', '21:15:00'
     UNION ALL
-    SELECT 1, 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-11-19', '19:30:00'
+    SELECT 1, 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-11-19', '19:35:00', '21:10:00'
     UNION ALL
-    SELECT 1, 'Recuperação', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-12-02', '19:30:00'
+    SELECT 1, 'Recuperação', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-12-02', '19:35:00', '21:15:00'
     UNION ALL
-    SELECT 1, 'Recuperação', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-12-03', '19:30:00'
+    SELECT 1, 'Recuperação', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-12-03', '19:30:00', '21:10:00'
     UNION ALL
-    SELECT 3, 'Recuperação', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-12-04', '19:30:00'
+    SELECT 3, 'Recuperação', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-12-04', '21:30:00', '23:05:00'
 ) AS v
 JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_professor AND p.nome_disciplina = v.nome_disciplina;
 
 -- ========== ALUNOS CONVOCADOS PARA CADA APLICAÇÃO ==========
 -- Provas 1 e 2: a turma inteira
-INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
-SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, pe.RA
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, pe.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN pertence pe ON pe.id_turma = pt.id_turma
@@ -1030,8 +1027,8 @@ WHERE p.nome_prova <> 'Recuperação';
 
 -- Recuperação: só alguns alunos da turma
 -- Inglês I (turma 1): claudia.barbosa@aluno.fatec.com, alexandre.assis@aluno.fatec.com, daiane.teixeira@aluno.fatec.com
-INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
-SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, a.RA
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, a.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN aluno a ON a.email IN ('claudia.barbosa@aluno.fatec.com', 'alexandre.assis@aluno.fatec.com', 'daiane.teixeira@aluno.fatec.com')
@@ -1039,8 +1036,8 @@ JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
 WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'teresinha.fatima@prof.fatec.com' AND p.nome_disciplina = 'Inglês I';
 
 -- Engenharia de Software I (turma 1): alexandre.assis@aluno.fatec.com, marco.carvalho@aluno.fatec.com
-INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
-SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, a.RA
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, a.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN aluno a ON a.email IN ('alexandre.assis@aluno.fatec.com', 'marco.carvalho@aluno.fatec.com')
@@ -1048,8 +1045,8 @@ JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
 WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'giuliano.bertoti@prof.fatec.com' AND p.nome_disciplina = 'Engenharia de Software I';
 
 -- Análise e desenvolvimento de Banco de Dados III (turma 3): david.matos@aluno.fatec.com, larissa.garcia@aluno.fatec.com, alessandra.braga@aluno.fatec.com
-INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
-SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, a.RA
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, a.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN aluno a ON a.email IN ('david.matos@aluno.fatec.com', 'larissa.garcia@aluno.fatec.com', 'alessandra.braga@aluno.fatec.com')
@@ -1060,38 +1057,38 @@ WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'emanuel.mineda@pro
 -- ========== PROVAS DA ADRIANA (Desenvolvimento Web I) E DO FABIANO (Sistemas Operacionais I) ==========
 
 -- QUESTÕES
-INSERT INTO questao (enunciado, tema, tipo, dificuldade, email_professor, nome_disciplina) VALUES
+INSERT INTO questao (questao_id, enunciado, tema, tipo, dificuldade, email_professor, nome_disciplina) VALUES
 -- Fabiano (Sistemas Operacionais I)
-('Qual é a principal função do kernel em um sistema operacional?', 'Conceitos de SO', 'alt', 'Fácil', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
-('Explique a diferença entre processo e thread.', 'Processos e threads', 'diss', 'Média', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
-('Relacione cada comando do Linux à sua função.', 'Linha de comando Linux', 'rela', 'Média', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
+(10, 'Qual é a principal função do kernel em um sistema operacional?', 'Conceitos de SO', 'alt', 'Fácil', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
+(11, 'Explique a diferença entre processo e thread.', 'Processos e threads', 'diss', 'Média', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
+(12, 'Relacione cada comando do Linux à sua função.', 'Linha de comando Linux', 'rela', 'Média', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I'),
 -- Adriana (Desenvolvimento Web I)
-('Qual tag HTML define o título principal de uma página?', 'Estrutura HTML', 'alt', 'Fácil', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I'),
-('Explique a diferença entre HTML e CSS.', 'Fundamentos da web', 'diss', 'Média', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I'),
-('Relacione cada tecnologia web à sua função.', 'Fundamentos da web', 'rela', 'Média', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I');
+(13, 'Qual tag HTML define o título principal de uma página?', 'Estrutura HTML', 'alt', 'Fácil', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I'),
+(14, 'Explique a diferença entre HTML e CSS.', 'Fundamentos da web', 'diss', 'Média', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I'),
+(15, 'Relacione cada tecnologia web à sua função.', 'Fundamentos da web', 'rela', 'Média', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I');
 
 -- RESPOSTAS (rela: texto = item | conceito = par correto)
-INSERT INTO resposta (enunciado, tipo, texto, correta, conceito) VALUES
--- Fabiano
-('Qual é a principal função do kernel em um sistema operacional?', 'alt', 'Gerenciar os recursos de hardware e os processos', 1, NULL),
-('Qual é a principal função do kernel em um sistema operacional?', 'alt', 'Editar documentos de texto', 0, NULL),
-('Qual é a principal função do kernel em um sistema operacional?', 'alt', 'Navegar na internet', 0, NULL),
-('Qual é a principal função do kernel em um sistema operacional?', 'alt', 'Compilar programas em linguagem C', 0, NULL),
-('Explique a diferença entre processo e thread.', 'diss', 'Processo tem memória própria; as threads de um processo compartilham memória e recursos.', NULL, NULL),
-('Relacione cada comando do Linux à sua função.', 'rela', 'ls', NULL, 'Lista arquivos e diretórios'),
-('Relacione cada comando do Linux à sua função.', 'rela', 'cd', NULL, 'Muda de diretório'),
-('Relacione cada comando do Linux à sua função.', 'rela', 'mkdir', NULL, 'Cria um diretório'),
-('Relacione cada comando do Linux à sua função.', 'rela', 'rm', NULL, 'Remove arquivos'),
+INSERT INTO resposta (questao_id, texto, correta, conceito) VALUES
+-- Fabiano: 
+(10, 'Gerenciar os recursos de hardware e os processos', 1, NULL),
+(10, 'Editar documentos de texto', 0, NULL),
+(10, 'Navegar na internet', 0, NULL),
+(10, 'Compilar programas em linguagem C', 0, NULL),
+(11, 'Processo tem memória própria; as threads de um processo compartilham memória e recursos.', NULL, NULL),
+(12, 'ls', NULL, 'Lista arquivos e diretórios'),
+(12, 'cd', NULL, 'Muda de diretório'),
+(12, 'mkdir', NULL, 'Cria um diretório'),
+(12, 'rm', NULL, 'Remove arquivos'),
 -- Adriana
-('Qual tag HTML define o título principal de uma página?', 'alt', '<h1>', 1, NULL),
-('Qual tag HTML define o título principal de uma página?', 'alt', '<p>', 0, NULL),
-('Qual tag HTML define o título principal de uma página?', 'alt', '<div>', 0, NULL),
-('Qual tag HTML define o título principal de uma página?', 'alt', '<span>', 0, NULL),
-('Explique a diferença entre HTML e CSS.', 'diss', 'HTML define a estrutura e o conteúdo da página; CSS define a aparência e o layout.', NULL, NULL),
-('Relacione cada tecnologia web à sua função.', 'rela', 'HTML', NULL, 'Estrutura da página'),
-('Relacione cada tecnologia web à sua função.', 'rela', 'CSS', NULL, 'Estilo e layout'),
-('Relacione cada tecnologia web à sua função.', 'rela', 'JavaScript', NULL, 'Comportamento e interatividade'),
-('Relacione cada tecnologia web à sua função.', 'rela', 'HTTP', NULL, 'Protocolo de comunicação entre cliente e servidor');
+(13, '<h1>', 1, NULL),
+(13, '<p>', 0, NULL),
+(13, '<div>', 0, NULL),
+(13, '<span>', 0, NULL),
+(14, 'HTML define a estrutura e o conteúdo da página; CSS define a aparência e o layout.', NULL, NULL),
+(15, 'HTML', NULL, 'Estrutura da página'),
+(15, 'CSS', NULL, 'Estilo e layout'),
+(15, 'JavaScript', NULL, 'Comportamento e interatividade'),
+(15, 'HTTP', NULL, 'Protocolo de comunicação entre cliente e servidor');
 
 -- PROVAS
 INSERT INTO prova (nome_prova, dificuldade, valor, email_professor, nome_disciplina) VALUES
@@ -1153,27 +1150,27 @@ JOIN questao q ON q.enunciado = v.enunciado AND q.tipo = v.tipo;
 
 -- PROVA APLICADA À TURMA (turmas matutinas: 08:00)
 -- Fabiano: Sistemas Operacionais I = ADS 1º sem. (turma 7) | Adriana: Desenvolvimento Web I = DSM 1º sem. (turma 13)
-INSERT INTO prova_turma (prova_id, id_turma, nome_prova, email_professor, nome_disciplina, data, horario)
-SELECT p.prova_id, v.id_turma, p.nome_prova, p.email_professor, p.nome_disciplina, v.data, v.horario
+INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim)
+SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario, v.horario_fim
 FROM (
-    SELECT 7 AS id_turma, 'Prova 1' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina, '2026-10-16' AS data, '08:00:00' AS horario
+    SELECT 7 AS id_turma, 'Prova 1' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina, '2026-10-16' AS data, '08:00:00' AS horario, '09:50:00' AS horario_fim
     UNION ALL
-    SELECT 7, 'Prova 2', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-11-20', '08:00:00'
+    SELECT 7, 'Prova 2', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-11-20', '08:00:00', '09:50:00'
     UNION ALL
-    SELECT 7, 'Recuperação', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-12-07', '08:00:00'
+    SELECT 7, 'Recuperação', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-12-07', '08:00:00', '09:50:00'
     UNION ALL
-    SELECT 13, 'Prova 1', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-10-19', '08:00:00'
+    SELECT 13, 'Prova 1', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-10-19', '08:00:00', '09:50:00'
     UNION ALL
-    SELECT 13, 'Prova 2', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-11-23', '08:00:00'
+    SELECT 13, 'Prova 2', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-11-23', '08:00:00', '09:50:00'
     UNION ALL
-    SELECT 13, 'Recuperação', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-12-08', '08:00:00'
+    SELECT 13, 'Recuperação', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-12-08', '08:00:00', '09:50:00'
 ) AS v
 JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_professor AND p.nome_disciplina = v.nome_disciplina;
 
 -- ALUNOS CONVOCADOS
 -- Provas 1 e 2: a turma inteira
-INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
-SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, pe.RA
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, pe.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN pertence pe ON pe.id_turma = pt.id_turma
@@ -1181,8 +1178,8 @@ WHERE p.email_professor IN ('fabiano.sabha@prof.fatec.com', 'adriana.silva@prof.
 
 -- Recuperação: só alguns alunos da turma
 -- Sistemas Operacionais I (turma 7): daniele.teixeira@aluno.fatec.com, gabriela.monteiro@aluno.fatec.com, geraldo.castro@aluno.fatec.com
-INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
-SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, a.RA
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, a.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN aluno a ON a.email IN ('daniele.teixeira@aluno.fatec.com', 'gabriela.monteiro@aluno.fatec.com', 'geraldo.castro@aluno.fatec.com')
@@ -1190,13 +1187,168 @@ JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
 WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'fabiano.sabha@prof.fatec.com' AND p.nome_disciplina = 'Sistemas Operacionais I';
 
 -- Desenvolvimento Web I (turma 13): yasmin.alves@aluno.fatec.com, joaquim.brito@aluno.fatec.com, gabriel.carvalho@aluno.fatec.com
-INSERT INTO prova_aluno (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA)
-SELECT pt.prova_id, pt.id_turma, pt.email_professor, pt.nome_disciplina, pt.data, pt.horario, a.RA
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, a.RA
 FROM prova_turma pt
 JOIN prova p ON p.prova_id = pt.prova_id
 JOIN aluno a ON a.email IN ('yasmin.alves@aluno.fatec.com', 'joaquim.brito@aluno.fatec.com', 'gabriel.carvalho@aluno.fatec.com')
 JOIN pertence pe ON pe.RA = a.RA AND pe.id_turma = pt.id_turma
 WHERE p.nome_prova = 'Recuperação' AND p.email_professor = 'adriana.silva@prof.fatec.com' AND p.nome_disciplina = 'Desenvolvimento Web I';
+
+-- RESPOSTA ALUNOS (resposta_aluno)
+
+INSERT INTO resposta_aluno
+    (id_aplicacao, prova_id, RA, questao_id, resposta_id, texto_resposta, correta)
+
+-- QUESTÕES DE MÚLTIPLA ESCOLHA (ALT)
+
+-- Fabiano 
+SELECT
+    pt.id_aplicacao, pt.prova_id, a.RA,
+    q.questao_id, r.resposta_id, NULL, NULL
+FROM prova_turma pt
+JOIN prova p
+    ON p.prova_id = pt.prova_id
+JOIN questao q
+    ON q.enunciado = 'Qual é a principal função do kernel em um sistema operacional?'
+   AND q.tipo = 'alt'
+JOIN resposta r
+    ON r.questao_id = q.questao_id
+   AND r.texto = 'Editar documentos de texto'
+JOIN aluno a
+    ON a.email = 'daniele.teixeira@aluno.fatec.com'
+JOIN prova_aluno pa
+    ON pa.id_aplicacao = pt.id_aplicacao
+   AND pa.RA = a.RA
+WHERE p.nome_prova = 'Recuperação'
+  AND p.email_professor = 'fabiano.sabha@prof.fatec.com'
+  AND p.nome_disciplina = 'Sistemas Operacionais I'
+  AND pt.id_turma = 7
+
+UNION ALL
+
+-- Adriana 
+SELECT
+    pt.id_aplicacao, pt.prova_id, a.RA,
+    q.questao_id, r.resposta_id, NULL, NULL
+FROM prova_turma pt
+JOIN prova p
+    ON p.prova_id = pt.prova_id
+JOIN questao q
+    ON q.enunciado = 'Qual tag HTML define o título principal de uma página?'
+   AND q.tipo = 'alt'
+JOIN resposta r
+    ON r.questao_id = q.questao_id
+   AND r.texto = '<h1>'
+JOIN aluno a
+    ON a.email = 'yasmin.alves@aluno.fatec.com'
+JOIN prova_aluno pa
+    ON pa.id_aplicacao = pt.id_aplicacao
+   AND pa.RA = a.RA
+WHERE p.nome_prova = 'Recuperação'
+  AND p.email_professor = 'adriana.silva@prof.fatec.com'
+  AND p.nome_disciplina = 'Desenvolvimento Web I'
+  AND pt.id_turma = 13
+
+UNION ALL
+
+-- QUESTÕES DISSERTATIVAS (DISS)
+
+-- Fabiano 
+SELECT
+    pt.id_aplicacao, pt.prova_id, a.RA,
+    q.questao_id, NULL,
+    'Um processo possui seu próprio espaço de memória, enquanto as threads compartilham a memória e os recursos do processo.',
+    NULL
+FROM prova_turma pt
+JOIN prova p
+    ON p.prova_id = pt.prova_id
+JOIN questao q
+    ON q.enunciado = 'Explique a diferença entre processo e thread.'
+   AND q.tipo = 'diss'
+JOIN aluno a
+    ON a.email = 'daniele.teixeira@aluno.fatec.com'
+JOIN prova_aluno pa
+    ON pa.id_aplicacao = pt.id_aplicacao
+   AND pa.RA = a.RA
+WHERE p.nome_prova = 'Recuperação'
+  AND p.email_professor = 'fabiano.sabha@prof.fatec.com'
+  AND p.nome_disciplina = 'Sistemas Operacionais I'
+  AND pt.id_turma = 7
+
+UNION ALL
+
+-- Adriana 
+SELECT
+    pt.id_aplicacao, pt.prova_id, a.RA,
+    q.questao_id, NULL,
+    'HTML é utilizado para estruturar o conteúdo da página, enquanto CSS define sua aparência, cores, fontes e organização visual.',
+    NULL
+FROM prova_turma pt
+JOIN prova p
+    ON p.prova_id = pt.prova_id
+JOIN questao q
+    ON q.enunciado = 'Explique a diferença entre HTML e CSS.'
+   AND q.tipo = 'diss'
+JOIN aluno a
+    ON a.email = 'yasmin.alves@aluno.fatec.com'
+JOIN prova_aluno pa
+    ON pa.id_aplicacao = pt.id_aplicacao
+   AND pa.RA = a.RA
+WHERE p.nome_prova = 'Recuperação'
+  AND p.email_professor = 'adriana.silva@prof.fatec.com'
+  AND p.nome_disciplina = 'Desenvolvimento Web I'
+  AND pt.id_turma = 13
+
+UNION ALL
+
+-- QUESTÕES RELACIONAMENTO
+ 
+-- Fabiano 
+SELECT
+    pt.id_aplicacao, pt.prova_id, a.RA,
+    q.questao_id, NULL,
+    '[{"item":"ls","ligou":"Lista arquivos e diretórios"},{"item":"cd","ligou":"Muda de diretório"},{"item":"mkdir","ligou":"Cria um diretório"},{"item":"rm","ligou":"Remove arquivos"}]',
+    NULL
+FROM prova_turma pt
+JOIN prova p
+    ON p.prova_id = pt.prova_id
+JOIN questao q
+    ON q.enunciado = 'Relacione cada comando do Linux à sua função.'
+   AND q.tipo = 'rela'
+JOIN aluno a
+    ON a.email = 'daniele.teixeira@aluno.fatec.com'
+JOIN prova_aluno pa
+    ON pa.id_aplicacao = pt.id_aplicacao
+   AND pa.RA = a.RA
+WHERE p.nome_prova = 'Recuperação'
+  AND p.email_professor = 'fabiano.sabha@prof.fatec.com'
+  AND p.nome_disciplina = 'Sistemas Operacionais I'
+  AND pt.id_turma = 7
+
+UNION ALL
+
+-- Adriana 
+SELECT
+    pt.id_aplicacao, pt.prova_id, a.RA,
+    q.questao_id, NULL,
+    '[{"item":"HTML","ligou":"Estrutura da página"},{"item":"CSS","ligou":"Estilo e layout"},{"item":"JavaScript","ligou":"Comportamento e interatividade"},{"item":"HTTP","ligou":"Protocolo de comunicação entre cliente e servidor"}]',
+    NULL
+FROM prova_turma pt
+JOIN prova p
+    ON p.prova_id = pt.prova_id
+JOIN questao q
+    ON q.enunciado = 'Relacione cada tecnologia web à sua função.'
+   AND q.tipo = 'rela'
+JOIN aluno a
+    ON a.email = 'yasmin.alves@aluno.fatec.com'
+JOIN prova_aluno pa
+    ON pa.id_aplicacao = pt.id_aplicacao
+   AND pa.RA = a.RA
+WHERE p.nome_prova = 'Recuperação'
+  AND p.email_professor = 'adriana.silva@prof.fatec.com'
+  AND p.nome_disciplina = 'Desenvolvimento Web I'
+  AND pt.id_turma = 13;
 
 
 -- ========== CONFERÊNCIA ==========
@@ -1213,6 +1365,7 @@ SELECT * FROM curso_disciplina;
 SELECT * FROM turma_disciplina;
 SELECT * FROM pertence;
  
+ 
 SELECT * FROM questao;
 SELECT * FROM resposta;
 SELECT * FROM prova;
@@ -1220,3 +1373,4 @@ SELECT * FROM prova_aluno;
 
 SELECT * FROM prova_questao;
 SELECT * FROM prova_turma;
+SELECT * FROM resposta_aluno;
