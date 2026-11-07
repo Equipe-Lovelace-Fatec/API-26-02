@@ -142,18 +142,18 @@ CREATE TABLE `questao` ( -- QUESTÃO (cria/edita: professor 1:N | contém: disci
         REFERENCES `disciplina` (`nome_disciplina`)
 );
 
-CREATE TABLE `resposta` ( -- RESPOSTA (entidade fraca de questão: alternativas, itens e resposta esperada)
+CREATE TABLE `resposta` (
     `resposta_id` bigint auto_increment,
-    `enunciado`   varchar(100) NOT NULL,
-    `tipo`        enum('alt','rela','diss') NOT NULL,
-    `texto`       varchar(100) NOT NULL, -- DISSERTATIVA: resp. esperada / ALTERNATIVA: opções / RELACIONAMENTO: conceito
+    `questao_id`  bigint NOT NULL,
+    `texto`       varchar(100) NOT NULL, -- DISSERTATIVA: resp. esperada / ALTERNATIVA: opções / RELACIONAMENTO: item
     `correta`     boolean DEFAULT NULL,  -- ALTERNATIVA: verdadeiro ou falso / DISSERTATIVA e RELACIONAMENTO: null
-    `conceito`    varchar(100) DEFAULT NULL, -- RELACIONAMENTO: alternativa / DISSERTATIVA e ALTERNATIVA: null
+    `conceito`    varchar(100) DEFAULT NULL, -- RELACIONAMENTO: par correto / DISSERTATIVA e ALTERNATIVA: null
 
     PRIMARY KEY (`resposta_id`),
+    UNIQUE KEY `uq_resposta_questao` (`resposta_id`, `questao_id`),
 
-    CONSTRAINT `fk_resposta_questao` FOREIGN KEY (`enunciado`,`tipo`)
-        REFERENCES `questao` (`enunciado`,`tipo`) ON DELETE CASCADE
+    CONSTRAINT `fk_resposta_questao` FOREIGN KEY (`questao_id`)
+        REFERENCES `questao` (`questao_id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `prova` ( -- PROVA (monta: professor 1:N | avalia: disciplina 1:N)
@@ -167,7 +167,6 @@ CREATE TABLE `prova` ( -- PROVA (monta: professor 1:N | avalia: disciplina 1:N)
     PRIMARY KEY (`prova_id`),
     UNIQUE (`nome_prova`, `email_professor`, `nome_disciplina`),
     UNIQUE KEY `uq_prova_id_disciplina` (`prova_id`, `email_professor`, `nome_disciplina`),
-    UNIQUE KEY `uq_prova_id_nome` (`prova_id`, `nome_prova`, `email_professor`, `nome_disciplina`),
 
     CONSTRAINT `fk_prova_professor` FOREIGN KEY (`email_professor`)
         REFERENCES `professor` (`email`),
@@ -184,6 +183,7 @@ CREATE TABLE `prova_questao` (
     `peso`            decimal(5,2) NOT NULL,
 
     PRIMARY KEY (`prova_id`,`email_professor`,`nome_disciplina`,`questao_id`),
+    UNIQUE KEY `uq_pq_prova_questao` (`prova_id`, `questao_id`),   -- novo
 
     CONSTRAINT `fk_pq_prova` FOREIGN KEY (`prova_id`,`email_professor`,`nome_disciplina`)
         REFERENCES `prova` (`prova_id`,`email_professor`,`nome_disciplina`) ON DELETE CASCADE,
@@ -192,46 +192,76 @@ CREATE TABLE `prova_questao` (
         REFERENCES `questao` (`questao_id`)
 );
 
-CREATE TABLE prova_turma ( -- aplicação da prova a uma turma (qual prova, qual turma, quando)
+
+CREATE TABLE prova_turma (
+    id_aplicacao    BIGINT       NOT NULL AUTO_INCREMENT,
     prova_id        BIGINT       NOT NULL,
     id_turma        BIGINT       NOT NULL,
-    nome_prova      VARCHAR(100) NOT NULL,
     email_professor VARCHAR(150) NOT NULL,
     nome_disciplina VARCHAR(100) NOT NULL,
     data            DATE         NOT NULL,
-    horario         TIME         NOT NULL,
+    horario         TIME         NOT NULL, 
+    horario_fim     TIME         NOT NULL, 
 
-    PRIMARY KEY (id_turma, prova_id, email_professor, nome_disciplina, data, horario),
+    PRIMARY KEY (id_aplicacao),
+    UNIQUE (id_turma, prova_id, data, horario),
+    UNIQUE (id_aplicacao, id_turma),
+    UNIQUE KEY uq_pt_aplicacao_prova (id_aplicacao, prova_id),
+    CONSTRAINT ck_pt_janela CHECK (horario_fim > horario),
 
-    -- prova_id, nome_prova, professor e disciplina têm que ser da MESMA prova
-    CONSTRAINT fk_pt_prova FOREIGN KEY (prova_id, nome_prova, email_professor, nome_disciplina)
-        REFERENCES prova (prova_id, nome_prova, email_professor, nome_disciplina),
+    CONSTRAINT fk_pt_prova FOREIGN KEY (prova_id, email_professor, nome_disciplina)
+        REFERENCES prova (prova_id, email_professor, nome_disciplina),
 
-    CONSTRAINT fk_pt_turma FOREIGN KEY (id_turma)
-        REFERENCES turma (id_turma),
-
-    -- garante que a disciplina da prova faz parte da turma
     CONSTRAINT fk_pt_turma_disciplina FOREIGN KEY (id_turma, nome_disciplina)
         REFERENCES turma_disciplina (id_turma, nome_disciplina)
 );
 
+
+
 CREATE TABLE prova_aluno ( -- alunos convocados para a aplicação (turma toda ou só alguns, ex.: recuperação)
-    prova_id        BIGINT       NOT NULL,
-    id_turma        BIGINT       NOT NULL,
-    email_professor VARCHAR(150) NOT NULL,
-    nome_disciplina VARCHAR(100) NOT NULL,
-    data            DATE         NOT NULL,
-    horario         TIME         NOT NULL,
-    RA              VARCHAR(20)  NOT NULL,
 
-    PRIMARY KEY (prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA),
+    id_aplicacao BIGINT       NOT NULL,
+    id_turma     BIGINT       NOT NULL,
+    RA           VARCHAR(20)  NOT NULL,
+    nota         DECIMAL(5,2) NULL,  -- vazio até a prova ser corrigida
 
-    -- a aplicação existe (prova + turma + data + horário)
-    CONSTRAINT fk_pa_prova_turma FOREIGN KEY (id_turma, prova_id, email_professor, nome_disciplina, data, horario)
-        REFERENCES prova_turma (id_turma, prova_id, email_professor, nome_disciplina, data, horario)
-        ON DELETE CASCADE,
+    PRIMARY KEY (id_aplicacao, RA),
 
-    -- o aluno pertence à turma da aplicação
+    CONSTRAINT fk_pa_aplicacao FOREIGN KEY (id_aplicacao, id_turma)
+        REFERENCES prova_turma (id_aplicacao, id_turma),
+
+    -- garante que o aluno pertence à turma da aplicação
     CONSTRAINT fk_pa_pertence FOREIGN KEY (RA, id_turma)
         REFERENCES pertence (RA, id_turma)
+);
+
+CREATE TABLE resposta_aluno (
+    id_resposta_aluno BIGINT NOT NULL AUTO_INCREMENT,
+    id_aplicacao      BIGINT NOT NULL,
+    prova_id          BIGINT NOT NULL,
+    RA                VARCHAR(20) NOT NULL,
+    questao_id        BIGINT NOT NULL,
+    resposta_id       BIGINT NULL,            -- alt: alternativa marcada | diss e rela: NULL
+    texto_resposta    TEXT NULL,              -- diss: texto digitado | rela: pares (ex.: JSON)
+    correta           BOOLEAN NULL,           -- NULL = ainda não corrigida
+
+    PRIMARY KEY (id_resposta_aluno),
+
+    CONSTRAINT uq_resposta_aluno UNIQUE (id_aplicacao, RA, questao_id),
+
+    CONSTRAINT fk_ra_prova_aluno
+        FOREIGN KEY (id_aplicacao, RA)
+        REFERENCES prova_aluno (id_aplicacao, RA),
+
+    CONSTRAINT fk_ra_aplicacao_prova
+        FOREIGN KEY (id_aplicacao, prova_id)
+        REFERENCES prova_turma (id_aplicacao, prova_id),
+
+    CONSTRAINT fk_ra_prova_questao
+        FOREIGN KEY (prova_id, questao_id)
+        REFERENCES prova_questao (prova_id, questao_id),
+
+    CONSTRAINT fk_ra_resposta
+        FOREIGN KEY (resposta_id, questao_id)
+        REFERENCES resposta (resposta_id, questao_id)
 );
