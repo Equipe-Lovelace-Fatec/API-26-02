@@ -116,8 +116,9 @@ public class QuestaoDAO {
 
         String sqlResposta =
                 "INSERT INTO resposta " +
-                        "(enunciado, tipo, texto, correta, conceito) " +
-                        "VALUES (?, ?, ?, ?, ?)";
+                        "(questao_id, texto, correta, conceito) " +
+                        "VALUES ((SELECT questao_id FROM questao WHERE enunciado = ? AND tipo = ?), ?, ?, ?)";
+
 
         String enunciadoOriginal = questao.getEnunciado();
         String tipo = questao.getTipo();
@@ -241,7 +242,8 @@ public class QuestaoDAO {
             List<Resposta> novasRespostas) {
 
         String sqlExcluirRespostas =
-                "DELETE FROM resposta WHERE enunciado = ? AND tipo = ?";
+        "DELETE FROM resposta WHERE questao_id = (SELECT questao_id FROM questao WHERE enunciado = ? AND tipo = ?)";
+
 
         String sqlAtualizarQuestao =
                 "UPDATE questao SET " +
@@ -256,8 +258,8 @@ public class QuestaoDAO {
 
         String sqlInserirResposta =
                 "INSERT INTO resposta " +
-                        "(enunciado, tipo, texto, correta, conceito) " +
-                        "VALUES (?, ?, ?, ?, ?)";
+                        "(questao_id, texto, correta, conceito) " +
+                        "VALUES ((SELECT questao_id FROM questao WHERE enunciado = ? AND tipo = ?), ?, ?, ?)";
 
         try (Connection con = getConnection()) {
 
@@ -341,10 +343,11 @@ public class QuestaoDAO {
         List<Resposta> respostas = new ArrayList<>();
 
         String sql =
-                "SELECT resposta_id, enunciado, tipo, texto, correta, conceito " +
-                        "FROM resposta " +
-                        "WHERE enunciado = ? AND tipo = ? " +
-                        "ORDER BY resposta_id";
+
+        "SELECT r.resposta_id, q.enunciado, q.tipo, r.texto, r.correta, r.conceito " +
+                "FROM resposta r JOIN questao q ON q.questao_id = r.questao_id " +
+                "WHERE q.enunciado = ? AND q.tipo = ? " +
+                "ORDER BY r.resposta_id";
 
         try (Connection con = getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -387,10 +390,10 @@ public class QuestaoDAO {
         List<Resposta> respostas = new ArrayList<>();
 
         String sql =
-                "SELECT resposta_id, enunciado, tipo, texto, correta, conceito " +
-                        "FROM resposta " +
-                        "WHERE enunciado = ? AND tipo = ? " +
-                        "ORDER BY resposta_id";
+        "SELECT r.resposta_id, q.enunciado, q.tipo, r.texto, r.correta, r.conceito " +
+                "FROM resposta r JOIN questao q ON q.questao_id = r.questao_id " +
+                "WHERE q.enunciado = ? AND q.tipo = ? " +
+                "ORDER BY r.resposta_id";
 
         try (PreparedStatement pst = con.prepareStatement(sql)) {
 
