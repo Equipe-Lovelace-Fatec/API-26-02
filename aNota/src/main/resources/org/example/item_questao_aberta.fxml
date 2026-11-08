@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="232.0" prefWidth="700.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.QuestaoAbertaController">
+   <children>
+      <VBox layoutX="12.0" layoutY="18.0" prefHeight="200.0" prefWidth="676.0">
+         <children>
+            <Label fx:id="EnunciadoQuestaoAberta" prefHeight="143.0" prefWidth="673.0" text="Enunciado da Questão 01 — Meramente Ilustrativo. A crescente complexidade dos paradigmas contemporâneos evidencia a necessidade de uma abordagem multidimensional, pautada na convergência de perspectivas epistemológicas e metodológicas, visando à maximização dos resultados e à otimização dos processos inerentes ao contexto supracitado." wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="RespostaQuestaoAberta" prefHeight="118.0" prefWidth="676.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

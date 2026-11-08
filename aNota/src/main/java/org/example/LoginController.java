@@ -100,11 +100,6 @@ public class LoginController {
             return;
         }
 
-        if (usuario.getPerfil() != Usuario.Perfil.PROFESSOR) {
-            lbl_erro.setText("Acesso permitido apenas para professores.");
-            return;
-        }
-
         Sessao.setUsuario(usuario);
 
         if (checkbox_lembre.isSelected()) {
@@ -113,15 +108,31 @@ public class LoginController {
             prefs.remove("email");
         }
 
-        abrirTelaPrincipal();
+        // Redireciona para a tela correspondente ao perfil do usuário
+        if (usuario.getPerfil() == Usuario.Perfil.PROFESSOR) {
+            abrirTelaProfessor();
+        } else if (usuario.getPerfil() == Usuario.Perfil.ALUNO) {
+            abrirTelaAluno();
+        } else {
+            lbl_erro.setText("Perfil de usuário não reconhecido.");
+        }
     }
 
-    private void abrirTelaPrincipal() {
+    private void abrirTelaProfessor() {
         try {
             App.abrirTela("VisualizarQuestao", "aNota", 1350, 1500);
         } catch (IOException e) {
             e.printStackTrace();
-            lbl_erro.setText("Erro ao abrir a tela principal.");
+            lbl_erro.setText("Erro ao abrir a tela principal do professor.");
+        }
+    }
+
+    private void abrirTelaAluno() {
+        try {
+            App.abrirTela("realizar_prova_aluno", "aNota - Realizar Prova", 1350, 1500);
+        } catch (IOException e) {
+            e.printStackTrace();
+            lbl_erro.setText("Erro ao abrir a tela de prova do aluno.");
         }
     }
 }
