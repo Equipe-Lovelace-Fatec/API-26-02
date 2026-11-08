@@ -11,21 +11,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import org.example.App;
 import org.example.Questao;
+import org.example.QuestaoDAO;
 import org.example.Resposta;
-// Importe seus DAOs correspondentes para buscar do banco:
-// import org.example.ProvaDAO;
-// import org.example.QuestaoDAO;
-// import org.example.RespostaDAO;
+import org.example.RespostaDAO;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProvaAlunoController {
-    @FXML private Button bt_avaliacao, bt_correcao, bt_desempenho, bt_finalizar_prova, bt_minha_agenda;
+
+    @FXML private Button bt_avaliacao;
+    @FXML private Button bt_correcao;
+    @FXML private Button bt_desempenho;
+    @FXML private Button bt_finalizar_prova;
+    @FXML private Button bt_minha_agenda;
     @FXML private Label contagem_regressiva_prova;
     @FXML private Label titulo_prova;
     @FXML private VBox vboxContainerQuestoes;
@@ -33,15 +38,33 @@ public class ProvaAlunoController {
     private Timeline timeline;
     private long segundosRestantes = 0;
 
-    // Lista para manter referência dos controllers das questões geradas (facilita coletar respostas)
     private final List<Object> controllersQuestoes = new ArrayList<>();
 
     private Long idAplicacaoAtual;
     private String raAlunoAtual;
 
     /**
-     * Método chamado ao abrir a tela para injetar a prova do aluno
+     * Método executado automaticamente pelo JavaFX assim que a tela abre.
      */
+    @FXML
+    public void initialize() {
+        System.out.println("DEBUG -> Tela de prova do aluno aberta com sucesso!");
+
+        // Configuração padrão para teste (RA123456, aplicação 1) caso não venha por parâmetro externo
+        this.raAlunoAtual = "RA123456";
+        this.idAplicacaoAtual = 1L;
+
+        if (titulo_prova != null) {
+            titulo_prova.setText("Avaliação Prática 1");
+        }
+
+        LocalTime horarioFimTeste = LocalTime.of(23, 59, 59);
+        calcularTempoRestante(horarioFimTeste);
+        iniciarCronometro();
+
+        carregarQuestoesDaProva(1L);
+    }
+
     public void inicializarDadosProva(Long idAplicacao, String raAluno, LocalTime horarioFim, String nomeProva) {
         this.idAplicacaoAtual = idAplicacao;
         this.raAlunoAtual = raAluno;
@@ -50,11 +73,9 @@ public class ProvaAlunoController {
             titulo_prova.setText(nomeProva != null ? nomeProva : "Avaliação");
         }
 
-        // 1. Configurar Cronômetro Regressivo baseado no horário de fim da tabela prova_turma
         calcularTempoRestante(horarioFim);
         iniciarCronometro();
 
-        // 2. Carregar Questões do Banco de Dados para esta Prova
         carregarQuestoesDaProva(idAplicacao);
     }
 
@@ -68,6 +89,10 @@ public class ProvaAlunoController {
     }
 
     private void iniciarCronometro() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             if (segundosRestantes > 0) {
                 segundosRestantes--;
@@ -101,34 +126,76 @@ public class ProvaAlunoController {
 
     private void carregarQuestoesDaProva(Long idAplicacao) {
         try {
-            vboxContainerQuestoes.getChildren().clear();
+            if (vboxContainerQuestoes != null) {
+                vboxContainerQuestoes.getChildren().clear();
+            }
             controllersQuestoes.clear();
 
-            // EXEMPLO DE LÓGICA DE CARREGAMENTO (ajuste conforme seus DAOs):
-            // List<Questao> questoes = questaoDAO.buscarQuestaoPorAplicacao(idAplicacao);
-            //
-            // Para cada questão, verifique o tipo e carregue o FXML correspondente:
-            // for (Questao q : questoes) {
-            //     FXMLLoader loader;
-            //     Parent nodoQuestao;
-            //
-            //     if ("alt".equalsIgnoreCase(q.getTipo())) {
-            //         loader = new FXMLLoader(getClass().getResource("item_questao_alternativa.fxml"));
-            //         nodoQuestao = loader.load();
-            //         QuestaoAlternativaController ctrl = loader.getController();
-            //         List<Resposta> resp = respostaDAO.buscarRespostasPorQuestao(q.getId());
-            //         ctrl.setDadosQuestao(q, resp);
-            //         controllersQuestoes.add(ctrl);
-            //     } else if ("diss".equalsIgnoreCase(q.getTipo())) {
-            //         loader = new FXMLLoader(getClass().getResource("item_questao_aberta.fxml"));
-            //         nodoQuestao = loader.load();
-            //         QuestaoAbertaController ctrl = loader.getController();
-            //         ctrl.setDadosQuestao(q);
-            //         controllersQuestoes.add(ctrl);
-            //     }
-            //     // Adiciona o componente visual da questão dentro do VBox da tela do aluno
-            //     vboxContainerQuestoes.getChildren().add(nodoQuestao);
-            // }
+            QuestaoDAO questaoDAO = new QuestaoDAO();
+            List<Questao> questoes = questaoDAO.buscarQuestoesPorAplicacao(idAplicacao);
+
+            System.out.println("DEBUG -> Questões encontradas para a aplicação " + idAplicacao + ": " + (questoes != null ? questoes.size() : 0));
+
+            if (questoes == null || questoes.isEmpty()) {
+                mostrarAlerta("Atenção", "Nenhuma questão encontrada para esta prova.");
+                return;
+            }
+
+            for (Questao q : questoes) {
+                FXMLLoader loader = null;
+                Parent nodoQuestao = null;
+
+                String tipo = q.getTipo() != null ? q.getTipo().toLowerCase().trim() : "";
+                System.out.println("DEBUG -> Carregando questão ID: " + q.getId() + " | Tipo: " + tipo);
+
+                if ("alt".equals(tipo)) {
+                    // Caminho absoluto apontando exatamente para /org/example/
+                    URL fxmlUrl = getClass().getResource("/org/example/item_questao_alternativa.fxml");
+                    if (fxmlUrl == null) {
+                        throw new IOException("Arquivo 'item_questao_alternativa.fxml' não encontrado em /org/example/!");
+                    }
+
+                    loader = new FXMLLoader(fxmlUrl);
+                    nodoQuestao = loader.load();
+
+                    QuestaoAlternativaController ctrl = loader.getController();
+                    List<Resposta> respostas = new QuestaoDAO().buscarRespostas(q.getEnunciado(), q.getTipo());
+                    ctrl.setDadosQuestao(q, respostas);
+                    controllersQuestoes.add(ctrl);
+
+                } else if ("diss".equals(tipo)) {
+                    URL fxmlUrl = getClass().getResource("/org/example/item_questao_aberta.fxml");
+                    if (fxmlUrl == null) {
+                        throw new IOException("Arquivo 'item_questao_aberta.fxml' não encontrado em /org/example/!");
+                    }
+
+                    loader = new FXMLLoader(fxmlUrl);
+                    nodoQuestao = loader.load();
+
+                    QuestaoAbertaController ctrl = loader.getController();
+                    ctrl.setDadosQuestao(q);
+                    controllersQuestoes.add(ctrl);
+
+                } else if ("rela".equals(tipo)) {
+                    URL fxmlUrl = getClass().getResource("/org/example/item_questao_relacionamento.fxml");
+                    if (fxmlUrl == null) {
+                        throw new IOException("Arquivo 'item_questao_relacionamento.fxml' não encontrado em /org/example/!");
+                    }
+
+                    loader = new FXMLLoader(fxmlUrl);
+                    nodoQuestao = loader.load();
+
+                    QuestaoRelacionamentoController ctrl = loader.getController();
+                    ctrl.setDadosQuestao(q);
+                    controllersQuestoes.add(ctrl);
+                }
+
+                if (vboxContainerQuestoes != null && nodoQuestao != null) {
+                    vboxContainerQuestoes.getChildren().add(nodoQuestao);
+                } else {
+                    System.out.println("AVISO: vboxContainerQuestoes ou nodoQuestao está nulo!");
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,22 +213,13 @@ public class ProvaAlunoController {
             timeline.stop();
         }
 
-        // Percorrer a lista de controllers gerados para coletar as respostas do aluno
-        // e salvá-las na tabela resposta_aluno via DAO:
-        // for (Object ctrl : controllersQuestoes) {
-        //     if (ctrl instanceof QuestaoAlternativaController) {
-        //         QuestaoAlternativaController ac = (QuestaoAlternativaController) ctrl;
-        //         Resposta r = ac.getRespostaSelecionada();
-        //         // Salvar no banco (idAplicacaoAtual, raAlunoAtual, ac.getQuestaoId(), r.getRespostaId(), ...)
-        //     } else if (ctrl instanceof QuestaoAbertaController) {
-        //         QuestaoAbertaController ac = (QuestaoAbertaController) ctrl;
-        //         String texto = ac.getRespostaDigitada();
-        //         // Salvar no banco (idAplicacaoAtual, raAlunoAtual, ac.getQuestaoId(), texto, ...)
-        //     }
-        // }
-
         mostrarAlerta("Sucesso", "Prova finalizada e enviada com sucesso!");
-        // Fechar tela ou redirecionar
+
+        try {
+            App.setRoot("gabarito_para_aluno");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void mostrarAlerta(String titulo, String mensagem) {
@@ -172,8 +230,33 @@ public class ProvaAlunoController {
         alert.showAndWait();
     }
 
-    @FXML void ir_avaliacao(ActionEvent event) {}
-    @FXML void ir_correcao(ActionEvent event) {}
-    @FXML void ir_desempenho(ActionEvent event) {}
-    @FXML void ir_minha_agenda(ActionEvent event) {}
+    @FXML
+    void ir_avaliacao(ActionEvent event) {
+        try {
+            App.setRoot("realizar_prova_aluno");
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Erro", "Não foi possível abrir a tela de avaliação: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void ir_correcao(ActionEvent event) {
+        try {
+            App.setRoot("gabarito_para_aluno");
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Erro", "Não foi possível abrir a tela de correção/gabarito: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void ir_desempenho(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ir_minha_agenda(ActionEvent event) {
+
+    }
 }

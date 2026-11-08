@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="700.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.CorrecaoAlunoQuestaoController">
+   <children>
+      <VBox layoutX="12.0" layoutY="18.0" prefHeight="279.0" prefWidth="676.0">
+         <children>
+            <Label fx:id="label_enunciado_prova_gabarito" prefHeight="112.0" prefWidth="673.0" text="Enunciado da Questão 01 — Meramente Ilustrativo. A crescente complexidade dos paradigmas contemporâneos evidencia a necessidade de uma abordagem multidimensional, pautada na convergência de perspectivas epistemológicas e metodológicas, visando à maximização dos resultados e à otimização dos processos inerentes ao contexto supracitado." wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Sua resposta:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_resposta_aluno_gabarito" prefHeight="54.0" prefWidth="674.0" />
+            <Label layoutX="10.0" layoutY="122.0" text="Resposta esperada:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_resposta_esperada_prova_gabarito" layoutX="10.0" layoutY="142.0" prefHeight="60.0" prefWidth="674.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

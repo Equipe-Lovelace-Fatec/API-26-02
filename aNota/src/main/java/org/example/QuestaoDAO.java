@@ -48,7 +48,6 @@ public class QuestaoDAO {
         }
     }
 
-    // BUSCAR TODAS AS QUESTÕES (com a data do último uso em uma prova aplicada)
     public List<Questao> buscarQuestoes() {
 
         List<Questao> questoes = new ArrayList<>();
@@ -242,7 +241,7 @@ public class QuestaoDAO {
             List<Resposta> novasRespostas) {
 
         String sqlExcluirRespostas =
-        "DELETE FROM resposta WHERE questao_id = (SELECT questao_id FROM questao WHERE enunciado = ? AND tipo = ?)";
+                "DELETE FROM resposta WHERE questao_id = (SELECT questao_id FROM questao WHERE enunciado = ? AND tipo = ?)";
 
 
         String sqlAtualizarQuestao =
@@ -344,10 +343,10 @@ public class QuestaoDAO {
 
         String sql =
 
-        "SELECT r.resposta_id, q.enunciado, q.tipo, r.texto, r.correta, r.conceito " +
-                "FROM resposta r JOIN questao q ON q.questao_id = r.questao_id " +
-                "WHERE q.enunciado = ? AND q.tipo = ? " +
-                "ORDER BY r.resposta_id";
+                "SELECT r.resposta_id, q.enunciado, q.tipo, r.texto, r.correta, r.conceito " +
+                        "FROM resposta r JOIN questao q ON q.questao_id = r.questao_id " +
+                        "WHERE q.enunciado = ? AND q.tipo = ? " +
+                        "ORDER BY r.resposta_id";
 
         try (Connection con = getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -383,17 +382,16 @@ public class QuestaoDAO {
         return respostas;
     }
 
-    // BUSCAR RESPOSTAS USANDO UMA CONEXÃO EXISTENTE
     private List<Resposta> buscarRespostas(
             Connection con, String enunciado, String tipo) throws SQLException {
 
         List<Resposta> respostas = new ArrayList<>();
 
         String sql =
-        "SELECT r.resposta_id, q.enunciado, q.tipo, r.texto, r.correta, r.conceito " +
-                "FROM resposta r JOIN questao q ON q.questao_id = r.questao_id " +
-                "WHERE q.enunciado = ? AND q.tipo = ? " +
-                "ORDER BY r.resposta_id";
+                "SELECT r.resposta_id, q.enunciado, q.tipo, r.texto, r.correta, r.conceito " +
+                        "FROM resposta r JOIN questao q ON q.questao_id = r.questao_id " +
+                        "WHERE q.enunciado = ? AND q.tipo = ? " +
+                        "ORDER BY r.resposta_id";
 
         try (PreparedStatement pst = con.prepareStatement(sql)) {
 
@@ -420,5 +418,41 @@ public class QuestaoDAO {
         }
 
         return respostas;
+    }
+
+    // BUSCAR QUESTÕES VINCULADAS A UMA APLICAÇÃO DE PROVA ESPECÍFICA (NOVO MÉTODO)
+    public List<Questao> buscarQuestoesPorAplicacao(Long idAplicacao) {
+        List<Questao> questoes = new ArrayList<>();
+        String sql = "SELECT q.* FROM questao q " +
+                "JOIN prova_questao pq ON q.questao_id = pq.questao_id " +
+                "JOIN prova_turma pt ON pq.prova_id = pt.prova_id " +
+                "WHERE pt.id_aplicacao = ?";
+
+        try (Connection con = getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setLong(1, idAplicacao);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Questao q = new Questao();
+                    q.setId(rs.getLong("questao_id"));
+                    q.setEnunciado(rs.getString("enunciado"));
+                    q.setTema(rs.getString("tema"));
+                    q.setTipo(rs.getString("tipo"));
+                    q.setDificuldade(rs.getString("dificuldade"));
+
+                    q.setDataCriacao(rs.getObject("data_criacao", LocalDateTime.class));
+                    q.setDataEdicao(rs.getObject("data_edicao", LocalDateTime.class));
+                    q.setEmailProfessor(rs.getString("email_professor"));
+                    q.setNomeDisciplina(rs.getString("nome_disciplina"));
+
+                    questoes.add(q);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao buscar questões por aplicação de prova!", e);
+        }
+        return questoes;
     }
 }
