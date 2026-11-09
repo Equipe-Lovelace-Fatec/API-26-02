@@ -1,10 +1,19 @@
 package org.example.ProvaAlunoArquivos;
 
+import java.util.ArrayList;
+import java.util.List;
+
+// Uma questão como o aluno a vê no Gabarito e na Correção
 public class CorrecaoAlunoQuestao {
     private String enunciado;
     private String respostaAluno;
     private String respostaEsperada;
     private Boolean correta;
+
+    private int numero;
+    private String tipo;                         // alt | diss | rela
+    private List<String> linhasApoio = new ArrayList<>(); // alternativas / itens a relacionar
+    private String comentarioProfessor;          // só questões abertas
 
     public CorrecaoAlunoQuestao(String enunciado, String respostaAluno, String respostaEsperada, Boolean correta) {
         this.enunciado = enunciado;
@@ -24,4 +33,20 @@ public class CorrecaoAlunoQuestao {
 
     public Boolean getCorreta() { return correta; }
     public void setCorreta(Boolean correta) { this.correta = correta; }
+
+    public int getNumero() { return numero; }
+    public void setNumero(int numero) { this.numero = numero; }
+
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
+
+    public List<String> getLinhasApoio() { return linhasApoio; }
+    public void setLinhasApoio(List<String> linhasApoio) { this.linhasApoio = linhasApoio; }
+
+    public String getComentarioProfessor() { return comentarioProfessor; }
+    public void setComentarioProfessor(String comentarioProfessor) { this.comentarioProfessor = comentarioProfessor; }
+
+    public boolean ehAberta() {
+        return "diss".equalsIgnoreCase(tipo);
+    }
 }

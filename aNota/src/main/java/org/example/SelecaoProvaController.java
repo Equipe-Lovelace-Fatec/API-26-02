@@ -14,6 +14,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +67,7 @@ public class SelecaoProvaController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CartaoProva.fxml"));
             Node cartao = loader.load();
             CartaoProvaController controller = loader.getController();
-            controller.setProva(p, this::visualizar, this::agendar);
+            controller.setProva(p, this::visualizar, this::agendar, this::editar);
             return cartao;
         } catch (IOException e) {
             e.printStackTrace();
@@ -103,14 +106,9 @@ public class SelecaoProvaController {
 
     private void agendar(Prova escolhida) {
         if (!escolhida.temNota()) {
-            avisar("Nota não definida", "A prova \"" + escolhida.getNomeProva()
-                    + "\" ainda não tem nota. Você será levado à tela de montagem para indicá-la."
-                    + " Depois, volte e clique em AGENDAR novamente.");
-            try {
-                App.abrirTela("montagem", "aNota", 1350, 1080);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            avisar("Prova em rascunho", "A prova \"" + escolhida.getNomeProva()
+                    + "\" é um rascunho e não pode ser agendada."
+                    + " Clique em EDITAR e informe o valor das questões para concluí-la.");
             return;
         }
 
@@ -119,6 +117,39 @@ public class SelecaoProvaController {
             App.abrirTela("agendamento", "aNota", 1350, 800);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void editar(Prova escolhida) {
+        // Só pode editar rascunho ou prova que ainda não foi agendada
+        if (foiAgendada(escolhida)) {
+            avisar("Editar prova", "A prova \"" + escolhida.getNomeProva()
+                    + "\" já foi agendada e não pode mais ser editada.");
+            return;
+        }
+        // A tela de montagem abre com as questões já selecionadas e os valores já salvos
+        MontagemProvaController.provaParaEditar = escolhida;
+        try {
+            App.abrirTela("montagem", "aNota", 1350, 1080);
+        } catch (IOException e) {
+            e.printStackTrace();
+            MontagemProvaController.provaParaEditar = null;
+            avisar("Erro", "Não foi possível abrir a tela de montagem: " + e.getMessage());
+        }
+    }
+
+    private boolean foiAgendada(Prova p) {
+        String sql = "SELECT COUNT(*) FROM prova_turma WHERE prova_id = ?";
+        try (Connection con = ConexaoBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setLong(1, p.getProvaId());
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            avisar("Erro", "Não foi possível verificar se a prova já foi agendada: " + e.getMessage());
+            return true; // na dúvida, não permite editar
         }
     }
 

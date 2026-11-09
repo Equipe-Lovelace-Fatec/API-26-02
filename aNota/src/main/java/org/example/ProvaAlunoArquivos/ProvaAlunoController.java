@@ -216,7 +216,7 @@ public class ProvaAlunoController {
         mostrarAlerta("Sucesso", "Prova finalizada e enviada com sucesso!");
 
         try {
-            App.setRoot("gabarito_para_aluno");
+            App.setRoot("SelecaoProvaAluno");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -243,7 +243,7 @@ public class ProvaAlunoController {
     @FXML
     void ir_correcao(ActionEvent event) {
         try {
-            App.setRoot("gabarito_para_aluno");
+            App.setRoot("SelecaoProvaAluno");
         } catch (IOException e) {
             e.printStackTrace();
             mostrarAlerta("Erro", "Não foi possível abrir a tela de correção/gabarito: " + e.getMessage());

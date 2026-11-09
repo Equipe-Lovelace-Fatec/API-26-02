@@ -20,8 +20,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,6 +54,10 @@ public class MontagemProvaController {
         public static List<String> perguntasTemporarias = new ArrayList<>();
         public static List<String> valoresTemporarios = new ArrayList<>();
 
+        // Prova (rascunho) a ser editada: definida pela tela de provas elaboradas antes de abrir esta tela
+        public static Prova provaParaEditar;
+        private Prova provaEmEdicao;
+
         @FXML private ComboBox<String> boxDisciplina;
         @FXML private ComboBox<String> box_filtro_dificuldade;
         @FXML private ComboBox<String> box_filtro_disciplina;
@@ -65,10 +74,90 @@ public class MontagemProvaController {
 
         @FXML
         public void initialize() {
+                // Consome o pedido de edição para que a próxima abertura da tela seja uma montagem nova
+                provaEmEdicao = provaParaEditar;
+                provaParaEditar = null;
+
                 inicializarArraysComponentes();
                 carregarDadosDoBanco();
                 configurarFiltrosDinamicos();
                 atualizacaoValorProva();
+
+                if (provaEmEdicao != null) {
+                        carregarProvaEmEdicao();
+                }
+        }
+
+        // Preenche a tela com a prova salva: nome, disciplina e questões já selecionadas
+        private void carregarProvaEmEdicao() {
+                if (txtNomeProva != null) {
+                        txtNomeProva.setText(provaEmEdicao.getNomeProva());
+                }
+                if (boxDisciplina != null && disciplinasDoProfessor.contains(provaEmEdicao.getNomeDisciplina())) {
+                        boxDisciplina.setValue(provaEmEdicao.getNomeDisciplina());
+                }
+
+                Map<Long, BigDecimal> salvas;
+                try {
+                        salvas = buscarPesosSalvos(provaEmEdicao.getProvaId());
+                } catch (SQLException e) {
+                        e.printStackTrace();
+                        mostrarAlerta("Erro", "Não foi possível carregar as questões da prova: " + e.getMessage());
+                        return;
+                }
+
+                priorizarQuestoes(salvas.keySet());
+                if (box_filtro_disciplina != null) {
+                        box_filtro_disciplina.setValue(provaEmEdicao.getNomeDisciplina());
+                }
+                aplicarFiltros();
+
+                for (Map.Entry<Long, BigDecimal> e : salvas.entrySet()) {
+                        estadosSelecionados.put(e.getKey(), true);
+                        valoresQuestaoMap.put(e.getKey(), formatarPeso(e.getValue()));
+                }
+                atualizarExibicaoCheckBoxes();
+                recalcularValorTela();
+        }
+
+        // Questão -> peso gravado em prova_questao
+        private Map<Long, BigDecimal> buscarPesosSalvos(long provaId) throws SQLException {
+                Map<Long, BigDecimal> pesos = new LinkedHashMap<>();
+                String sql = "SELECT questao_id, peso FROM prova_questao WHERE prova_id = ? ORDER BY questao_id";
+                try (Connection con = ConexaoBD.conectar();
+                     PreparedStatement ps = con.prepareStatement(sql)) {
+                        ps.setLong(1, provaId);
+                        try (ResultSet rs = ps.executeQuery()) {
+                                while (rs.next()) {
+                                        pesos.put(rs.getLong("questao_id"), rs.getBigDecimal("peso"));
+                                }
+                        }
+                }
+                return pesos;
+        }
+
+        // Coloca as questões da prova no início da lista, para ficarem sempre visíveis na tela
+        private void priorizarQuestoes(java.util.Set<Long> idsDaProva) {
+                List<Questao> ordenadas = new ArrayList<>();
+                for (Questao q : questoesBancoGeral) {
+                        if (idsDaProva.contains(q.getId())) ordenadas.add(q);
+                }
+                for (Questao q : questoesBancoGeral) {
+                        if (!idsDaProva.contains(q.getId())) ordenadas.add(q);
+                }
+                questoesBancoGeral = ordenadas;
+        }
+
+        // Peso 0 (rascunho) volta como campo vazio para o professor preencher
+        private String formatarPeso(BigDecimal peso) {
+                return (peso == null || peso.compareTo(BigDecimal.ZERO) <= 0)
+                        ? "" : peso.stripTrailingZeros().toPlainString();
+        }
+
+        // Texto do campo -> peso; vazio vira zero
+        private BigDecimal parsePeso(String texto) {
+                String t = texto == null ? "" : texto.trim().replace(",", ".");
+                return t.isEmpty() ? BigDecimal.ZERO : new BigDecimal(t);
         }
 
         private void inicializarArraysComponentes() {
@@ -325,17 +414,22 @@ public class MontagemProvaController {
                 prova.setNomeDisciplina(disciplinaProva);
                 prova.setEmailProfessor(emailProfessor);
 
-                String valorStr = txtValorProva.getText().trim().replace(",", ".");
-                if (!valorStr.isEmpty()) {
-                        try {
-                                prova.setValor(new BigDecimal(valorStr));
-                        } catch (NumberFormatException e) {
-                                prova.setValor(null);
+                // Rascunho: todas as questões selecionadas sem valor (valor da prova fica 0)
+                boolean rascunho = MontagemProva.ehRascunho(valoresTextuais);
+
+                if (!rascunho) {
+                        String valorStr = txtValorProva.getText().trim().replace(",", ".");
+                        if (!valorStr.isEmpty()) {
+                                try {
+                                        prova.setValor(new BigDecimal(valorStr));
+                                } catch (NumberFormatException e) {
+                                        prova.setValor(null);
+                                }
                         }
                 }
 
-                // 4. Valida a prova (valor total igual a 10, valores das questões etc.)
-                String resultadoValidacao = prova.validarProva(indicesDummy, valoresTextuais);
+                // 4. Valida a prova (rascunho, valores parciais, valor total igual a 10, valores das questões etc.)
+                String resultadoValidacao = prova.validarParaSalvar(indicesDummy, valoresTextuais);
                 if (resultadoValidacao != null) {
                         mostrarAlerta("Atenção!", resultadoValidacao);
                         return;
@@ -344,6 +438,22 @@ public class MontagemProvaController {
                 try {
                         String dificuldadeProva = normalizarDificuldadeProva(
                                 box_filtro_dificuldade != null ? box_filtro_dificuldade.getValue() : null);
+
+                        if (provaEmEdicao != null) {
+                                // Sem filtro de dificuldade escolhido, mantém a dificuldade já gravada
+                                if (dificuldadeProva == null) {
+                                        dificuldadeProva = provaEmEdicao.getDificuldade();
+                                }
+                                atualizarProvaExistente(provaEmEdicao.getProvaId(), prova.getNomeProva(), dificuldadeProva,
+                                        prova.getValor(), emailProfessor, disciplinaProva, idsSelecionados);
+
+                                mostrarAlerta("Sucesso", rascunho
+                                        ? "Rascunho atualizado com sucesso!"
+                                        : "Prova atualizada com sucesso!\nValor total: " + txtValorProva.getText());
+                                provaEmEdicao = null;
+                                App.abrirTela("SelecaoProva", "aNota", 1350, 1080);
+                                return;
+                        }
 
                         Long provaId = montagemProvaDAO.nova(
                                 prova.getNomeProva(), dificuldadeProva, prova.getValor(),
@@ -361,10 +471,59 @@ public class MontagemProvaController {
                                 }
                         }
 
-                        mostrarAlerta("Sucesso", "Prova salva com sucesso!\nValor total: " + txtValorProva.getText());
+                        mostrarAlerta("Sucesso", rascunho
+                                ? "Rascunho salvo com sucesso!\nDefina o valor das questões em EDITAR para poder agendá-lo."
+                                : "Prova salva com sucesso!\nValor total: " + txtValorProva.getText());
                 } catch (Exception e) {
                         e.printStackTrace();
                         mostrarAlerta("Erro", "Erro ao salvar a prova: " + e.getMessage());
+                }
+        }
+
+        // Atualiza a prova existente (não insere outra, por causa da chave única nome/professor/disciplina)
+        private void atualizarProvaExistente(long provaId, String nomeProva, String dificuldade, BigDecimal valor,
+                                             String emailProfessor, String nomeDisciplina, List<Long> idsQuestoes) throws SQLException {
+                try (Connection con = ConexaoBD.conectar()) {
+                        con.setAutoCommit(false);
+                        try {
+                                try (PreparedStatement ps = con.prepareStatement("DELETE FROM prova_questao WHERE prova_id = ?")) {
+                                        ps.setLong(1, provaId);
+                                        ps.executeUpdate();
+                                }
+
+                                String upd = "UPDATE prova SET nome_prova = ?, dificuldade = ?, valor = ?, "
+                                        + "email_professor = ?, nome_disciplina = ? WHERE prova_id = ?";
+                                try (PreparedStatement ps = con.prepareStatement(upd)) {
+                                        ps.setString(1, nomeProva);
+                                        if (dificuldade == null || dificuldade.trim().isEmpty()) {
+                                                ps.setNull(2, java.sql.Types.VARCHAR);
+                                        } else {
+                                                ps.setString(2, dificuldade);
+                                        }
+                                        ps.setBigDecimal(3, valor);
+                                        ps.setString(4, emailProfessor);
+                                        ps.setString(5, nomeDisciplina);
+                                        ps.setLong(6, provaId);
+                                        ps.executeUpdate();
+                                }
+
+                                String ins = "INSERT INTO prova_questao (prova_id, questao_id, email_professor, nome_disciplina, peso) "
+                                        + "VALUES (?, ?, ?, ?, ?)";
+                                try (PreparedStatement ps = con.prepareStatement(ins)) {
+                                        for (Long questaoId : idsQuestoes) {
+                                                ps.setLong(1, provaId);
+                                                ps.setLong(2, questaoId);
+                                                ps.setString(3, emailProfessor);
+                                                ps.setString(4, nomeDisciplina);
+                                                ps.setBigDecimal(5, parsePeso(valoresQuestaoMap.get(questaoId)));
+                                                ps.executeUpdate();
+                                        }
+                                }
+                                con.commit();
+                        } catch (SQLException | RuntimeException e) {
+                                con.rollback();
+                                throw e;
+                        }
                 }
         }
 
