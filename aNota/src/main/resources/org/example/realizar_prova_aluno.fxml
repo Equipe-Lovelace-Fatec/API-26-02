@@ -9,26 +9,26 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1300.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.ProvaAlunoController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1652.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.ProvaAlunoController">
   <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2039.0" prefWidth="1357.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1651.0" prefWidth="1357.0">
          <children>
             <ImageView fitHeight="2086.0" fitWidth="1349.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../telas.png/tela_prova_aluno.png" />
                </image>
             </ImageView>
-            <ScrollPane layoutX="47.0" layoutY="351.0" prefHeight="1480.0" prefWidth="1252.0" style="-fx-background-color: #ffffff;">
+            <ScrollPane layoutX="96.0" layoutY="354.0" prefHeight="1124.0" prefWidth="1152.0" style="-fx-background-color: #ffffff;">
                <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1548.0" prefWidth="1242.0" style="-fx-background-color: #ffffff;">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1116.0" prefWidth="1142.0" style="-fx-background-color: #ffffff;">
                      <children>
-                        <VBox fx:id="vboxContainerQuestoes" layoutX="33.0" layoutY="32.0" prefHeight="282.0" prefWidth="1168.0" />
+                        <VBox fx:id="vboxContainerQuestoes" layoutX="33.0" layoutY="32.0" prefHeight="282.0" prefWidth="1070.0" />
                      </children></AnchorPane>
                </content>
             </ScrollPane>
-            <Label fx:id="contagem_regressiva_prova" alignment="CENTER" layoutX="595.0" layoutY="300.0" prefHeight="53.0" prefWidth="203.0" style="-fx-text-fill: #624695;" text="00 : 00 : 00" textFill="#624695">
+            <Label fx:id="contagem_regressiva_prova" alignment="CENTER" layoutX="1122.0" layoutY="239.0" prefHeight="53.0" prefWidth="203.0" style="-fx-text-fill: #624695;" text="00:00" textFill="#624695">
                <font>
-                  <Font name="System Bold" size="36.0" />
+                  <Font name="System Bold" size="44.0" />
                </font>
             </Label>
             <Button fx:id="bt_finalizar_prova" layoutX="493.0" layoutY="1896.0" mnemonicParsing="false" onAction="#ir_finalizar_prova" prefHeight="82.0" prefWidth="364.0" style="-fx-background-color: transparent;" />

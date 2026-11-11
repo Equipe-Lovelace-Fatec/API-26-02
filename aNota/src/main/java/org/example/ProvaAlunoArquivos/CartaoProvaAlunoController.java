@@ -28,7 +28,7 @@ public class CartaoProvaAlunoController {
 
         lbl_titulo.setText(prova.getNomeProva());
         lbl_disciplina.setText(prova.getNomeDisciplina());
-        lbl_valor.setText("Nota: " + prova.getNotaExibicao());
+        lbl_valor.setText(prova.getNotaExibicao());
     }
 
     @FXML
