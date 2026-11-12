@@ -265,7 +265,11 @@ INSERT INTO turma (id_turma, nome_curso, semestre, periodo, vigencia, nome_turma
 (15, 'Desenvolvimento de Software Multiplataforma', '3º', 'Matutino', '07/2026 a 12/2026', 'Regular'),
 (16, 'Desenvolvimento de Software Multiplataforma', '4º', 'Matutino', '07/2026 a 12/2026', 'Regular'),
 (17, 'Desenvolvimento de Software Multiplataforma', '5º', 'Matutino', '07/2026 a 12/2026', 'Regular'),
-(18, 'Desenvolvimento de Software Multiplataforma', '6º', 'Matutino', '07/2026 a 12/2026', 'Regular');
+(18, 'Desenvolvimento de Software Multiplataforma', '6º', 'Matutino', '07/2026 a 12/2026', 'Regular'),
+
+-- Turma extra de teste: BD 2º semestre só para quem cursa Inglês II (4 dos 10 alunos da turma Regular 2).
+-- Serve para testar aluno em duas turmas e prova aplicada só a parte da turma do curso. Detalhes no bloco "TURMA DE INGLÊS", no fim do arquivo.
+(19, 'Banco de Dados', '2º', 'Noturno', '07/2026 a 12/2026', 'Inglês');
  
 -- PROFESSORES
 INSERT INTO professor (email, matricula) VALUES
@@ -578,7 +582,7 @@ INSERT INTO turma_disciplina (id_turma, nome_disciplina) VALUES
 (1, 'Inglês I'),
 (1, 'Engenharia de Software I'),
 (1, 'Análise e desenvolvimento de Banco de Dados I'),
-(2, 'Inglês II'),
+-- (Inglês II não é cursado pela turma Regular 2: fica na turma de Inglês, id 19, no bloco do fim do arquivo)
 (2, 'Engenharia de Software II'),
 (2, 'Análise e desenvolvimento de Banco de Dados II'),
 (3, 'Inglês III'),
@@ -634,7 +638,8 @@ INSERT INTO turma_disciplina (id_turma, nome_disciplina) VALUES
 (18, 'Engenharia de Software VI'),
 (18, 'Desenvolvimento Web VI');
 
--- ALUNOS EM TURMAS (pertence): 10 alunos por semestre por curso, cada aluno em uma única turma
+-- ALUNOS EM TURMAS (pertence): 10 alunos por semestre por curso, cada aluno em uma turma Regular
+-- (a exceção é a turma 19, de Inglês, em que 4 alunos da turma 2 entram também; ver o bloco no fim do arquivo)
 INSERT INTO pertence (RA, id_turma, nome_curso) VALUES
 -- Banco de Dados
 -- turma 1 · 1º semestre
@@ -993,26 +998,26 @@ JOIN questao q ON q.enunciado = v.enunciado AND q.tipo = v.tipo;
 -- ========= PROVA aplicada TURMA =============
 -- Provas 1 e 2 e recuperação, cada uma na turma do semestre da disciplina:
 -- Inglês I e Eng. de Software I = BD 1º sem. (turma 1) | Análise e Desenv. de BD III = BD 3º sem. (turma 3)
-INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim)
-SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario, v.horario_fim
+INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim, recuperacao)
+SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario, v.horario_fim, v.recuperacao
 FROM (
-    SELECT 1 AS id_turma, 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina, '2026-09-18' AS data, '19:35:00' AS horario, '21:15:00' AS horario_fim
+    SELECT 1 AS id_turma, 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina, '2026-09-18' AS data, '19:35:00' AS horario, '21:15:00' AS horario_fim, false AS recuperacao
     UNION ALL
-    SELECT 1, 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-10-20', '19:35:00', '21:15:00'
+    SELECT 1, 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-10-20', '19:35:00', '21:15:00', false
     UNION ALL
-    SELECT 3, 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-10-14', '21:25:00', '23:05:00'
+    SELECT 3, 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-10-14', '21:25:00', '23:05:00', false
     UNION ALL
-    SELECT 3, 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-11-18', '21:25:00', '23:05:00'
+    SELECT 3, 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-11-18', '21:25:00', '23:05:00', false
     UNION ALL
-    SELECT 1, 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-10-15', '19:35:00', '21:15:00'
+    SELECT 1, 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-10-15', '19:35:00', '21:15:00', false
     UNION ALL
-    SELECT 1, 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-11-19', '19:35:00', '21:10:00'
+    SELECT 1, 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-11-19', '19:35:00', '21:10:00', false
     UNION ALL
-    SELECT 1, 'Recuperação', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-12-02', '19:35:00', '21:15:00'
+    SELECT 1, 'Recuperação', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-12-02', '19:35:00', '21:15:00', true
     UNION ALL
-    SELECT 1, 'Recuperação', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-12-03', '19:30:00', '21:10:00'
+    SELECT 1, 'Recuperação', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-12-03', '19:30:00', '21:10:00', true
     UNION ALL
-    SELECT 3, 'Recuperação', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-12-04', '21:30:00', '23:05:00'
+    SELECT 3, 'Recuperação', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-12-04', '21:30:00', '23:05:00', true
 ) AS v
 JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_professor AND p.nome_disciplina = v.nome_disciplina;
 
@@ -1150,20 +1155,20 @@ JOIN questao q ON q.enunciado = v.enunciado AND q.tipo = v.tipo;
 
 -- PROVA APLICADA À TURMA (turmas matutinas: 08:00)
 -- Fabiano: Sistemas Operacionais I = ADS 1º sem. (turma 7) | Adriana: Desenvolvimento Web I = DSM 1º sem. (turma 13)
-INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim)
-SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario, v.horario_fim
+INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim, recuperacao)
+SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario, v.horario_fim, v.recuperacao
 FROM (
-    SELECT 7 AS id_turma, 'Prova 1' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina, '2026-10-16' AS data, '08:00:00' AS horario, '09:50:00' AS horario_fim
+    SELECT 7 AS id_turma, 'Prova 1' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina, '2026-10-16' AS data, '08:00:00' AS horario, '09:50:00' AS horario_fim, false AS recuperacao
     UNION ALL
-    SELECT 7, 'Prova 2', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-11-20', '08:00:00', '09:50:00'
+    SELECT 7, 'Prova 2', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-11-20', '08:00:00', '09:50:00', false
     UNION ALL
-    SELECT 7, 'Recuperação', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-12-07', '08:00:00', '09:50:00'
+    SELECT 7, 'Recuperação', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-12-07', '08:00:00', '09:50:00', true
     UNION ALL
-    SELECT 13, 'Prova 1', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-10-19', '08:00:00', '09:50:00'
+    SELECT 13, 'Prova 1', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-10-19', '08:00:00', '09:50:00', false
     UNION ALL
-    SELECT 13, 'Prova 2', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-11-23', '08:00:00', '09:50:00'
+    SELECT 13, 'Prova 2', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-11-23', '08:00:00', '09:50:00', false
     UNION ALL
-    SELECT 13, 'Recuperação', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-12-08', '08:00:00', '09:50:00'
+    SELECT 13, 'Recuperação', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-12-08', '08:00:00', '09:50:00', true
 ) AS v
 JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_professor AND p.nome_disciplina = v.nome_disciplina;
 
@@ -1351,6 +1356,200 @@ WHERE p.nome_prova = 'Recuperação'
   AND pt.id_turma = 13;
 
 
+-- ========== CENÁRIO: TURMA DE INGLÊS COM SÓ ALGUNS ALUNOS ==========
+-- BD 2º semestre (noturno): a turma Regular (id 2) NÃO cursa Inglês II.
+-- Só 4 dos 10 alunos fazem Inglês II, numa turma própria (nome_turma = 'Inglês', id 19, criada na lista de TURMAS).
+-- Eles continuam na turma Regular para as demais matérias (um aluno em duas turmas).
+
+INSERT INTO turma_disciplina (id_turma, nome_disciplina) VALUES
+(19, 'Inglês II');
+
+-- ALUNOS DA TURMA DE INGLÊS: marli.aguiar@aluno.fatec.com, fabiana.pires@aluno.fatec.com, ronaldo.cunha@aluno.fatec.com, willian.fonseca@aluno.fatec.com
+INSERT INTO pertence (RA, id_turma, nome_curso)
+SELECT a.RA, 19, a.nome_curso
+FROM aluno a
+WHERE a.email IN ('marli.aguiar@aluno.fatec.com', 'fabiana.pires@aluno.fatec.com', 'ronaldo.cunha@aluno.fatec.com', 'willian.fonseca@aluno.fatec.com');
+
+-- QUESTÕES DE INGLÊS II (Teresinha)
+INSERT INTO questao (questao_id, enunciado, tema, tipo, dificuldade, email_professor, nome_disciplina) VALUES
+(16, 'Qual é o passado simples do verbo "go" em inglês?', 'Passado simples', 'alt', 'Fácil', 'teresinha.fatima@prof.fatec.com', 'Inglês II'),
+(17, 'Escreva em inglês duas frases sobre o que você fez ontem.', 'Rotina e passado', 'diss', 'Média', 'teresinha.fatima@prof.fatec.com', 'Inglês II');
+
+INSERT INTO resposta (questao_id, texto, correta, conceito) VALUES
+(16, 'went', 1, NULL),
+(16, 'goed', 0, NULL),
+(16, 'gone', 0, NULL),
+(16, 'going', 0, NULL),
+(17, 'Yesterday I woke up early and went to college. In the evening I studied English.', NULL, NULL);
+
+-- Prova 1 de Inglês II (já cadastrada, sem questões): 4,00 + 6,00 = 10,00
+INSERT INTO prova_questao (prova_id, questao_id, email_professor, nome_disciplina, peso)
+SELECT p.prova_id, q.questao_id, p.email_professor, p.nome_disciplina, v.peso
+FROM (
+    SELECT 16 AS questao_id, 4.00 AS peso
+    UNION ALL
+    SELECT 17, 6.00
+) AS v
+JOIN prova p ON p.nome_prova = 'Prova 1' AND p.email_professor = 'teresinha.fatima@prof.fatec.com' AND p.nome_disciplina = 'Inglês II'
+JOIN questao q ON q.questao_id = v.questao_id;
+
+-- APLICAÇÃO NA TURMA DE INGLÊS (24/11, 19:35 às 21:15)
+INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim)
+SELECT p.prova_id, 19, p.email_professor, p.nome_disciplina, '2026-11-24', '19:35:00', '21:15:00'
+FROM prova p
+WHERE p.nome_prova = 'Prova 1' AND p.email_professor = 'teresinha.fatima@prof.fatec.com' AND p.nome_disciplina = 'Inglês II';
+
+-- CONVOCADOS: todos os alunos da turma de Inglês (os outros 6 da turma Regular não fazem a prova)
+INSERT INTO prova_aluno (id_aplicacao, id_turma, RA)
+SELECT pt.id_aplicacao, pt.id_turma, pe.RA
+FROM prova_turma pt
+JOIN pertence pe ON pe.id_turma = pt.id_turma
+WHERE pt.id_turma = 19;
+
+-- =====================================================================
+-- DEPENDÊNCIA: 2 alunos de ADS (3º semestre, turma 9) cursam Engenharia de Software II
+-- junto com a turma 8 (2º semestre)
+-- =====================================================================
+INSERT INTO pertence (RA, id_turma, nome_curso)
+SELECT pe.RA, 8, pe.nome_curso FROM pertence pe JOIN aluno a ON a.RA = pe.RA
+WHERE pe.id_turma = 9 AND a.email IN ('edson.reis@aluno.fatec.com', 'diogo.oliveira@aluno.fatec.com');
+
+-- =====================================================================
+-- NOVO: EXEMPLO DE COMPOSIÇÃO DA MÉDIA (colocar antes da CONFERÊNCIA)
+-- Inglês I / turma 1: Prova 1 = 60%, Prova 2 = 40% (soma 100)
+-- BD III / turma 3: Prova 1 = 50%, Prova 2 = 50% (Prova 2 ainda sem correção)
+-- A Recuperação NÃO entra como item: ela substitui o item escolhido pelo professor (bloco RECUPERAÇÃO abaixo).
+-- =====================================================================
+-- localiza as aplicações pelo nome (não depende do id gerado pelo AUTO_INCREMENT)
+SET @app_ing_p1 = (SELECT pt.id_aplicacao FROM prova_turma pt JOIN prova p ON p.prova_id = pt.prova_id
+                  WHERE pt.id_turma = 1 AND p.nome_disciplina = 'Inglês I' AND p.nome_prova = 'Prova 1');
+SET @app_ing_p2 = (SELECT pt.id_aplicacao FROM prova_turma pt JOIN prova p ON p.prova_id = pt.prova_id
+                  WHERE pt.id_turma = 1 AND p.nome_disciplina = 'Inglês I' AND p.nome_prova = 'Prova 2');
+SET @app_ing_rec = (SELECT pt.id_aplicacao FROM prova_turma pt JOIN prova p ON p.prova_id = pt.prova_id
+                   WHERE pt.id_turma = 1 AND p.nome_disciplina = 'Inglês I' AND p.nome_prova = 'Recuperação');
+SET @app_bd_p1 = (SELECT pt.id_aplicacao FROM prova_turma pt JOIN prova p ON p.prova_id = pt.prova_id
+                 WHERE pt.id_turma = 3 AND p.nome_disciplina = 'Análise e desenvolvimento de Banco de Dados III' AND p.nome_prova = 'Prova 1');
+SET @app_bd_p2 = (SELECT pt.id_aplicacao FROM prova_turma pt JOIN prova p ON p.prova_id = pt.prova_id
+                 WHERE pt.id_turma = 3 AND p.nome_disciplina = 'Análise e desenvolvimento de Banco de Dados III' AND p.nome_prova = 'Prova 2');
+
+INSERT INTO item_avaliativo (id_turma, nome_disciplina, nome, peso_percentual, id_aplicacao) VALUES
+(1, 'Inglês I', 'Prova 1', 60, @app_ing_p1),
+(1, 'Inglês I', 'Prova 2', 40, @app_ing_p2),
+(3, 'Análise e desenvolvimento de Banco de Dados III', 'Prova 1', 50, @app_bd_p1),
+(3, 'Análise e desenvolvimento de Banco de Dados III', 'Prova 2', 50, @app_bd_p2);
+
+-- notas das provas (prova_aluno) + fechamento da correção
+
+UPDATE prova_aluno SET nota = 8, corrigida_em = '2026-10-25 10:00:00' WHERE id_aplicacao = @app_ing_p1 AND RA = '3429843806';
+UPDATE prova_aluno SET nota = 7, corrigida_em = '2026-11-25 10:00:00' WHERE id_aplicacao = @app_ing_p2 AND RA = '3429843806';
+UPDATE prova_aluno SET nota = 10, corrigida_em = '2026-10-25 10:00:00' WHERE id_aplicacao = @app_ing_p1 AND RA = '8089811057';
+UPDATE prova_aluno SET nota = 10, corrigida_em = '2026-11-25 10:00:00' WHERE id_aplicacao = @app_ing_p2 AND RA = '8089811057';
+UPDATE prova_aluno SET nota = 9.5, corrigida_em = '2026-10-25 10:00:00' WHERE id_aplicacao = @app_ing_p1 AND RA = '3534589347';
+UPDATE prova_aluno SET nota = 9.5, corrigida_em = '2026-11-25 10:00:00' WHERE id_aplicacao = @app_ing_p2 AND RA = '3534589347';
+UPDATE prova_aluno SET nota = 6, corrigida_em = '2026-10-25 10:00:00' WHERE id_aplicacao = @app_ing_p1 AND RA = '7070353682';
+UPDATE prova_aluno SET nota = 5, corrigida_em = '2026-11-25 10:00:00' WHERE id_aplicacao = @app_ing_p2 AND RA = '7070353682';
+UPDATE prova_aluno SET nota = 4, corrigida_em = '2026-10-25 10:00:00' WHERE id_aplicacao = @app_ing_p1 AND RA = '3955057679';
+UPDATE prova_aluno SET nota = 3, corrigida_em = '2026-11-25 10:00:00' WHERE id_aplicacao = @app_ing_p2 AND RA = '3955057679';
+UPDATE prova_aluno SET nota = 7, corrigida_em = '2026-10-25 10:00:00' WHERE id_aplicacao = @app_ing_p1 AND RA = '3737564015';
+UPDATE prova_aluno SET nota = 6.5 WHERE id_aplicacao = @app_ing_p2 AND RA = '3737564015';  -- nota provisória, correção não fechada
+UPDATE prova_aluno SET nota = 9, corrigida_em = '2026-10-25 10:00:00' WHERE id_aplicacao = @app_ing_p1 AND RA = '5969515932';
+UPDATE prova_aluno SET nota = 9, corrigida_em = '2026-11-25 10:00:00' WHERE id_aplicacao = @app_ing_p2 AND RA = '5969515932';
+UPDATE prova_aluno SET nota = 2, corrigida_em = '2026-10-25 10:00:00' WHERE id_aplicacao = @app_ing_p1 AND RA = '3480944395';
+UPDATE prova_aluno SET nota = 6, corrigida_em = '2026-11-25 10:00:00' WHERE id_aplicacao = @app_ing_p2 AND RA = '3480944395';
+UPDATE prova_aluno SET nota = 10, corrigida_em = '2026-10-25 10:00:00' WHERE id_aplicacao = @app_ing_p1 AND RA = '6569811650';
+UPDATE prova_aluno SET nota = 8, corrigida_em = '2026-11-25 10:00:00' WHERE id_aplicacao = @app_ing_p2 AND RA = '6569811650';
+UPDATE prova_aluno SET nota = 5, corrigida_em = '2026-10-25 10:00:00' WHERE id_aplicacao = @app_ing_p1 AND RA = '9930486087';
+UPDATE prova_aluno SET nota = 5, corrigida_em = '2026-11-25 10:00:00' WHERE id_aplicacao = @app_ing_p2 AND RA = '9930486087';
+UPDATE prova_aluno SET nota = 8, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '1331331252';
+UPDATE prova_aluno SET nota = 6, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '2816870293';
+UPDATE prova_aluno SET nota = 10, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '3758626180';
+UPDATE prova_aluno SET nota = 5, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '8148949375';
+UPDATE prova_aluno SET nota = 7, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '1982038995';
+UPDATE prova_aluno SET nota = 9, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '9934821335';
+UPDATE prova_aluno SET nota = 4, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '8458685742';
+UPDATE prova_aluno SET nota = 3, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '3125811937';
+UPDATE prova_aluno SET nota = 2, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '4011695303';
+UPDATE prova_aluno SET nota = 10, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '3579364582';
+
+-- =====================================================================
+-- NOVO: RECUPERAÇÃO
+-- (as aplicações de recuperação já estão marcadas com recuperacao = true em prova_turma)
+-- Inglês I (turma 1): o professor escolhe qual item cada aluno substitui
+--    Daiane   -> Prova 1     (recuperação já corrigida: 8)
+--    Alexandre-> Prova 2     (recuperação já corrigida: 7)
+--    Cláudia  -> Prova 1     (recuperação ainda NÃO corrigida: vale a nota original)
+-- =====================================================================
+UPDATE prova_aluno SET nota = 8, corrigida_em = '2026-12-03 10:00:00' WHERE id_aplicacao = @app_ing_rec AND RA = '3480944395';
+UPDATE prova_aluno SET nota = 7, corrigida_em = '2026-12-03 10:00:00' WHERE id_aplicacao = @app_ing_rec AND RA = '3955057679';
+UPDATE prova_aluno SET nota = 5                                       WHERE id_aplicacao = @app_ing_rec AND RA = '8089811057';  -- provisória
+
+INSERT INTO recuperacao_substituicao (id_aplicacao, id_turma, nome_disciplina, RA, item_id) VALUES
+(@app_ing_rec, 1, 'Inglês I', '3480944395', (SELECT item_id FROM item_avaliativo WHERE id_turma = 1 AND nome_disciplina = 'Inglês I' AND nome = 'Prova 1')),
+(@app_ing_rec, 1, 'Inglês I', '3955057679', (SELECT item_id FROM item_avaliativo WHERE id_turma = 1 AND nome_disciplina = 'Inglês I' AND nome = 'Prova 2')),
+(@app_ing_rec, 1, 'Inglês I', '8089811057', (SELECT item_id FROM item_avaliativo WHERE id_turma = 1 AND nome_disciplina = 'Inglês I' AND nome = 'Prova 1'));
+
+-- =====================================================================
+-- TESTE DO APP: prova respondida e corrigida
+-- Turma 7 (ADS, 1º semestre, Regular, 10 alunos) - Sistemas Operacionais I - Prova 1
+-- Questão alternativa (vale 4) e questão dissertativa (vale 6). Todos responderam tudo.
+-- Os 10 alunos, em ordem de RA, recebem nota final 1, 2, ..., 10:
+--   notas 1 a 3  -> erraram a alternativa; dissertativa vale 1, 2 e 3
+--   notas 4 a 10 -> acertaram a alternativa (4); dissertativa vale 0 a 6
+-- correta = TRUE só quando a questão recebeu a nota cheia.
+-- A aplicação e as questões são localizadas pelo nome (sem id fixo).
+-- =====================================================================
+SET @app_so = (SELECT pt.id_aplicacao FROM prova_turma pt JOIN prova p ON p.prova_id = pt.prova_id
+               WHERE pt.id_turma = 7 AND p.nome_disciplina = 'Sistemas Operacionais I' AND p.nome_prova = 'Prova 1');
+
+-- questão alternativa
+INSERT INTO resposta_aluno (id_aplicacao, prova_id, RA, questao_id, resposta_id, texto_resposta, correta, nota)
+SELECT pt.id_aplicacao, pt.prova_id, a.RA, qu.questao_id, r.resposta_id, NULL,
+       CASE WHEN a.n >= 4 THEN TRUE ELSE FALSE END,
+       CASE WHEN a.n >= 4 THEN 4 ELSE 0 END
+FROM (SELECT pa.id_aplicacao, pa.RA, ROW_NUMBER() OVER (ORDER BY pa.RA) AS n
+      FROM prova_aluno pa WHERE pa.id_aplicacao = @app_so) a
+JOIN prova_turma pt   ON pt.id_aplicacao = a.id_aplicacao
+JOIN prova_questao pq ON pq.prova_id = pt.prova_id
+JOIN questao qu       ON qu.questao_id = pq.questao_id AND qu.tipo = 'alt'
+JOIN resposta r       ON r.questao_id = qu.questao_id
+                     AND r.texto = CASE a.n WHEN 1 THEN 'Editar documentos de texto'
+                                            WHEN 2 THEN 'Navegar na internet'
+                                            WHEN 3 THEN 'Compilar programas em linguagem C'
+                                            ELSE 'Gerenciar os recursos de hardware e os processos' END;
+
+-- questão dissertativa
+INSERT INTO resposta_aluno (id_aplicacao, prova_id, RA, questao_id, resposta_id, texto_resposta, correta, nota)
+SELECT pt.id_aplicacao, pt.prova_id, a.RA, qu.questao_id, NULL, t.texto,
+       CASE WHEN t.d = 6 THEN TRUE ELSE FALSE END, t.d
+FROM (SELECT pa.id_aplicacao, pa.RA, ROW_NUMBER() OVER (ORDER BY pa.RA) AS n
+      FROM prova_aluno pa WHERE pa.id_aplicacao = @app_so) a
+JOIN prova_turma pt   ON pt.id_aplicacao = a.id_aplicacao
+JOIN prova_questao pq ON pq.prova_id = pt.prova_id
+JOIN questao qu       ON qu.questao_id = pq.questao_id AND qu.tipo = 'diss'
+JOIN (
+    SELECT 0 AS d, 'Processo e thread são a mesma coisa.' AS texto
+    UNION ALL
+    SELECT 1, 'Thread é uma parte do processo.'
+    UNION ALL
+    SELECT 2, 'O processo é um programa em execução e a thread executa dentro dele.'
+    UNION ALL
+    SELECT 3, 'O processo tem memória própria e a thread fica dentro do processo.'
+    UNION ALL
+    SELECT 4, 'Cada processo tem seu espaço de memória; as threads de um processo compartilham esse espaço.'
+    UNION ALL
+    SELECT 5, 'Processo tem memória própria; as threads de um mesmo processo compartilham memória e recursos, e por isso trocam dados com mais facilidade.'
+    UNION ALL
+    SELECT 6, 'Um processo possui seu próprio espaço de memória, enquanto as threads compartilham a memória e os recursos do processo.'
+) t ON t.d = CASE WHEN a.n < 4 THEN a.n ELSE a.n - 4 END;
+
+-- fecha a correção: nota da prova = soma das notas das questões
+UPDATE prova_aluno
+SET nota = (SELECT SUM(r.nota) FROM resposta_aluno r
+            WHERE r.id_aplicacao = prova_aluno.id_aplicacao AND r.RA = prova_aluno.RA),
+    corrigida_em = '2026-10-20 10:00:00'
+WHERE id_aplicacao = @app_so;
+
+
 -- ========== CONFERÊNCIA ==========
 
 SELECT * FROM usuario;
@@ -1364,8 +1563,7 @@ SELECT * FROM ministra;
 SELECT * FROM curso_disciplina;
 SELECT * FROM turma_disciplina;
 SELECT * FROM pertence;
- 
- 
+
 SELECT * FROM questao;
 SELECT * FROM resposta;
 SELECT * FROM prova;
@@ -1374,3 +1572,13 @@ SELECT * FROM prova_aluno;
 SELECT * FROM prova_questao;
 SELECT * FROM prova_turma;
 SELECT * FROM resposta_aluno;
+
+-- novas
+SELECT * FROM item_avaliativo;
+SELECT * FROM recuperacao_substituicao;
+
+SELECT * FROM v_media_aluno;
+SELECT * FROM v_recuperacao_status;
+SELECT * FROM v_correcao_status;
+SELECT * FROM v_auditoria_pesos;
+SELECT * FROM v_auditoria_notas;
