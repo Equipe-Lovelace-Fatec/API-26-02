@@ -11,12 +11,12 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="700.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.QuestaoRelacionamentoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="1070.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.QuestaoRelacionamentoController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="344.0" layoutX="5.0" layoutY="11.0" stroke="#624695" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="2.0" width="691.0" />
-      <VBox layoutX="12.0" layoutY="18.0" prefHeight="336.0" prefWidth="676.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="344.0" layoutX="5.0" layoutY="11.0" stroke="#624695" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="2.0" width="1060.0" />
+      <VBox layoutX="12.0" layoutY="18.0" prefHeight="336.0" prefWidth="1045.0">
          <children>
-            <Label fx:id="EnunciadoQuestao" alignment="TOP_LEFT" prefHeight="68.0" prefWidth="673.0" text="Enunciado da Questão 01 — Meramente Ilustrativo. A crescente complexidade dos paradigmas contemporâneos evidencia a necessidade de uma epistemológicas e metodológicas ao contexto supracitado." wrapText="true">
+            <Label fx:id="EnunciadoQuestao" alignment="TOP_LEFT" prefHeight="66.0" prefWidth="1044.0" text="Enunciado da Questão 01 — Meramente Ilustrativo. A crescente complexidade dos paradigmas contemporâneos evidencia a necessidade de uma epistemológicas e metodológicas ao contexto supracitado." wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
@@ -43,22 +43,22 @@
                   <Label fx:id="afirmacao2" prefHeight="58.0" prefWidth="313.0" text="Afirmação 02" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <Label fx:id="afirmacao3" prefHeight="58.0" prefWidth="313.0" text="Afirmação 03" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <Label fx:id="afirmacao4" prefHeight="58.0" prefWidth="313.0" text="Afirmação 04" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <ComboBox prefHeight="47.0" prefWidth="44.0" style="-fx-background-color: transparent; -fx-border-color: #624695; -fx-border-width: 2px; -fx-border-radius: 4px;" GridPane.columnIndex="2">
+                  <ComboBox fx:id="cbRelacaoA" prefHeight="47.0" prefWidth="44.0" style="-fx-background-color: transparent; -fx-border-color: #624695; -fx-border-width: 2px; -fx-border-radius: 4px;" GridPane.columnIndex="2">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ComboBox>
-                  <ComboBox prefHeight="47.0" prefWidth="44.0" style="-fx-background-color: transparent; -fx-border-color: #624695; -fx-border-width: 2px; -fx-border-radius: 4px;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <ComboBox fx:id="cbRelacaoB" prefHeight="47.0" prefWidth="44.0" style="-fx-background-color: transparent; -fx-border-color: #624695; -fx-border-width: 2px; -fx-border-radius: 4px;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ComboBox>
-                  <ComboBox prefHeight="47.0" prefWidth="44.0" style="-fx-background-color: transparent; -fx-border-color: #624695; -fx-border-width: 2px; -fx-border-radius: 4px;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <ComboBox fx:id="cbRelacaoC" prefHeight="47.0" prefWidth="44.0" style="-fx-background-color: transparent; -fx-border-color: #624695; -fx-border-width: 2px; -fx-border-radius: 4px;" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ComboBox>
-                  <ComboBox prefHeight="47.0" prefWidth="44.0" style="-fx-background-color: transparent; -fx-border-color: #624695; -fx-border-width: 2px; -fx-border-radius: 4px;" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <ComboBox fx:id="cbRelacaoD" prefHeight="47.0" prefWidth="44.0" style="-fx-background-color: transparent; -fx-border-color: #624695; -fx-border-width: 2px; -fx-border-radius: 4px;" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

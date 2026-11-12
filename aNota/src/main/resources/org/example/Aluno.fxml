@@ -171,27 +171,22 @@
                                         <Font name="System Bold" size="16.0" />
                                     </font>
                                 </Label>
-                                <Text fx:id="txt_nome_aluno" layoutX="117.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" wrappingWidth="295.0">
+                                <Text fx:id="txt_nome_aluno" layoutX="117.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" wrappingWidth="295.0">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Text>
-                                <Text fx:id="txt_ra" layoutX="117.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RA:" wrappingWidth="295.0">
+                                <Text fx:id="txt_ra" layoutX="117.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RA:" wrappingWidth="295.0">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Text>
-                                <Text fx:id="txt_curso" layoutX="117.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Curso:" wrappingWidth="295.0">
+                                <Text fx:id="txt_curso" layoutX="117.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Curso:" wrappingWidth="295.0">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Text>
-                                <Text fx:id="txt_nasc" layoutX="117.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data de Nascimento:" wrappingWidth="295.0">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Text>
-                                <Text fx:id="txt_email" layoutX="117.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" wrappingWidth="295.0">
+                                <Text fx:id="txt_email" layoutX="117.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" wrappingWidth="295.0">
                                     <font>
                                         <Font size="14.0" />
                                     </font>

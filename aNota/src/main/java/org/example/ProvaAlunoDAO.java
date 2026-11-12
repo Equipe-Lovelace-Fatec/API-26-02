@@ -18,8 +18,6 @@ import java.util.Map;
 // Consultas das telas do aluno: provas realizadas, gabarito e correção.
 public class ProvaAlunoDAO {
 
-    private static final int ERRO_COLUNA_INEXISTENTE = 1054;
-
     private final CorrecaoAlunoDAO correcaoDAO = new CorrecaoAlunoDAO();
 
     // RA do aluno a partir do e-mail do login
@@ -38,7 +36,8 @@ public class ProvaAlunoDAO {
     // já passou (assim o gabarito nunca aparece com a prova ainda em andamento). Mais recentes primeiro.
     public List<ProvaRealizada> listarProvasRealizadas(String ra) throws SQLException {
         String sql = "SELECT pa.id_aplicacao, pt.prova_id, p.nome_prova, pt.nome_disciplina, "
-                + "up.nome AS nome_professor, pt.data, pt.horario, pa.nota "
+                + "up.nome AS nome_professor, pt.data, pt.horario, "
+                + "CASE WHEN pa.corrigida_em IS NOT NULL THEN pa.nota END AS nota "
                 + "FROM prova_aluno pa "
                 + "JOIN prova_turma pt ON pt.id_aplicacao = pa.id_aplicacao AND pt.id_turma = pa.id_turma "
                 + "JOIN prova p ON p.prova_id = pt.prova_id "
@@ -119,9 +118,7 @@ public class ProvaAlunoDAO {
         return linhas;
     }
 
-    // Comentário do professor por questão aberta.
-    // PENDENTE NO BANCO: assume a coluna resposta_aluno.comentario_professor (TEXT NULL). Enquanto ela não
-    // existir, a consulta falha com "coluna desconhecida" e devolvemos vazio, sem quebrar a tela.
+    // Comentário do professor por questão aberta (resposta_aluno.comentario_professor)
     private Map<Long, String> buscarComentariosDoProfessor(String ra, long idAplicacao) throws SQLException {
         String sql = "SELECT questao_id, comentario_professor FROM resposta_aluno "
                 + "WHERE id_aplicacao = ? AND RA = ?";
@@ -137,10 +134,6 @@ public class ProvaAlunoDAO {
                         comentarios.put(rs.getLong("questao_id"), comentario);
                     }
                 }
-            }
-        } catch (SQLException e) {
-            if (e.getErrorCode() != ERRO_COLUNA_INEXISTENTE) {
-                throw e;
             }
         }
         return comentarios;

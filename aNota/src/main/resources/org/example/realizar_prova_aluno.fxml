@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -31,7 +32,10 @@
                   <Font name="System Bold" size="44.0" />
                </font>
             </Label>
-            <Button fx:id="bt_finalizar_prova" layoutX="493.0" layoutY="1896.0" mnemonicParsing="false" onAction="#ir_finalizar_prova" prefHeight="82.0" prefWidth="364.0" style="-fx-background-color: transparent;" />
+            <Button fx:id="bt_finalizar_prova" layoutX="489.0" layoutY="1528.0" mnemonicParsing="false" onAction="#ir_finalizar_prova" prefHeight="82.0" prefWidth="364.0" style="-fx-background-color: transparent;">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Label fx:id="titulo_prova" alignment="CENTER" contentDisplay="CENTER" layoutX="54.0" layoutY="124.0" prefHeight="116.0" prefWidth="1219.0" style="-fx-text-fill: #624695;" textFill="#624695">
                <font>
                   <Font name="System Bold" size="40.0" />

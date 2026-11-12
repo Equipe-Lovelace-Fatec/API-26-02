@@ -33,7 +33,6 @@ public class AlunoController {
     private static final String COR_TEXTO = "#737373";
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final DateTimeFormatter FORMATO_HORA = DateTimeFormatter.ofPattern("HH:mm");
-    private static final DateTimeFormatter FORMATO_NASC = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     // ---- Menus e navegação (inalterados) ----
     @FXML private javafx.scene.control.MenuButton btnQuestoes, btnProva, btnAlunos;
@@ -53,7 +52,6 @@ public class AlunoController {
     @FXML private Text txt_nome_aluno;
     @FXML private Text txt_ra;
     @FXML private Text txt_curso;
-    @FXML private Text txt_nasc;
     @FXML private Text txt_email;
     @FXML private Label txt_status;
 
@@ -79,6 +77,23 @@ public class AlunoController {
 
         boolean ehAberta() {
             return "diss".equalsIgnoreCase(questao.tipo);
+        }
+
+        // Nota a gravar em resposta_aluno.nota: objetiva = automática; aberta = o que o professor digitou
+        // (campo vazio = null, "ainda não corrigida")
+        BigDecimal notaParaSalvar() {
+            if (!ehAberta()) {
+                return BigDecimal.valueOf(notaAutomatica).setScale(2, java.math.RoundingMode.HALF_UP);
+            }
+            String t = campoNota.getText().trim().replace(",", ".");
+            if (t.isEmpty()) {
+                return null;
+            }
+            try {
+                return new BigDecimal(t).setScale(2, java.math.RoundingMode.HALF_UP);
+            } catch (NumberFormatException e) {
+                return null;
+            }
         }
 
         double getNota() {
@@ -251,14 +266,12 @@ public class AlunoController {
         txt_data_prova.setText("Realizada em: " + data + hora);
 
         txt_turma.setText("Turma: " + valor(c.nomeTurma) + "  |  " + valor(c.semestre)
-                + "º sem.  |  " + valor(c.periodo));
+                + " sem.  |  " + valor(c.periodo));
 
         txt_perfil.setText(iniciais(c.nomeAluno));
         txt_nome_aluno.setText("Nome: " + valor(c.nomeAluno));
         txt_ra.setText("RA: " + valor(c.ra));
         txt_curso.setText("Curso: " + valor(c.nomeCurso));
-        txt_nasc.setText("Data de Nascimento: "
-                + (c.dataNascimento != null ? c.dataNascimento.format(FORMATO_NASC) : "-"));
         txt_email.setText("E-mail: " + valor(c.email));
     }
 
@@ -272,7 +285,6 @@ public class AlunoController {
         txt_nome_aluno.setText("Nome: -");
         txt_ra.setText("RA: -");
         txt_curso.setText("Curso: -");
-        txt_nasc.setText("Data de Nascimento: -");
         txt_email.setText("E-mail: -");
         txt_status.setText("Status:");
     }
@@ -330,6 +342,9 @@ public class AlunoController {
             comentario.setWrapText(true);
             comentario.setPrefRowCount(3);
             comentario.setFont(Font.font(16));
+            if (respostaAluno != null && respostaAluno.comentario != null) {
+                comentario.setText(respostaAluno.comentario);   // comentário já salvo antes
+            }
             cartao.campoComentario = comentario;
             caixa.getChildren().add(comentario);
         }
@@ -359,6 +374,9 @@ public class AlunoController {
 
         if (cartao.ehAberta()) {
             campo.setPromptText("0,00");
+            if (respostaAluno != null && respostaAluno.nota != null) {
+                campo.setText(formatar(respostaAluno.nota.doubleValue()));   // nota já salva antes
+            }
             campo.textProperty().addListener((obs, antigo, novo) -> {
                 validarNota(campo, cartao.peso.doubleValue());
                 atualizarTotal();
@@ -459,26 +477,41 @@ public class AlunoController {
 
     // ------------------------------------------------------------------ ações
 
+    // Salva nota e comentário de cada questão. Se todas as questões têm nota, a correção é fechada
+    // (nota da prova gravada e corrigida_em preenchido, e só então a nota entra na média);
+    // se falta nota em alguma questão aberta, fica salva como parcial.
     @FXML
     void salvanotas(ActionEvent event) {
         if (!CorrecaoAluno.temSelecao() || cartoes.isEmpty()) {
             return;
         }
-        double total = 0;
+
+        List<CorrecaoAlunoDAO.NotaQuestao> notas = new ArrayList<>();
         for (CartaoQuestao c : cartoes) {
-            total += c.getNota();
+            String comentario = c.campoComentario != null ? c.campoComentario.getText() : null;
+            notas.add(new CorrecaoAlunoDAO.NotaQuestao(c.questao.questaoId, c.notaParaSalvar(), comentario));
         }
+
         try {
-            dao.salvarNota(CorrecaoAluno.getRa(), CorrecaoAluno.getIdAplicacao(),
-                    BigDecimal.valueOf(total).setScale(2, java.math.RoundingMode.HALF_UP));
+            CorrecaoAlunoDAO.ResultadoCorrecao resultado = dao.salvarCorrecao(
+                    CorrecaoAluno.getRa(), CorrecaoAluno.getIdAplicacao(), notas);
+
             CorrecaoAlunoDAO.Aplicacao aplicacao = combo_prova.getValue();
             if (aplicacao != null) {
-                carregarAlunos(aplicacao, CorrecaoAluno.getRa());   // atualiza "nota" ao lado do nome
+                carregarAlunos(aplicacao, CorrecaoAluno.getRa());   // atualiza a situação ao lado do nome
             }
-            txt_status.setText(String.format("Nota salva. Total: %.2f", total));
+
+            if (resultado.fechada) {
+                txt_status.setText("Correção fechada. Nota: "
+                        + (resultado.notaProva != null ? formatar(resultado.notaProva.doubleValue()) : "-"));
+            } else {
+                txt_status.setText(resultado.pendentes + (resultado.pendentes == 1
+                        ? " questão sem nota. Correção salva, mas ainda não fechada."
+                        : " questões sem nota. Correção salva, mas ainda não fechada."));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            mostrarAlerta("Não foi possível salvar a nota: " + e.getMessage());
+            mostrarAlerta("Não foi possível salvar a correção: " + e.getMessage());
         }
     }
 

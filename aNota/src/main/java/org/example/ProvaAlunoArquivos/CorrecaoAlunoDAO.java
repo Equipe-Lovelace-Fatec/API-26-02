@@ -32,14 +32,15 @@ public class CorrecaoAlunoDAO {
         public String vigencia;
         public LocalDate data;
         public LocalTime horario;
+        public boolean recuperacao;   // prova_turma.recuperacao
 
         @Override
         public String toString() {
             String dia = data != null ? data.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")) : "-";
             String hora = horario != null ? horario.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")) : "";
             return nomeProva + "  |  " + nomeDisciplina
-                    + "  |  Turma: " + nomeTurma + " - " + semestre + "º sem. " + periodo + " (" + vigencia + ")"
-                    + "  |  " + dia + " " + hora;
+                    + "  |  Turma: " + nomeTurma + " - " + semestre + " sem. " + periodo + " (" + vigencia + ")"
+                    + "  |  " + dia + " " + hora + (recuperacao ? "  |  RECUPERAÇÃO" : "");
         }
     }
 
@@ -47,11 +48,15 @@ public class CorrecaoAlunoDAO {
     public static class AlunoConvocado {
         public String ra;
         public String nome;
-        public BigDecimal nota;   // null = ainda não corrigida
+        public BigDecimal nota;   // só vale quando corrigida
+        public boolean corrigida; // prova_aluno.corrigida_em preenchido
+        public String situacao;   // v_correcao_status: SEM ENTREGA, AGUARDANDO CORREÇÃO, PRONTA PARA FECHAR...
 
         @Override
         public String toString() {
-            return nome + " (" + ra + ")" + (nota != null ? "  - nota " + nota.toPlainString() : "");
+            String detalhe = corrigida && nota != null ? "nota " + nota.toPlainString()
+                    : (situacao != null ? situacao.toLowerCase() : "");
+            return nome + " (" + ra + ")" + (detalhe.isEmpty() ? "" : "  - " + detalhe);
         }
     }
 
@@ -62,7 +67,6 @@ public class CorrecaoAlunoDAO {
         public String ra;
         public String email;
         public String nomeCurso;
-        public LocalDate dataNascimento;
         public String nomeTurma;
         public String semestre;
         public String periodo;
@@ -87,12 +91,34 @@ public class CorrecaoAlunoDAO {
     public static class RespostaDoAluno {
         public String texto;      // alt: texto da alternativa marcada | diss/rela: texto_resposta
         public Boolean correta;   // null = ainda não corrigida
+        public BigDecimal nota;   // resposta_aluno.nota (null = questão ainda sem nota)
+        public String comentario; // resposta_aluno.comentario_professor
+    }
+
+    // Nota e comentário que o professor deu a uma questão (nota null = ainda não corrigida)
+    public static class NotaQuestao {
+        public final long questaoId;
+        public final BigDecimal nota;
+        public final String comentario;
+
+        public NotaQuestao(long questaoId, BigDecimal nota, String comentario) {
+            this.questaoId = questaoId;
+            this.nota = nota;
+            this.comentario = comentario != null && !comentario.isBlank() ? comentario.trim() : null;
+        }
+    }
+
+    // Resultado de salvar a correção de um aluno
+    public static class ResultadoCorrecao {
+        public boolean fechada;          // todas as questões com nota: nota da prova gravada e corrigida_em preenchido
+        public int pendentes;            // questões ainda sem nota
+        public BigDecimal notaProva;     // prova_aluno.nota (só quando fechada)
     }
 
     // Aplicações do professor cuja prova já começou (só essas podem ser corrigidas), as mais recentes primeiro
     public List<Aplicacao> listarAplicacoesDoProfessor(String emailProfessor) throws SQLException {
         String sql = "SELECT pt.id_aplicacao, pt.prova_id, p.nome_prova, pt.nome_disciplina, "
-                + "t.nome_turma, t.semestre, t.periodo, t.vigencia, pt.data, pt.horario "
+                + "t.nome_turma, t.semestre, t.periodo, t.vigencia, pt.data, pt.horario, pt.recuperacao "
                 + "FROM prova_turma pt "
                 + "JOIN prova p ON p.prova_id = pt.prova_id "
                 + "AND p.email_professor = pt.email_professor AND p.nome_disciplina = pt.nome_disciplina "
@@ -119,6 +145,7 @@ public class CorrecaoAlunoDAO {
                     Time horario = rs.getTime("horario");
                     a.data = data != null ? data.toLocalDate() : null;
                     a.horario = horario != null ? horario.toLocalTime() : null;
+                    a.recuperacao = rs.getBoolean("recuperacao");
                     lista.add(a);
                 }
             }
@@ -128,10 +155,11 @@ public class CorrecaoAlunoDAO {
 
     // Alunos convocados para a aplicação, em ordem alfabética
     public List<AlunoConvocado> listarAlunosDaAplicacao(long idAplicacao) throws SQLException {
-        String sql = "SELECT a.RA, u.nome, pa.nota "
+        String sql = "SELECT a.RA, u.nome, pa.nota, pa.corrigida_em, cs.situacao "
                 + "FROM prova_aluno pa "
                 + "JOIN aluno a ON a.RA = pa.RA "
                 + "JOIN usuario u ON u.email = a.email "
+                + "LEFT JOIN v_correcao_status cs ON cs.id_aplicacao = pa.id_aplicacao AND cs.RA = pa.RA "
                 + "WHERE pa.id_aplicacao = ? ORDER BY u.nome";
 
         List<AlunoConvocado> alunos = new ArrayList<>();
@@ -144,6 +172,8 @@ public class CorrecaoAlunoDAO {
                     a.ra = rs.getString("RA");
                     a.nome = rs.getString("nome");
                     a.nota = rs.getBigDecimal("nota");
+                    a.corrigida = rs.getTimestamp("corrigida_em") != null;
+                    a.situacao = rs.getString("situacao");
                     alunos.add(a);
                 }
             }
@@ -152,7 +182,7 @@ public class CorrecaoAlunoDAO {
     }
 
     public Cabecalho buscarCabecalho(String ra, long idAplicacao) throws SQLException {
-        String sql = "SELECT pt.prova_id, u.nome, a.RA, u.email, a.nome_curso, a.data_nascimento, "
+        String sql = "SELECT pt.prova_id, u.nome, a.RA, u.email, a.nome_curso, "
                 + "t.nome_turma, t.semestre, t.periodo, pt.nome_disciplina, pt.data, pt.horario, "
                 + "p.nome_prova, pa.nota "
                 + "FROM prova_aluno pa "
@@ -178,8 +208,6 @@ public class CorrecaoAlunoDAO {
                 c.ra = rs.getString("RA");
                 c.email = rs.getString("email");
                 c.nomeCurso = rs.getString("nome_curso");
-                Date nasc = rs.getDate("data_nascimento");
-                c.dataNascimento = nasc != null ? nasc.toLocalDate() : null;
                 c.nomeTurma = rs.getString("nome_turma");
                 c.semestre = rs.getString("semestre");
                 c.periodo = rs.getString("periodo");
@@ -260,8 +288,8 @@ public class CorrecaoAlunoDAO {
 
     // Respostas do aluno nesta aplicação, por questao_id
     public Map<Long, RespostaDoAluno> buscarRespostasDoAluno(String ra, long idAplicacao) throws SQLException {
-        String sql = "SELECT ra.questao_id, ra.texto_resposta, ra.correta, r.texto AS texto_alternativa, "
-                + "r.correta AS alternativa_correta "
+        String sql = "SELECT ra.questao_id, ra.texto_resposta, ra.correta, ra.nota, ra.comentario_professor, "
+                + "r.texto AS texto_alternativa, r.correta AS alternativa_correta "
                 + "FROM resposta_aluno ra "
                 + "LEFT JOIN resposta r ON r.resposta_id = ra.resposta_id AND r.questao_id = ra.questao_id "
                 + "WHERE ra.id_aplicacao = ? AND ra.RA = ?";
@@ -284,6 +312,8 @@ public class CorrecaoAlunoDAO {
                         // alternativa marcada: dá para saber se acertou pela própria alternativa
                         r.correta = rs.getBoolean("alternativa_correta");
                     }
+                    r.nota = rs.getBigDecimal("nota");
+                    r.comentario = rs.getString("comentario_professor");
                     respostas.put(rs.getLong("questao_id"), r);
                 }
             }
@@ -291,15 +321,67 @@ public class CorrecaoAlunoDAO {
         return respostas;
     }
 
-    // Grava a nota total da prova do aluno (coluna prova_aluno.nota)
-    public void salvarNota(String ra, long idAplicacao, BigDecimal nota) throws SQLException {
-        String sql = "UPDATE prova_aluno SET nota = ? WHERE id_aplicacao = ? AND RA = ?";
-        try (Connection con = ConexaoBD.conectar();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setBigDecimal(1, nota);
-            ps.setLong(2, idAplicacao);
-            ps.setString(3, ra);
-            ps.executeUpdate();
+    // Salva a correção de um aluno numa única transação:
+    //  1. garante a linha de cada questão em resposta_aluno (aluno que não entregou fica com tudo em branco);
+    //  2. grava nota e comentário de cada questão (em branco corrigida = 0; nota null = ainda não corrigida);
+    //  3. se todas as questões têm nota, fecha a correção (nota da prova = soma e corrigida_em = agora);
+    //     senão, se ela já estava fechada, reabre, para a nota antiga não continuar valendo na média.
+    public ResultadoCorrecao salvarCorrecao(String ra, long idAplicacao, List<NotaQuestao> notas) throws SQLException {
+        String sql = "UPDATE resposta_aluno SET nota = ?, comentario_professor = ? "
+                + "WHERE id_aplicacao = ? AND RA = ? AND questao_id = ?";
+
+        ResultadoCorrecao resultado = new ResultadoCorrecao();
+        try (Connection con = ConexaoBD.conectar()) {
+            con.setAutoCommit(false);
+            try {
+                ProcedimentosAvaliacao.preencherRespostasEmBranco(con, idAplicacao, ra);
+
+                try (PreparedStatement ps = con.prepareStatement(sql)) {
+                    for (NotaQuestao n : notas) {
+                        if (n.nota != null) {
+                            ps.setBigDecimal(1, n.nota);
+                        } else {
+                            ps.setNull(1, java.sql.Types.DECIMAL);
+                        }
+                        if (n.comentario != null) {
+                            ps.setString(2, n.comentario);
+                        } else {
+                            ps.setNull(2, java.sql.Types.LONGVARCHAR);
+                        }
+                        ps.setLong(3, idAplicacao);
+                        ps.setString(4, ra);
+                        ps.setLong(5, n.questaoId);
+                        ps.executeUpdate();
+                        if (n.nota == null) {
+                            resultado.pendentes++;
+                        }
+                    }
+                }
+
+                if (resultado.pendentes == 0) {
+                    ProcedimentosAvaliacao.fecharCorrecao(con, idAplicacao, ra);
+                    resultado.fechada = true;
+                    resultado.notaProva = buscarNotaDaProva(con, idAplicacao, ra);
+                } else {
+                    ProcedimentosAvaliacao.reabrirCorrecao(con, idAplicacao, ra);
+                }
+                con.commit();
+            } catch (SQLException e) {
+                con.rollback();
+                throw e;
+            }
+        }
+        return resultado;
+    }
+
+    private BigDecimal buscarNotaDaProva(Connection con, long idAplicacao, String ra) throws SQLException {
+        String sql = "SELECT nota FROM prova_aluno WHERE id_aplicacao = ? AND RA = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setLong(1, idAplicacao);
+            ps.setString(2, ra);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getBigDecimal("nota") : null;
+            }
         }
     }
 }
