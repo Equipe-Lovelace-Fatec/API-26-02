@@ -143,7 +143,12 @@ public class SelecaoProvaAlunoController {
 
     @FXML
     void ir_desempenho(ActionEvent event) {
-
+        try {
+            App.setRoot("desempenho_aluno");
+        } catch (IOException e) {
+            e.printStackTrace();
+            avisar("Erro", "Não foi possível abrir a tela de desempenho: " + e.getMessage());
+        }
     }
 
     @FXML

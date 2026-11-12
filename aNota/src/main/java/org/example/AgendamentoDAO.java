@@ -59,37 +59,45 @@ public class AgendamentoDAO {
         return alunos;
     }
 
+    private static final int DURACAO_PROVA_MINUTOS = 100;
+
     public void agendar(Prova prova, int idTurma, LocalDate data, LocalTime horario,
                         List<String> ras) throws SQLException {
         String sqlTurma = "INSERT INTO prova_turma "
-                + "(prova_id, id_turma, nome_prova, email_professor, nome_disciplina, data, horario) "
+                + "(prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
         String sqlAluno = "INSERT INTO prova_aluno "
-                + "(prova_id, id_turma, email_professor, nome_disciplina, data, horario, RA) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                + "(id_aplicacao, id_turma, RA) "
+                + "VALUES (?, ?, ?)";
+
+        LocalTime horarioFim = horario.plusMinutes(DURACAO_PROVA_MINUTOS);
 
         try (Connection con = ConexaoBD.conectar()) {
             con.setAutoCommit(false);
-            try (PreparedStatement psTurma = con.prepareStatement(sqlTurma);
+            try (PreparedStatement psTurma = con.prepareStatement(sqlTurma, Statement.RETURN_GENERATED_KEYS);
                  PreparedStatement psAluno = con.prepareStatement(sqlAluno)) {
 
                 psTurma.setLong(1, prova.getProvaId());
                 psTurma.setInt(2, idTurma);
-                psTurma.setString(3, prova.getNomeProva());
-                psTurma.setString(4, prova.getEmailProfessor());
-                psTurma.setString(5, prova.getNomeDisciplina());
-                psTurma.setDate(6, Date.valueOf(data));
-                psTurma.setTime(7, Time.valueOf(horario));
+                psTurma.setString(3, prova.getEmailProfessor());
+                psTurma.setString(4, prova.getNomeDisciplina());
+                psTurma.setDate(5, Date.valueOf(data));
+                psTurma.setTime(6, Time.valueOf(horario));
+                psTurma.setTime(7, Time.valueOf(horarioFim));
                 psTurma.executeUpdate();
 
+                long idAplicacao;
+                try (ResultSet chaves = psTurma.getGeneratedKeys()) {
+                    if (!chaves.next()) {
+                        throw new SQLException("Não foi possível obter o id_aplicacao gerado.");
+                    }
+                    idAplicacao = chaves.getLong(1);
+                }
+
                 for (String ra : ras) {
-                    psAluno.setLong(1, prova.getProvaId());
+                    psAluno.setLong(1, idAplicacao);
                     psAluno.setInt(2, idTurma);
-                    psAluno.setString(3, prova.getEmailProfessor());
-                    psAluno.setString(4, prova.getNomeDisciplina());
-                    psAluno.setDate(5, Date.valueOf(data));
-                    psAluno.setTime(6, Time.valueOf(horario));
-                    psAluno.setString(7, ra);
+                    psAluno.setString(3, ra);
                     psAluno.addBatch();
                 }
                 psAluno.executeBatch();

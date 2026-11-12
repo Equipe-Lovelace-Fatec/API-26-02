@@ -96,7 +96,7 @@ public class CorrecaoAlunoProvaController {
 
     @FXML
     void ir_desempenho(ActionEvent event) {
-
+        abrir("desempenho_aluno", "a tela de desempenho");
     }
 
     @FXML
