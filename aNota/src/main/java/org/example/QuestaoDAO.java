@@ -19,6 +19,43 @@ public class QuestaoDAO {
         );
     }
 
+    // true se a questão está em alguma prova cuja data/hora já passou
+    public boolean estaEmProvaPassada(long questaoId) {
+        return contarProvas(questaoId, true) > 0;
+    }
+
+    // true se a questão está em alguma prova agendada que ainda vai acontecer
+    public boolean estaEmProvaFutura(long questaoId) {
+        return contarProvas(questaoId, false) > 0;
+    }
+
+    private int contarProvas(long questaoId, boolean passada) {
+        String operador = passada ? "<=" : ">";
+        String sql =
+                "SELECT COUNT(*) FROM prova_questao pq "
+                        + "JOIN prova_turma pt ON pt.prova_id = pq.prova_id "
+                        + "WHERE pq.questao_id = ? "
+                        + "AND TIMESTAMP(pt.data, pt.horario) " + operador + " ?";
+
+        String agora = java.time.LocalDateTime.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        try (Connection con = getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setLong(1, questaoId);
+            pst.setString(2, agora);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                rs.next();
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao verificar provas da questão!", e);
+        }
+    }
+
     // INSERIR UMA NOVA QUESTÃO
     public void nova(String enunciado, String tema, String tipo,
                      String dificuldade, String emailProfessor,
@@ -105,8 +142,8 @@ public class QuestaoDAO {
         return questoes;
     }
 
-    // DUPLICAR UMA QUESTÃO E SUAS RESPOSTAS
-    public void duplicarQuestao(Questao questao) {
+    // DUPLICAR UMA QUESTÃO E SUAS RESPOSTAS (a cópia vai para o banco de quem copia)
+    public void duplicarQuestao(Questao questao, String emailNovoDono) {
 
         String sqlQuestao =
                 "INSERT INTO questao " +
@@ -116,8 +153,8 @@ public class QuestaoDAO {
 
         String sqlResposta =
                 "INSERT INTO resposta " +
-                        "(enunciado, tipo, texto, correta, conceito) " +
-                        "VALUES (?, ?, ?, ?, ?)";
+                        "(questao_id, texto, correta, conceito) " +
+                        "VALUES ((SELECT questao_id FROM questao WHERE enunciado = ? AND tipo = ?), ?, ?, ?)";
 
         String enunciadoOriginal = questao.getEnunciado();
         String tipo = questao.getTipo();
@@ -142,7 +179,7 @@ public class QuestaoDAO {
                     pst.setString(2, questao.getTema());
                     pst.setString(3, tipo);
                     pst.setString(4, questao.getDificuldade());
-                    pst.setString(5, questao.getEmailProfessor());
+                    pst.setString(5, emailNovoDono);
                     pst.setString(6, questao.getNomeDisciplina());
 
                     pst.executeUpdate();
@@ -241,7 +278,7 @@ public class QuestaoDAO {
             List<Resposta> novasRespostas) {
 
         String sqlExcluirRespostas =
-                "DELETE FROM resposta WHERE enunciado = ? AND tipo = ?";
+                "DELETE FROM resposta WHERE questao_id = (SELECT questao_id FROM questao WHERE enunciado = ? AND tipo = ?)";
 
         String sqlAtualizarQuestao =
                 "UPDATE questao SET " +
@@ -256,8 +293,14 @@ public class QuestaoDAO {
 
         String sqlInserirResposta =
                 "INSERT INTO resposta " +
-                        "(enunciado, tipo, texto, correta, conceito) " +
-                        "VALUES (?, ?, ?, ?, ?)";
+                        "(questao_id, texto, correta, conceito) " +
+                        "VALUES ((SELECT questao_id FROM questao WHERE enunciado = ? AND tipo = ?), ?, ?, ?)";
+
+        // Trava: questão em prova já realizada não pode ser alterada
+        if (estaEmProvaPassada(questao.getId())) {
+            throw new RuntimeException(
+                    "Esta questão está em uma prova antiga e não pode ser alterada.");
+        }
 
         try (Connection con = getConnection()) {
 
@@ -341,10 +384,10 @@ public class QuestaoDAO {
         List<Resposta> respostas = new ArrayList<>();
 
         String sql =
-                "SELECT resposta_id, enunciado, tipo, texto, correta, conceito " +
-                        "FROM resposta " +
-                        "WHERE enunciado = ? AND tipo = ? " +
-                        "ORDER BY resposta_id";
+                "SELECT r.resposta_id, q.enunciado, q.tipo, r.texto, r.correta, r.conceito " +
+                        "FROM resposta r JOIN questao q ON q.questao_id = r.questao_id " +
+                        "WHERE q.enunciado = ? AND q.tipo = ? " +
+                        "ORDER BY r.resposta_id";
 
         try (Connection con = getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -387,10 +430,10 @@ public class QuestaoDAO {
         List<Resposta> respostas = new ArrayList<>();
 
         String sql =
-                "SELECT resposta_id, enunciado, tipo, texto, correta, conceito " +
-                        "FROM resposta " +
-                        "WHERE enunciado = ? AND tipo = ? " +
-                        "ORDER BY resposta_id";
+                "SELECT r.resposta_id, q.enunciado, q.tipo, r.texto, r.correta, r.conceito " +
+                        "FROM resposta r JOIN questao q ON q.questao_id = r.questao_id " +
+                        "WHERE q.enunciado = ? AND q.tipo = ? " +
+                        "ORDER BY r.resposta_id";
 
         try (PreparedStatement pst = con.prepareStatement(sql)) {
 
@@ -417,5 +460,41 @@ public class QuestaoDAO {
         }
 
         return respostas;
+    }
+
+    // BUSCAR QUESTÕES VINCULADAS A UMA APLICAÇÃO DE PROVA ESPECÍFICA (método da outra dev)
+    public List<Questao> buscarQuestoesPorAplicacao(Long idAplicacao) {
+        List<Questao> questoes = new ArrayList<>();
+        String sql = "SELECT q.* FROM questao q " +
+                "JOIN prova_questao pq ON q.questao_id = pq.questao_id " +
+                "JOIN prova_turma pt ON pq.prova_id = pt.prova_id " +
+                "WHERE pt.id_aplicacao = ?";
+
+        try (Connection con = getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setLong(1, idAplicacao);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Questao q = new Questao();
+                    q.setId(rs.getLong("questao_id"));
+                    q.setEnunciado(rs.getString("enunciado"));
+                    q.setTema(rs.getString("tema"));
+                    q.setTipo(rs.getString("tipo"));
+                    q.setDificuldade(rs.getString("dificuldade"));
+
+                    q.setDataCriacao(rs.getObject("data_criacao", LocalDateTime.class));
+                    q.setDataEdicao(rs.getObject("data_edicao", LocalDateTime.class));
+                    q.setEmailProfessor(rs.getString("email_professor"));
+                    q.setNomeDisciplina(rs.getString("nome_disciplina"));
+
+                    questoes.add(q);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao buscar questões por aplicação de prova!", e);
+        }
+        return questoes;
     }
 }

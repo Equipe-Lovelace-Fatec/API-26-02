@@ -309,7 +309,7 @@ public class AgendamentoController {
                         "Esta prova já está agendada para essa turma nesse dia e horário.");
             } else if (e.getErrorCode() == 1146) {
                 avisar(Alert.AlertType.ERROR, "Banco de dados",
-                        "A tabela prova_aluno ainda não existe. Rode o script criar_prova_aluno.sql no MySQL.");
+                        "Não foi possível concluir o agendamento: O banco de dados está inconsistente. Contate o administrador do banco.");
             } else {
                 avisar(Alert.AlertType.ERROR, "Erro", "Não foi possível salvar o agendamento.");
             }

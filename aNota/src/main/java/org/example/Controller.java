@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 public class Controller {
     private Questao questaoEmEdicao;
@@ -96,17 +99,50 @@ public class Controller {
 
     @FXML
     public void abrirMultipla(ActionEvent event) throws IOException {
-        App.setRoot("CadastroQuestoesAlt");
+        trocarTipo("CadastroQuestoesAlt");
     }
 
     @FXML
     public void abrirRelac(ActionEvent event) throws IOException {
-        App.setRoot("CadastroQuestoesRelac");
+        trocarTipo("CadastroQuestoesRelac");
     }
 
     @FXML
     public void abrirAberta(ActionEvent event) throws IOException {
-        App.setRoot("CadastroQuestoes");
+        trocarTipo("CadastroQuestoes");
+    }
+
+    // Abre a tela do novo tipo levando junto o cabeçalho da questão
+    private void trocarTipo(String fxml) throws IOException {
+        String enunciado = txtPergunta != null ? txtPergunta.getText() : null;
+        String disciplina = valorDe(comboDisciplina);
+        String tema = valorDe(comboTema);
+        String dificuldade = valorDe(comboDificuldade);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml + ".fxml"));
+        Parent root = loader.load();
+
+        Controller novo = loader.getController();
+        novo.preencherCabecalho(enunciado, disciplina, tema, dificuldade);
+
+        App.definirCenaAtual(new Scene(root));
+    }
+
+    // Preenche só os campos comuns a todos os tipos
+    public void preencherCabecalho(String enunciado, String disciplina,
+                                   String tema, String dificuldade) {
+        if (txtPergunta != null && enunciado != null) {
+            txtPergunta.setText(enunciado);
+        }
+        if (comboDisciplina != null && disciplina != null) {
+            comboDisciplina.setValue(disciplina);
+        }
+        if (comboTema != null && tema != null) {
+            comboTema.setValue(tema);
+        }
+        if (comboDificuldade != null && dificuldade != null) {
+            comboDificuldade.setValue(dificuldade);
+        }
     }
 
     @FXML

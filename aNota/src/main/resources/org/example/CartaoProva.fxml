@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -43,10 +42,11 @@
          </font>
       </Label>
       <Region HBox.hgrow="ALWAYS" />
-      <VBox alignment="CENTER" spacing="12.0">
+      <VBox alignment="CENTER" prefHeight="70.0" prefWidth="100.0" spacing="12.0">
          <children>
-            <Button fx:id="bt_visualizar" minHeight="38.0" minWidth="160.0" mnemonicParsing="false" onAction="#visualizar" prefHeight="38.0" prefWidth="160.0" style="-fx-background-color: #00596a; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="VISUALIZAR" />
-            <Button fx:id="bt_agendar" minHeight="38.0" minWidth="160.0" mnemonicParsing="false" onAction="#agendar" prefHeight="38.0" prefWidth="160.0" style="-fx-background-color: #00596a; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="AGENDAR" />
+            <Button fx:id="bt_visualizar" minHeight="32.0" minWidth="160.0" mnemonicParsing="false" onAction="#visualizar" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #00596a; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="VISUALIZAR" />
+            <Button fx:id="bt_agendar" minHeight="30.0" minWidth="160.0" mnemonicParsing="false" onAction="#agendar" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #00596a; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="AGENDAR" />
+            <Button fx:id="bt_editar" minHeight="30.0" minWidth="160.0" mnemonicParsing="false" onAction="#editar" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #00596a; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="EDITAR" />
          </children>
       </VBox>
    </children>

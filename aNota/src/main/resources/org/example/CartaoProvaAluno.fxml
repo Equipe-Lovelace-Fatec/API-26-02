@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="136.0" minHeight="136.0" prefHeight="136.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #624695; -fx-border-width: 2; -fx-border-radius: 8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.CartaoProvaAlunoController">
+   <padding>
+      <Insets right="14.0" />
+   </padding>
+   <VBox.margin>
+      <Insets left="16.0" right="16.0" />
+   </VBox.margin>
+   <children>
+      <Label fx:id="lbl_titulo" alignment="CENTER" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_disciplina" alignment="CENTER" maxWidth="257.0" minWidth="257.0" prefWidth="257.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_valor" alignment="CENTER" maxWidth="123.0" minWidth="123.0" prefWidth="123.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Region HBox.hgrow="ALWAYS" />
+      <VBox alignment="CENTER" prefHeight="70.0" prefWidth="100.0" spacing="12.0">
+         <children>
+            <Button fx:id="bt_gabarito" minHeight="30.0" minWidth="160.0" mnemonicParsing="false" onAction="#gabarito" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #624695; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="GABARITO" />
+            <Button fx:id="bt_correcao" minHeight="30.0" minWidth="160.0" mnemonicParsing="false" onAction="#correcao" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #624695; -fx-background-radius: 8; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="CORREÇÃO" />
+         </children>
+      </VBox>
+   </children>
+</HBox>

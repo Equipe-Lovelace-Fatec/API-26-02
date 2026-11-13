@@ -25,6 +25,51 @@ public class MontagemProva {
         this.questoes = questoes;
     }
 
+    // ---- Rascunho: prova montada sem valor em nenhuma questão (no banco, valor da prova = 0) ----
+
+    // Valor vazio ou zero conta como "sem valor"
+    public static boolean valorEmBranco(String texto) {
+        if (texto == null || texto.trim().isEmpty()) {
+            return true;
+        }
+        try {
+            return new BigDecimal(texto.trim().replace(",", ".")).compareTo(BigDecimal.ZERO) == 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    // Todas as questões estão sem valor
+    public static boolean ehRascunho(List<String> valoresDigitados) {
+        return valoresDigitados != null && !valoresDigitados.isEmpty()
+                && valoresDigitados.stream().allMatch(MontagemProva::valorEmBranco);
+    }
+
+    // Algumas questões têm valor e outras não
+    public static boolean temValoresParciais(List<String> valoresDigitados) {
+        if (valoresDigitados == null) {
+            return false;
+        }
+        long semValor = valoresDigitados.stream().filter(MontagemProva::valorEmBranco).count();
+        return semValor > 0 && semValor < valoresDigitados.size();
+    }
+
+    // Valida o salvamento como rascunho ou como prova completa; null = tudo certo
+    public String validarParaSalvar(List<Integer> indicesSelecionados, List<String> valoresDigitados) {
+        if (indicesSelecionados.isEmpty()) {
+            return "Selecione ao menos uma questão para a prova.";
+        }
+        if (temValoresParciais(valoresDigitados)) {
+            return "Informe o valor de todas as questões ou deixe todas sem valor "
+                    + "para salvar a prova como rascunho.";
+        }
+        if (ehRascunho(valoresDigitados)) {
+            this.valor = BigDecimal.ZERO; // coluna prova.valor é NOT NULL
+            return null;
+        }
+        return validarProva(indicesSelecionados, valoresDigitados);
+    }
+
     public String validarProva(List<Integer> indicesSelecionados, List<String> valoresDigitados) {
         if (indicesSelecionados.isEmpty()) {
             return "Selecione ao menos uma questão para a prova.";

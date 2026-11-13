@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1652.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.ProvaAlunoController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1651.0" prefWidth="1357.0">
+         <children>
+            <ImageView fitHeight="2086.0" fitWidth="1349.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../telas.png/tela_prova_aluno.png" />
+               </image>
+            </ImageView>
+            <ScrollPane layoutX="96.0" layoutY="354.0" prefHeight="1124.0" prefWidth="1152.0" style="-fx-background-color: #ffffff;">
+               <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1116.0" prefWidth="1142.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <VBox fx:id="vboxContainerQuestoes" layoutX="33.0" layoutY="32.0" prefHeight="282.0" prefWidth="1070.0" />
+                     </children></AnchorPane>
+               </content>
+            </ScrollPane>
+            <Label fx:id="contagem_regressiva_prova" alignment="CENTER" layoutX="1122.0" layoutY="239.0" prefHeight="53.0" prefWidth="203.0" style="-fx-text-fill: #624695;" text="00:00" textFill="#624695">
+               <font>
+                  <Font name="System Bold" size="44.0" />
+               </font>
+            </Label>
+            <Button fx:id="bt_finalizar_prova" layoutX="489.0" layoutY="1528.0" mnemonicParsing="false" onAction="#ir_finalizar_prova" prefHeight="82.0" prefWidth="364.0" style="-fx-background-color: transparent;">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Label fx:id="titulo_prova" alignment="CENTER" contentDisplay="CENTER" layoutX="54.0" layoutY="124.0" prefHeight="116.0" prefWidth="1219.0" style="-fx-text-fill: #624695;" textFill="#624695">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
+            <Button fx:id="bt_minha_agenda" layoutX="362.0" layoutY="35.0" mnemonicParsing="false" onAction="#ir_minha_agenda" prefHeight="44.0" prefWidth="183.0" style="-fx-background-color: transparent;" />
+            <Button fx:id="bt_avaliacao" layoutX="621.0" layoutY="41.0" mnemonicParsing="false" onAction="#ir_avaliacao" prefHeight="37.0" prefWidth="175.0" style="-fx-background-color: transparent;" />
+            <Button fx:id="bt_correcao" layoutX="873.0" layoutY="40.0" mnemonicParsing="false" onAction="#ir_correcao" prefHeight="37.0" prefWidth="175.0" style="-fx-background-color: transparent;" />
+            <Button fx:id="bt_desempenho" layoutX="1129.0" layoutY="41.0" mnemonicParsing="false" onAction="#ir_desempenho" prefHeight="37.0" prefWidth="175.0" style="-fx-background-color: transparent;" />
+         </children></AnchorPane>
+  </content>
+</ScrollPane>
