@@ -28,6 +28,7 @@
                     <items>
                         <MenuItem fx:id="btProva_montar" mnemonicParsing="false" onAction="#IrProva_montar" text="Montar" />
                         <MenuItem fx:id="btProva_agendar" mnemonicParsing="false" onAction="#irProva_agendar" text="Agendar" />
+                        <MenuItem fx:id="btProva_pesos" mnemonicParsing="false" onAction="#irProva_pesos" text="Média" />
                     </items>
                     <cursor>
                         <Cursor fx:constant="HAND" />

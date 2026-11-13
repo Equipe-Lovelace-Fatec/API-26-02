@@ -79,20 +79,10 @@ public class AlunoController {
             return "diss".equalsIgnoreCase(questao.tipo);
         }
 
-        boolean ehRela() {
-            return "rela".equalsIgnoreCase(questao.tipo);
-        }
-
-        // Campo de nota digitável: dissertativa (professor digita) e relacionar (vem preenchida
-// automaticamente, mas o professor pode alterar)
-        boolean notaEditavel() {
-            return ehAberta() || ehRela();
-        }
-
         // Nota a gravar em resposta_aluno.nota: objetiva = automática; aberta = o que o professor digitou
         // (campo vazio = null, "ainda não corrigida")
         BigDecimal notaParaSalvar() {
-            if (!notaEditavel()) {
+            if (!ehAberta()) {
                 return BigDecimal.valueOf(notaAutomatica).setScale(2, java.math.RoundingMode.HALF_UP);
             }
             String t = campoNota.getText().trim().replace(",", ".");
@@ -107,7 +97,7 @@ public class AlunoController {
         }
 
         double getNota() {
-            if (!notaEditavel()) {
+            if (!ehAberta()) {
                 return notaAutomatica;
             }
             String t = campoNota.getText().trim().replace(",", ".");
@@ -382,12 +372,10 @@ public class AlunoController {
         campo.setFont(Font.font(16));
         cartao.campoNota = campo;
 
-        if (cartao.notaEditavel()) {
+        if (cartao.ehAberta()) {
             campo.setPromptText("0,00");
             if (respostaAluno != null && respostaAluno.nota != null) {
                 campo.setText(formatar(respostaAluno.nota.doubleValue()));   // nota já salva antes
-            } else if (cartao.ehRela()) {
-                campo.setText(formatar(corrigirObjetiva(cartao, respostaAluno)));   // sugestão automática
             }
             campo.textProperty().addListener((obs, antigo, novo) -> {
                 validarNota(campo, cartao.peso.doubleValue());
@@ -550,6 +538,11 @@ public class AlunoController {
     @FXML
     void irProva_agendar(ActionEvent event) throws IOException {
         App.setRoot("SelecaoProva");
+    }
+
+    @FXML
+    void irProva_pesos(ActionEvent event) throws IOException {
+        App.setRoot("pesos");
     }
 
     @FXML

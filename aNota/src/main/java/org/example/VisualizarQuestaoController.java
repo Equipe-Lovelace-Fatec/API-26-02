@@ -280,6 +280,7 @@ public class VisualizarQuestaoController {
     @FXML void IrQuestao_criar(ActionEvent event)     { navegar("CadastroQuestoes"); }
     @FXML void irAlunos_corrigir(ActionEvent event)   { navegar("Aluno"); }
     @FXML void irProva_agendar(ActionEvent event)     { navegar("agendamento"); }
+    @FXML void irProva_pesos(ActionEvent event)       { navegar("pesos"); }
     @FXML void irQuestao_consultar(ActionEvent event) { navegar("VisualizarQuestao"); }
     @FXML void irAlunos_notas(ActionEvent event)      { }
     @FXML void irAlunos(ActionEvent event)            { }

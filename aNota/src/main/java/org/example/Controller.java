@@ -797,6 +797,10 @@ public class Controller {
 
     }
 
+    @FXML
+    void irProva_pesos(ActionEvent event) throws IOException{ App.setRoot("pesos");
+
+    }
 
     @FXML
     void irQuestao(ActionEvent event) {
