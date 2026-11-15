@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="131.0" prefWidth="1070.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.QuestaoAlternativaController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="121.0" layoutX="6.0" layoutY="5.0" stroke="#624695" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="2.0" width="1060.0" />
+      <VBox layoutX="14.0" layoutY="6.0" prefHeight="121.0" prefWidth="1052.0">
+         <children>
+            <Label fx:id="EnunciadoQuestao1" prefHeight="68.0" prefWidth="1045.0" text="Enunciado da Questão 01 — Meramente Ilustrativo. Abordagem multidimensional, pautada na convergência de perspectivas epistemológicas e metodológicas, visando à maximização dos resultados e à otimização dos processos inerentes ao contexto supracitado." wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="48.0" prefWidth="676.0" spacing="40.0">
+               <children>
+                  <RadioButton fx:id="rbopcaoA" mnemonicParsing="false" prefHeight="74.0" prefWidth="141.0" text="Alternativa A" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="grupoQuestao1" />
+                     </toggleGroup>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+                  <RadioButton fx:id="rbopcaoB" mnemonicParsing="false" prefHeight="74.0" prefWidth="141.0" text="Alternativa B" toggleGroup="$grupoQuestao1" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+                  <RadioButton fx:id="rbopcaoC" mnemonicParsing="false" prefHeight="74.0" prefWidth="140.0" text="Alternativa C" toggleGroup="$grupoQuestao1" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+                  <RadioButton fx:id="rbopcaoD" mnemonicParsing="false" prefHeight="74.0" prefWidth="140.0" text="Alternativa D" toggleGroup="$grupoQuestao1" wrapText="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

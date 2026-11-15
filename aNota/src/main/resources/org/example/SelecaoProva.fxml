@@ -25,15 +25,16 @@
                </image>
             </ImageView>
             <MenuButton fx:id="btnQuestoes" layoutX="378.0" layoutY="41.0" mnemonicParsing="false" onAction="#irQuestao" prefHeight="39.0" prefWidth="187.0" snapToPixel="false" style="-fx-background-color: transparent;">
-              <items>
-                <MenuItem fx:id="btquestoes_criar" mnemonicParsing="false" onAction="#IrQuestao_criar" text="Criar" />
-                <MenuItem fx:id="btquestoes_consultar" mnemonicParsing="false" onAction="#irQuestao_consultar" text="Consultar" />
-              </items>
+               <items>
+                  <MenuItem fx:id="btquestoes_criar" mnemonicParsing="false" onAction="#IrQuestao_criar" text="Criar" />
+                  <MenuItem fx:id="btquestoes_consultar" mnemonicParsing="false" onAction="#irQuestao_consultar" text="Consultar" />
+               </items>
             </MenuButton>
             <MenuButton fx:id="btnProva" layoutX="752.0" layoutY="41.0" mnemonicParsing="false" onAction="#irProva" prefHeight="39.0" prefWidth="175.0" style="-fx-background-color: transparent;">
                <items>
                   <MenuItem fx:id="btProva_montar" mnemonicParsing="false" onAction="#IrProva_montar" text="Montar" />
                   <MenuItem fx:id="btProva_agendar" mnemonicParsing="false" onAction="#irProva_agendar" text="Agendar" />
+                  <MenuItem fx:id="btProva_pesos" mnemonicParsing="false" onAction="#irProva_pesos" text="Média" />
                </items>
             </MenuButton>
             <MenuButton fx:id="btnAlunos" layoutX="1119.0" layoutY="43.0" mnemonicParsing="false" onAction="#irAlunos" prefHeight="39.0" prefWidth="175.0" style="-fx-background-color: transparent;">

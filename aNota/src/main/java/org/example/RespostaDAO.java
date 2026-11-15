@@ -24,8 +24,7 @@ public class RespostaDAO {
         Connection con = null;
         try {
             con = getConnection();
-            String insert_sql = "INSERT INTO resposta (enunciado, tipo, texto, correta, conceito) VALUES (?, ?, ?, ?, ?)";
-
+            String insert_sql = "INSERT INTO resposta (questao_id, texto, correta, conceito) VALUES ((SELECT questao_id FROM questao WHERE enunciado = ? AND tipo = ?), ?, ?, ?)";
             PreparedStatement pst = con.prepareStatement(insert_sql);
             pst.setString(1, enunciado);
             pst.setString(2, tipo);
@@ -60,8 +59,7 @@ public class RespostaDAO {
         Connection con = null;
         try {
             con = getConnection();
-            String select_sql = "SELECT resposta_id, enunciado, tipo, texto, correta, conceito FROM resposta WHERE enunciado = ? AND tipo = ?";
-
+            String select_sql = "SELECT r.resposta_id, q.enunciado, q.tipo, r.texto, r.correta, r.conceito FROM resposta r JOIN questao q ON q.questao_id = r.questao_id WHERE q.enunciado = ? AND q.tipo = ? ORDER BY r.resposta_id";
             PreparedStatement pst = con.prepareStatement(select_sql);
             pst.setString(1, enunciadoQuestao);
             pst.setString(2, tipoQuestao);
@@ -106,7 +104,7 @@ public class RespostaDAO {
         Connection con = null;
         try {
             con = getConnection();
-            String sql = "SELECT texto, tipo, correta FROM resposta WHERE enunciado = ?";
+            String sql = "SELECT q.tipo, r.texto, r.correta, r.conceito FROM resposta r JOIN questao q ON q.questao_id = r.questao_id WHERE q.enunciado = ? ORDER BY r.resposta_id";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, enunciadoQuestao);
             ResultSet rs = pst.executeQuery();
@@ -115,6 +113,7 @@ public class RespostaDAO {
                 String tipo = rs.getString("tipo");
                 String texto = rs.getString("texto");
                 boolean correta = rs.getBoolean("correta");
+                String conceito = rs.getString("conceito");
 
                 if ("diss".equalsIgnoreCase(tipo)) {
                     // Se for dissertativa, adiciona o texto direto
@@ -122,6 +121,9 @@ public class RespostaDAO {
                 } else if ("alt".equalsIgnoreCase(tipo) && correta) {
                     // Se for alternativa, adiciona APENAS se correta for verdadeira
                     respostas.add(texto);
+                } else if ("rela".equalsIgnoreCase(tipo)) {
+                    // Se for relacionar, adiciona o par: item -> conceito correto
+                    respostas.add(texto + " → " + conceito);
                 }
             }
         } catch (SQLException e) {
