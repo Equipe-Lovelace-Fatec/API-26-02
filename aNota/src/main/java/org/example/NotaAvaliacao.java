@@ -76,7 +76,7 @@ public class NotaAvaliacao {
             andamento = jaAconteceu() ? "Aguardando correção" : "Agendada";
         }
 
-        if (recuperacao) {
+        if (recuperacao && pesoPercentual == null) {
             return itemSubstituido == null
                     ? "Recuperação · " + andamento
                     : "Recuperação de " + itemSubstituido + " · " + andamento;

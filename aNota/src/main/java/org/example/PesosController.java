@@ -254,7 +254,7 @@ public class PesosController {
 
     // Provas que ESTE professor já aplicou na turma e quais delas são recuperação
     private void carregarAplicacoesDaTurma(int idTurma, String emailProfessor) throws SQLException {
-        String sql = "SELECT prova_id, MAX(recuperacao) AS rec FROM prova_turma "
+        String sql = "SELECT prova_id, 0 AS rec FROM prova_turma "
                 + "WHERE id_turma = ? AND email_professor = ? GROUP BY prova_id";
 
         Set<Long> aplicadas = new HashSet<>();
@@ -341,10 +341,9 @@ public class PesosController {
     // GRAVAR PESOS (item_avaliativo)
     // =====================================
 
-    // Aplicação mais recente (não recuperação) da prova nesta turma, ou null se nunca foi agendada
     private Long buscarAplicacao(Connection con, int idTurma, long provaId, String email) throws SQLException {
         String sql = "SELECT id_aplicacao FROM prova_turma "
-                + "WHERE id_turma = ? AND prova_id = ? AND email_professor = ? AND recuperacao = FALSE "
+                + "WHERE id_turma = ? AND prova_id = ? AND email_professor = ? "
                 + "ORDER BY data DESC, horario DESC LIMIT 1";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -432,8 +431,8 @@ public class PesosController {
                 // GRAVA (OU ATUALIZA) O PESO DE CADA PROVA
 
                 String sqlGravar = "INSERT INTO item_avaliativo "
-                        + "(id_turma, nome_disciplina, nome, peso_percentual, id_aplicacao, recuperacao) "
-                        + "VALUES (?, ?, ?, ?, ?, FALSE) "
+                        + "(id_turma, nome_disciplina, nome, peso_percentual, id_aplicacao) "
+                        + "VALUES (?, ?, ?, ?, ?) "
                         + "ON DUPLICATE KEY UPDATE peso_percentual = VALUES(peso_percentual), "
                         + "id_aplicacao = VALUES(id_aplicacao)";
 
@@ -539,9 +538,14 @@ public class PesosController {
 
             boolean recuperacao = ehRecuperacao(prova);
 
+            // Recuperação não entra na média (só aparece para o aluno): checkbox travado
+            if (recuperacao) {
+                checkProva.setDisable(true);
+            }
+
             String textoNome = prova.getNomeProva()
                     + " - " + prova.getNomeDisciplina()
-                    + (recuperacao ? "  (Recuperação)" : "");
+                    + (recuperacao ? "  (Recuperação - não entra na média)" : "");
 
             Label nomeProva = new Label(textoNome);
 
@@ -589,13 +593,6 @@ public class PesosController {
                             campoPeso.clear();
                         }
 
-                        if (selecionado && recuperacao) {
-                            mostrarAlerta(
-                                    Alert.AlertType.INFORMATION,
-                                    "Recuperação",
-                                    "Caso escolha a recuperação, ela substituirá outra prova."
-                            );
-                        }
                     }
             );
 
@@ -831,22 +828,8 @@ public class PesosController {
                 String.format(Locale.forLanguageTag("pt-BR"), "%.2f", somaPonderada / somaPesos)
         );
 
-        // GRAVAÇÃO: só as provas normais (o banco não guarda recuperação como item de peso)
-
-        List<Prova> provasGravar = new ArrayList<>();
-        List<Double> pesosGravar = new ArrayList<>();
-        boolean recuperacaoMarcada = false;
-
-        for (int i = 0; i < provasCalculo.size(); i++) {
-            if (ehRecuperacao(provasCalculo.get(i))) {
-                recuperacaoMarcada = true;
-            } else {
-                provasGravar.add(provasCalculo.get(i));
-                pesosGravar.add(pesosCalculo.get(i));
-            }
-        }
-
-        // só recuperação marcada: não há o que gravar
+        List<Prova> provasGravar = new ArrayList<>(provasCalculo);
+        List<Double> pesosGravar = new ArrayList<>(pesosCalculo);
 
         if (provasGravar.isEmpty()) {
             return;
@@ -888,9 +871,6 @@ public class PesosController {
                 Alert.AlertType.INFORMATION,
                 "Pesos",
                 "Pesos gravados com sucesso."
-                        + (recuperacaoMarcada
-                        ? "\n\nA recuperação entrou na média final, mas o banco não guarda o peso dela."
-                        : "")
         );
     }
 

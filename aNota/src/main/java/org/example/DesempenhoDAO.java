@@ -78,17 +78,13 @@ public class DesempenhoDAO {
     }
 
     public List<NotaAvaliacao> listarNotas(String ra, String vigencia, String nomeDisciplina) throws SQLException {
-        String sql = "SELECT p.nome_prova, p.valor, pt.data, pt.horario_fim, pt.recuperacao, "
-                + "pa.nota, pa.corrigida_em, ia.peso_percentual, "
-                + "COALESCE(vin.substituida, 0) AS substituida, isub.nome AS item_substituido "
+        String sql = "SELECT p.nome_prova, p.valor, pt.data, pt.horario_fim, (p.nome_prova LIKE '%recupera%') AS recuperacao, "
+                +  "pa.nota, pa.corrigida_em, ia.peso_percentual "
                 + "FROM prova_aluno pa "
                 + "JOIN prova_turma pt ON pt.id_aplicacao = pa.id_aplicacao AND pt.id_turma = pa.id_turma "
                 + "JOIN turma t ON t.id_turma = pt.id_turma "
                 + "JOIN prova p ON p.prova_id = pt.prova_id "
                 + "LEFT JOIN item_avaliativo ia ON ia.id_aplicacao = pt.id_aplicacao "
-                + "LEFT JOIN v_item_nota vin ON vin.item_id = ia.item_id AND vin.RA = pa.RA "
-                + "LEFT JOIN recuperacao_substituicao rs ON rs.id_aplicacao = pt.id_aplicacao AND rs.RA = pa.RA "
-                + "LEFT JOIN item_avaliativo isub ON isub.item_id = rs.item_id "
                 + "WHERE pa.RA = ? AND t.vigencia = ? AND pt.nome_disciplina = ? "
                 + "ORDER BY pt.data, pt.horario";
 
@@ -111,8 +107,8 @@ public class DesempenhoDAO {
                             rs.getTimestamp("corrigida_em") != null,
                             rs.getBoolean("recuperacao"),
                             rs.getBigDecimal("peso_percentual"),
-                            rs.getInt("substituida") == 1,
-                            rs.getString("item_substituido")));
+                            false,
+                            null));
                 }
             }
         }
