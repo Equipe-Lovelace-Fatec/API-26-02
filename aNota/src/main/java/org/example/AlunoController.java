@@ -79,35 +79,50 @@ public class AlunoController {
             return "diss".equalsIgnoreCase(questao.tipo);
         }
 
+        // Relacionar: começa com a nota automática (tudo ou nada), mas o professor pode alterar
+        boolean ehRelacionar() {
+            return "rela".equalsIgnoreCase(questao.tipo);
+        }
+
+        // Nota digitável pelo professor: aberta (começa vazia) ou relacionar (começa com a automática)
+        boolean notaEditavel() {
+            return ehAberta() || ehRelacionar();
+        }
+
         // Nota a gravar em resposta_aluno.nota: objetiva = automática; aberta = o que o professor digitou
-        // (campo vazio = null, "ainda não corrigida")
+        // (campo vazio = null, "ainda não corrigida"); relacionar = o que o professor digitou
+        // (campo vazio ou inválido volta para a nota automática)
         BigDecimal notaParaSalvar() {
-            if (!ehAberta()) {
+            if (!notaEditavel()) {
                 return BigDecimal.valueOf(notaAutomatica).setScale(2, java.math.RoundingMode.HALF_UP);
             }
             String t = campoNota.getText().trim().replace(",", ".");
             if (t.isEmpty()) {
-                return null;
+                return ehRelacionar()
+                        ? BigDecimal.valueOf(notaAutomatica).setScale(2, java.math.RoundingMode.HALF_UP)
+                        : null;
             }
             try {
                 return new BigDecimal(t).setScale(2, java.math.RoundingMode.HALF_UP);
             } catch (NumberFormatException e) {
-                return null;
+                return ehRelacionar()
+                        ? BigDecimal.valueOf(notaAutomatica).setScale(2, java.math.RoundingMode.HALF_UP)
+                        : null;
             }
         }
 
         double getNota() {
-            if (!ehAberta()) {
+            if (!notaEditavel()) {
                 return notaAutomatica;
             }
             String t = campoNota.getText().trim().replace(",", ".");
             if (t.isEmpty()) {
-                return 0;
+                return ehRelacionar() ? notaAutomatica : 0;
             }
             try {
                 return Double.parseDouble(t);
             } catch (NumberFormatException e) {
-                return 0;
+                return ehRelacionar() ? notaAutomatica : 0;
             }
         }
     }
@@ -335,7 +350,7 @@ public class AlunoController {
         caixa.getChildren().add(blocoTexto(q.gabarito.isEmpty()
                 ? "Sem resposta cadastrada" : String.join("\n", q.gabarito)));
 
-        if (cartao.ehAberta()) {
+        if (cartao.notaEditavel()) {
             caixa.getChildren().add(titulo("Comentário do Professor - Não obrigatório - Obs.: O aluno lerá este comentário"));
             TextArea comentario = new TextArea();
             comentario.setPromptText("Escreva seu comentário aqui. Não obrigatório. O aluno lerá este comentário");
@@ -357,7 +372,7 @@ public class AlunoController {
         return caixa;
     }
 
-    // Valor da questão + pontuação (editável nas abertas; automática nas objetivas)
+    // Valor da questão + pontuação (editável nas abertas e na relacionar; automática nas demais objetivas)
     private HBox montarLinhaNota(CartaoQuestao cartao, CorrecaoAlunoDAO.RespostaDoAluno respostaAluno) {
         HBox linha = new HBox(15);
         linha.setAlignment(Pos.CENTER);
@@ -377,6 +392,18 @@ public class AlunoController {
             if (respostaAluno != null && respostaAluno.nota != null) {
                 campo.setText(formatar(respostaAluno.nota.doubleValue()));   // nota já salva antes
             }
+            campo.textProperty().addListener((obs, antigo, novo) -> {
+                validarNota(campo, cartao.peso.doubleValue());
+                atualizarTotal();
+            });
+        } else if (cartao.ehRelacionar()) {
+            // tudo ou nada automático como ponto de partida; se já foi salva uma nota, mostra a salva
+            cartao.notaAutomatica = corrigirObjetiva(cartao, respostaAluno);
+            double inicial = respostaAluno != null && respostaAluno.nota != null
+                    ? respostaAluno.nota.doubleValue()
+                    : cartao.notaAutomatica;
+            campo.setText(formatar(inicial));
+            campo.setPromptText("0,00");
             campo.textProperty().addListener((obs, antigo, novo) -> {
                 validarNota(campo, cartao.peso.doubleValue());
                 atualizarTotal();
@@ -549,6 +576,11 @@ public class AlunoController {
     @FXML
     void irProva_agendar(ActionEvent event) throws IOException {
         App.setRoot("SelecaoProva");
+    }
+
+    @FXML
+    void irProva_pesos(ActionEvent event) throws IOException {
+        App.setRoot("pesos");
     }
 
     @FXML

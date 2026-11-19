@@ -32,7 +32,7 @@ public class CorrecaoAlunoDAO {
         public String vigencia;
         public LocalDate data;
         public LocalTime horario;
-        public boolean recuperacao;   // prova_turma.recuperacao
+        public boolean recuperacao;   // pelo nome da prova (contém "recupera")
 
         @Override
         public String toString() {
@@ -118,7 +118,7 @@ public class CorrecaoAlunoDAO {
     // Aplicações do professor cuja prova já começou (só essas podem ser corrigidas), as mais recentes primeiro
     public List<Aplicacao> listarAplicacoesDoProfessor(String emailProfessor) throws SQLException {
         String sql = "SELECT pt.id_aplicacao, pt.prova_id, p.nome_prova, pt.nome_disciplina, "
-                + "t.nome_turma, t.semestre, t.periodo, t.vigencia, pt.data, pt.horario, pt.recuperacao "
+                + "t.nome_turma, t.semestre, t.periodo, t.vigencia, pt.data, pt.horario, (p.nome_prova LIKE '%recupera%') AS recuperacao "
                 + "FROM prova_turma pt "
                 + "JOIN prova p ON p.prova_id = pt.prova_id "
                 + "AND p.email_professor = pt.email_professor AND p.nome_disciplina = pt.nome_disciplina "

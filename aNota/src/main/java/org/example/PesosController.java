@@ -36,9 +36,7 @@ import java.util.Set;
 
 public class PesosController {
 
-    // =====================================
-    // ELEMENTOS DA TELA
-    // =====================================
+
 
     @FXML private MenuButton btnQuestoes;
     @FXML private MenuButton btnProva;
@@ -56,18 +54,12 @@ public class PesosController {
     @FXML private TextField txtMediaFinal;
 
 
-    // =====================================
-    // BANCO DE DADOS
-    // =====================================
 
     private final ProvaListaDAO provaDAO = new ProvaListaDAO();
 
     private List<Prova> provasProfessor = new ArrayList<>();
 
 
-    // =====================================
-    // TURMAS DA DISCIPLINA ESCOLHIDA
-    // =====================================
 
     private static class TurmaInfo {
         final int id;
@@ -85,19 +77,16 @@ public class PesosController {
 
     private List<String> disciplinasDaTurma = new ArrayList<>();
 
-    // provas que este professor já aplicou na turma escolhida (null = nenhuma turma escolhida)
+
     private Set<Long> provasDaTurma = null;
 
-    // dessas, as que foram aplicadas como recuperação
+
     private Set<Long> provasRecuperacao = new HashSet<>();
 
-    // texto mostrado na caixa Turma -> turma
     private final Map<String, TurmaInfo> turmasPorTexto = new LinkedHashMap<>();
 
 
-    // =====================================
-    // LISTAS DAS PROVAS EXIBIDAS
-    // =====================================
+
 
     private final List<Prova> provasExibidas = new ArrayList<>();
 
@@ -106,9 +95,7 @@ public class PesosController {
     private final List<TextField> camposPesos = new ArrayList<>();
 
 
-    // =====================================
-    // INICIALIZAÇÃO
-    // =====================================
+
 
     @FXML
     public void initialize() {
@@ -131,9 +118,6 @@ public class PesosController {
     }
 
 
-    // =====================================
-    // CARREGAR DADOS DO PROFESSOR
-    // =====================================
 
     private void carregarDados() {
         try {
@@ -172,11 +156,7 @@ public class PesosController {
     }
 
 
-    // =====================================
-    // TURMA -> DISCIPLINA, TURNO E SEMESTRE
-    // =====================================
 
-    // Turmas das disciplinas que o professor ministra
     private List<TurmaInfo> carregarTurmasDoProfessor(String emailProfessor) throws SQLException {
         // turmas das disciplinas que o professor ministra
         // + turmas onde ele já colocou prova (assim a prova sempre aparece na turma dela)
@@ -221,7 +201,7 @@ public class PesosController {
         return turmas;
     }
 
-    // Disciplinas da turma que o professor ministra
+
     private List<String> carregarDisciplinasDaTurma(String emailProfessor, int idTurma) throws SQLException {
         String sql = "SELECT td.nome_disciplina "
                 + "FROM turma_disciplina td "
@@ -252,9 +232,9 @@ public class PesosController {
         return disciplinas;
     }
 
-    // Provas que ESTE professor já aplicou na turma e quais delas são recuperação
+
     private void carregarAplicacoesDaTurma(int idTurma, String emailProfessor) throws SQLException {
-        String sql = "SELECT prova_id, MAX(recuperacao) AS rec FROM prova_turma "
+        String sql = "SELECT prova_id, 0 AS rec FROM prova_turma "
                 + "WHERE id_turma = ? AND email_professor = ? GROUP BY prova_id";
 
         Set<Long> aplicadas = new HashSet<>();
@@ -280,14 +260,14 @@ public class PesosController {
         provasRecuperacao = recuperacoes;
     }
 
-    // Recuperação: aplicada como recuperação na turma ou com "recuperação" no nome
+
     private boolean ehRecuperacao(Prova prova) {
         return provasRecuperacao.contains(prova.getProvaId())
                 || (prova.getNomeProva() != null
                 && prova.getNomeProva().toLowerCase().contains("recupera"));
     }
 
-    // Escolheu a turma: preenche turno e semestre sozinhos e puxa as disciplinas dela
+
     private void aoEscolherTurma() {
         TurmaInfo turma = turmasPorTexto.get(cbTurma.getValue());
 
@@ -300,7 +280,7 @@ public class PesosController {
             return;
         }
 
-        // TURNO E SEMESTRE VÊM DA TURMA
+
 
         cbTurno.getItems().setAll(turma.periodo);
         cbTurno.setValue(turma.periodo);
@@ -308,7 +288,7 @@ public class PesosController {
         cbSemestre.getItems().setAll(turma.semestre);
         cbSemestre.setValue(turma.semestre);
 
-        // DISCIPLINAS DA TURMA
+
 
         try {
             Usuario usuario = Sessao.getUsuario();
@@ -337,14 +317,11 @@ public class PesosController {
     }
 
 
-    // =====================================
-    // GRAVAR PESOS (item_avaliativo)
-    // =====================================
 
-    // Aplicação mais recente (não recuperação) da prova nesta turma, ou null se nunca foi agendada
+
     private Long buscarAplicacao(Connection con, int idTurma, long provaId, String email) throws SQLException {
         String sql = "SELECT id_aplicacao FROM prova_turma "
-                + "WHERE id_turma = ? AND prova_id = ? AND email_professor = ? AND recuperacao = FALSE "
+                + "WHERE id_turma = ? AND prova_id = ? AND email_professor = ? "
                 + "ORDER BY data DESC, horario DESC LIMIT 1";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -358,9 +335,7 @@ public class PesosController {
         }
     }
 
-    // Peso (0 a 10) vira percentual da disciplina: peso / soma dos pesos x 100.
-    // O último de cada disciplina fecha a conta para somar exatamente 100,00.
-    // Devolve null se a soma dos pesos de alguma disciplina for zero.
+
     private List<BigDecimal> calcularPercentuais(List<Prova> provas, List<Double> pesos) {
         Map<String, Double> somas = new LinkedHashMap<>();
         Map<String, Integer> ultimo = new LinkedHashMap<>();
@@ -402,8 +377,7 @@ public class PesosController {
         return percentuais;
     }
 
-    // Grava o peso (percentual) de cada prova na turma.
-    // Devolve null se deu certo, ou a mensagem do problema (nada é gravado nesse caso).
+
     private String gravarPesos(TurmaInfo turma, List<Prova> provas, List<BigDecimal> percentuais) throws SQLException {
         String email = Sessao.getUsuario().getEmail();
 
@@ -411,7 +385,6 @@ public class PesosController {
             con.setAutoCommit(false);
 
             try {
-                // APLICAÇÃO (prova_turma) DE CADA PROVA
 
                 List<Long> aplicacoes = new ArrayList<>();
 
@@ -429,11 +402,11 @@ public class PesosController {
                     aplicacoes.add(aplicacao);
                 }
 
-                // GRAVA (OU ATUALIZA) O PESO DE CADA PROVA
+
 
                 String sqlGravar = "INSERT INTO item_avaliativo "
-                        + "(id_turma, nome_disciplina, nome, peso_percentual, id_aplicacao, recuperacao) "
-                        + "VALUES (?, ?, ?, ?, ?, FALSE) "
+                        + "(id_turma, nome_disciplina, nome, peso_percentual, id_aplicacao) "
+                        + "VALUES (?, ?, ?, ?, ?) "
                         + "ON DUPLICATE KEY UPDATE peso_percentual = VALUES(peso_percentual), "
                         + "id_aplicacao = VALUES(id_aplicacao)";
 
@@ -461,9 +434,6 @@ public class PesosController {
     }
 
 
-    // =====================================
-    // ATUALIZAR PROVAS NA TELA
-    // =====================================
 
     private void atualizarProvasExibidas() {
         conteinerProvas.getChildren().clear();
@@ -475,7 +445,7 @@ public class PesosController {
 
         String disciplinaSelecionada = cbDisciplina.getValue();
 
-        // SEM TURMA ESCOLHIDA NÃO APARECE PROVA NENHUMA
+
 
         if (provasDaTurma == null) {
             Label aviso = new Label("Escolha a turma para ver as provas.");
@@ -496,16 +466,15 @@ public class PesosController {
                     continue;
                 }
             } else if (!disciplinasDaTurma.contains(prova.getNomeDisciplina())) {
-                // a prova aparece em toda turma que tem a disciplina dela
+
 
                 continue;
             }
 
-            // GUARDA A PROVA EXIBIDA
+
 
             provasExibidas.add(prova);
 
-            // CRIA A LINHA
 
             HBox linha = new HBox(20);
 
@@ -526,7 +495,7 @@ public class PesosController {
                             "-fx-padding: 8 15 8 15;"
             );
 
-            // CHECKBOX DE SELEÇÃO
+
 
             CheckBox checkProva = new CheckBox();
 
@@ -535,13 +504,18 @@ public class PesosController {
                             "-fx-cursor: hand;"
             );
 
-            // NOME DA PROVA
+
 
             boolean recuperacao = ehRecuperacao(prova);
 
+
+            if (recuperacao) {
+                checkProva.setDisable(true);
+            }
+
             String textoNome = prova.getNomeProva()
                     + " - " + prova.getNomeDisciplina()
-                    + (recuperacao ? "  (Recuperação)" : "");
+                    + (recuperacao ? "  (Recuperação - não entra na média)" : "");
 
             Label nomeProva = new Label(textoNome);
 
@@ -550,13 +524,13 @@ public class PesosController {
                             "-fx-text-fill: #006477;"
             );
 
-            // o nome ocupa o espaço que sobra, empurrando peso e botão para a ponta direita
+
 
             nomeProva.setMaxWidth(Double.MAX_VALUE);
 
             HBox.setHgrow(nomeProva, Priority.ALWAYS);
 
-            // CAMPO DO PESO
+
 
             TextField campoPeso = new TextField();
 
@@ -579,7 +553,7 @@ public class PesosController {
                             "-fx-font-size: 16px;"
             );
 
-            // SÓ PERMITE DIGITAR O PESO SE SELECIONAR A PROVA
+
 
             checkProva.selectedProperty().addListener(
                     (observable, anterior, selecionado) -> {
@@ -589,17 +563,10 @@ public class PesosController {
                             campoPeso.clear();
                         }
 
-                        if (selecionado && recuperacao) {
-                            mostrarAlerta(
-                                    Alert.AlertType.INFORMATION,
-                                    "Recuperação",
-                                    "Caso escolha a recuperação, ela substituirá outra prova."
-                            );
-                        }
                     }
             );
 
-            // BOTÃO VISUALIZAR PROVA
+
 
             Button btnVisualizar = new Button("VISUALIZAR");
 
@@ -618,7 +585,7 @@ public class PesosController {
 
             btnVisualizar.setOnAction(event -> visualizarProva(prova));
 
-            // GUARDA OS ELEMENTOS
+
 
             selecoesProvas.add(checkProva);
 
@@ -633,12 +600,11 @@ public class PesosController {
                     btnVisualizar
             );
 
-            // ADICIONA A LINHA NO QUADRO
+
 
             conteinerProvas.getChildren().add(linha);
         }
 
-        // NENHUMA PROVA ENCONTRADA
 
         if (provasExibidas.isEmpty()) {
             Label mensagem = new Label(
@@ -655,9 +621,7 @@ public class PesosController {
     }
 
 
-    // =====================================
-    // VISUALIZAR PROVA
-    // =====================================
+
 
     private void visualizarProva(Prova escolhida) {
         try {
@@ -707,9 +671,7 @@ public class PesosController {
     }
 
 
-    // =====================================
-    // ADICIONAR PESOS
-    // =====================================
+
 
     @FXML
     private void adicionarPesos(ActionEvent event) {
@@ -727,7 +689,7 @@ public class PesosController {
 
         int quantidadeSelecionada = 0;
 
-        // VERIFICA SE ALGUMA PROVA FOI SELECIONADA
+
 
         for (CheckBox check : selecoesProvas) {
             if (check.isSelected()) {
@@ -745,7 +707,7 @@ public class PesosController {
             return;
         }
 
-        // VALIDA OS PESOS DAS PROVAS SELECIONADAS
+
 
         List<Prova> provasCalculo = new ArrayList<>();
         List<Double> pesosCalculo = new ArrayList<>();
@@ -800,8 +762,7 @@ public class PesosController {
             }
         }
 
-        // MÉDIA FINAL = média dos valores das provas ponderada pelos pesos
-        //             = soma(valor da prova x peso) / soma(pesos)
+
 
         double somaPesos = 0;
         double somaPonderada = 0;
@@ -831,22 +792,8 @@ public class PesosController {
                 String.format(Locale.forLanguageTag("pt-BR"), "%.2f", somaPonderada / somaPesos)
         );
 
-        // GRAVAÇÃO: só as provas normais (o banco não guarda recuperação como item de peso)
-
-        List<Prova> provasGravar = new ArrayList<>();
-        List<Double> pesosGravar = new ArrayList<>();
-        boolean recuperacaoMarcada = false;
-
-        for (int i = 0; i < provasCalculo.size(); i++) {
-            if (ehRecuperacao(provasCalculo.get(i))) {
-                recuperacaoMarcada = true;
-            } else {
-                provasGravar.add(provasCalculo.get(i));
-                pesosGravar.add(pesosCalculo.get(i));
-            }
-        }
-
-        // só recuperação marcada: não há o que gravar
+        List<Prova> provasGravar = new ArrayList<>(provasCalculo);
+        List<Double> pesosGravar = new ArrayList<>(pesosCalculo);
 
         if (provasGravar.isEmpty()) {
             return;
@@ -864,7 +811,7 @@ public class PesosController {
             return;
         }
 
-        // GRAVA NO BANCO
+
 
         try {
             String problema = gravarPesos(turma, provasGravar, percentuais);
@@ -888,16 +835,11 @@ public class PesosController {
                 Alert.AlertType.INFORMATION,
                 "Pesos",
                 "Pesos gravados com sucesso."
-                        + (recuperacaoMarcada
-                        ? "\n\nA recuperação entrou na média final, mas o banco não guarda o peso dela."
-                        : "")
         );
     }
 
 
-    // =====================================
-    // ALERTAS
-    // =====================================
+
 
     private void mostrarAlerta(
             Alert.AlertType tipo,
@@ -915,9 +857,7 @@ public class PesosController {
     }
 
 
-    // =====================================
-    // MENU QUESTÕES
-    // =====================================
+
 
     @FXML
     private void irQuestao(ActionEvent event) {
@@ -934,9 +874,7 @@ public class PesosController {
     }
 
 
-    // =====================================
-    // MENU PROVAS
-    // =====================================
+
 
     @FXML
     private void irProva(ActionEvent event) {
