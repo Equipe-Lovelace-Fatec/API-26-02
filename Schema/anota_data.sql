@@ -4,194 +4,195 @@
 INSERT INTO usuario (email, senha, foto, nome) VALUES
 
   -- PROFESSORES
-('teresinha.fatima@prof.fatec.com', 'senha.prof.1234', NULL, 'Teresinha de Fátima'),
-('emanuel.mineda@prof.fatec.com', 'senha.prof.1234', NULL, 'Emanuel Mineda'),
-('giuliano.bertoti@prof.fatec.com', 'senha.prof.1234', NULL, 'Giuliano Bertoti'),
-('fabiano.sabha@prof.fatec.com', 'senha.prof.1234', NULL, 'Fabiano Sabha'),
-('adriana.silva@prof.fatec.com', 'senha.prof.1234', NULL, 'Adriana Silva'),
-('felipe.lemes@prof.fatec.com', 'senha.prof.1234', NULL, 'Felipe Lemes'), -- teste, sem disciplinas
+('teresinha.fatima@prof.fatec.com', 'senha', NULL, 'Teresinha de Fátima'),
+('emanuel.mineda@prof.fatec.com', 'senha', NULL, 'Emanuel Mineda'),
+('giuliano.bertoti@prof.fatec.com', 'senha', NULL, 'Giuliano Bertoti'),
+('fabiano.sabha@prof.fatec.com', 'senha', NULL, 'Fabiano Sabha'),
+('adriana.silva@prof.fatec.com', 'senha', NULL, 'Adriana Silva'),
+('felipe.lemes@prof.fatec.com', 'senha', NULL, 'Felipe Lemes'), -- teste, sem disciplinas
  
   -- ALUNOS
-('artur.almeida@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Artur Almeida'),
-('raimundo.araujo@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Raimundo Araújo'),
-('renato.araujo@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Renato Araújo'),
-('jonas.araujo@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Jonas Araújo'),
-('joao.assis@aluno.fatec.com', 'senha.aluno.1234', NULL, 'João Assis'),
-('vinicius.assis@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Vinícius Assis'),
-('alexandre.assis@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Alexandre Assis'),
-('wesley.assis@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Wesley Assis'),
-('matheus.barros@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Matheus Barros'),
-('matheus.vieira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Matheus Vieira'),
-('joaquim.brito@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Joaquim Brito'),
-('alex.brito@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Alex Brito'),
-('marco.carvalho@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Marco Carvalho'),
-('gabriel.carvalho@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Gabriel Carvalho'),
-('geraldo.castro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Geraldo Castro'),
-('samuel.castro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Samuel Castro'),
-('vinicius.conceicao@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Vinícius Conceição'),
-('sergio.costa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Sérgio Costa'),
-('davi.cruz@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Davi Cruz'),
-('carlos.cruz@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Carlos Cruz'),
-('thiago.cunha@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Thiago Cunha'),
-('ronaldo.cunha@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Ronaldo Cunha'),
-('heitor.cunha@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Heitor Cunha'),
-('edson.cunha@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Edson Cunha'),
-('willian.fonseca@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Willian Fonseca'),
-('willian.freitas@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Willian Freitas'),
-('sergio.lima@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Sérgio Lima'),
-('valdir.lima@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Valdir Lima'),
-('jeferson.lima@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Jeferson Lima'),
-('vinicius.lima@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Vinícius Lima'),
-('david.matos@aluno.fatec.com', 'senha.aluno.1234', NULL, 'David Matos'),
-('jean.melo@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Jean Melo'),
-('diogo.melo@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Diogo Melo'),
-('ruan.moraes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Ruan Moraes'),
-('fabio.moura@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Fábio Moura'),
-('luciano.moura@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Luciano Moura'),
-('gilberto.moura@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Gilberto Moura'),
-('luciano.neves@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Luciano Neves'),
-('diogo.oliveira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Diogo Oliveira'),
-('elias.oliveira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Elias Oliveira'),
-('manoel.reis@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Manoel Reis'),
-('edson.reis@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Edson Reis'),
-('bernardo.rocha@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Bernardo Rocha'),
-('kauan.rocha@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Kauan Rocha'),
-('emerson.rocha@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Emerson Rocha'),
-('felipe.rosa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Felipe Rosa'),
-('vitor.rosa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Vitor Rosa'),
-('robson.rosa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Robson Rosa'),
-('jose.santos@aluno.fatec.com', 'senha.aluno.1234', NULL, 'José Santos'),
-('francisco.sousa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Francisco Sousa'),
-('wesley.sousa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Wesley Sousa'),
-('alex.sousa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Alex Sousa'),
-('robson.sousa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Robson Sousa'),
-('eduardo.souza@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Eduardo Souza'),
-('davi.pires@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Davi Pires'),
-('victor.pinheiro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Victor Pinheiro'),
-('adriano.amaral@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Adriano Amaral'),
-('paulo.correia@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Paulo Correia'),
-('leonardo.correia@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Leonardo Correia'),
-('edson.mota@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Edson Mota'),
-('roberto.garcia@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Roberto Garcia'),
-('manoel.silveira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Manoel Silveira'),
-('andre.nunes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'André Nunes'),
-('ronaldo.dias@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Ronaldo Dias'),
-('adriano.cavalcante@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Adriano Cavalcante'),
-('benedito.dias@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Benedito Dias'),
-('ronaldo.teixeira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Ronaldo Teixeira'),
-('matheus.dias@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Matheus Dias'),
-('roberto.menezes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Roberto Menezes'),
-('marcos.bezerra@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Marcos Bezerra'),
-('paulo.amorim@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Paulo Amorim'),
-('joaquim.viana@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Joaquim Viana'),
-('jose.batista@aluno.fatec.com', 'senha.aluno.1234', NULL, 'José Batista'),
-('vinicius.pires@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Vinícius Pires'),
-('paulo.medeiros@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Paulo Medeiros'),
-('alexandre.tavares@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Alexandre Tavares'),
-('ricardo.guimaraes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Ricardo Guimarães'),
-('kauan.duarte@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Kauan Duarte'),
-('marcos.fernandes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Marcos Fernandes'),
-('pedro.moreira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Pedro Moreira'),
-('marcio.silveira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Márcio Silveira'),
-('flavio.queiroz@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Flávio Queiroz'),
-('claudio.soares@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Cláudio Soares'),
-('artur.ribeiro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Artur Ribeiro'),
-('manuel.viana@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Manuel Viana'),
-('murilo.morais@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Murilo Morais'),
-('marcos.teixeira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Marcos Teixeira'),
-('marcelo.aguiar@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Marcelo Aguiar'),
-('enzo.viana@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Enzo Viana'),
-('julio.moreira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Júlio Moreira'),
-('lara.pereira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Lara Pereira'),
-('claudia.barbosa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Cláudia Barbosa'),
-('gabriela.coelho@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Gabriela Coelho'),
-('daniele.teixeira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Daniele Teixeira'),
-('sofia.coelho@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Sofia Coelho'),
-('yasmin.alves@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Yasmin Alves'),
-('daiane.tavares@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Daiane Tavares'),
-('marcia.filho@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Márcia Filho'),
-('jessica.queiroz@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Jéssica Queiroz'),
-('gabriela.monteiro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Gabriela Monteiro'),
-('daiane.teixeira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Daiane Teixeira'),
-('silvia.miranda@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Sílvia Miranda'),
-('sandra.pires@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Sandra Pires'),
-('amanda.correa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Amanda Corrêa'),
-('jessica.macedo@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Jéssica Macedo'),
-('barbara.ribeiro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Bárbara Ribeiro'),
-('marli.aguiar@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Marli Aguiar'),
-('luiza.pinheiro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Luíza Pinheiro'),
-('camila.monteiro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Camila Monteiro'),
-('fabiana.pires@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Fabiana Pires'),
-('amanda.silveira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Amanda Silveira'),
-('lara.goncalves@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Lara Gonçalves'),
-('silvana.cardoso@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Silvana Cardoso'),
-('julia.cardoso@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Júlia Cardoso'),
-('sueli.moreira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Sueli Moreira'),
-('carla.pinto@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Carla Pinto'),
-('solange.correia@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Solange Correia'),
-('sara.morais@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Sara Morais'),
-('sueli.goncalves@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Sueli Gonçalves'),
-('vanessa.franca@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Vanessa França'),
-('silvana.siqueira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Silvana Siqueira'),
-('manuela.dias@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Manuela Dias'),
-('paula.barbosa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Paula Barbosa'),
-('michele.barbosa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Michele Barbosa'),
-('alice.mota@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Alice Mota'),
-('yasmin.teixeira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Yasmin Teixeira'),
-('daniele.coelho@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Daniele Coelho'),
-('larissa.garcia@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Larissa Garcia'),
-('tatiane.lopes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Tatiane Lopes'),
-('silvana.lopes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Silvana Lopes'),
-('paula.mendes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Paula Mendes'),
-('paula.siqueira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Paula Siqueira'),
-('maria.guimaraes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Maria Guimarães'),
-('alessandra.braga@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Alessandra Braga'),
-('lara.medeiros@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Lara Medeiros'),
-('angela.marques@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Ângela Marques'),
-('monica.pires@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Mônica Pires'),
-('luciana.viana@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Luciana Viana'),
-('isabela.pinheiro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Isabela Pinheiro'),
-('daniele.morais@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Daniele Morais'),
-('patricia.braga@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Patrícia Braga'),
-('julia.henrique@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Júlia Henrique'),
-('renata.silveira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Renata Silveira'),
-('michele.leite@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Michele Leite'),
-('daiane.sales@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Daiane Sales'),
-('lara.martins@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Lara Martins'),
-('raquel.alves@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Raquel Alves'),
-('francisca.macedo@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Francisca Macedo'),
-('yasmin.barbosa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Yasmin Barbosa'),
-('aline.bezerra@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Aline Bezerra'),
-('marta.ribeiro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Marta Ribeiro'),
-('jessica.martins@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Jéssica Martins'),
-('simone.farias@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Simone Farias'),
-('eduarda.mendes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Eduarda Mendes'),
-('paula.pereira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Paula Pereira'),
-('thais.braga@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Thaís Braga'),
-('francisca.teixeira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Francisca Teixeira'),
-('isadora.siqueira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Isadora Siqueira'),
-('julia.aguiar@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Júlia Aguiar'),
-('silvana.gomes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Silvana Gomes'),
-('thais.santana@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Thaís Santana'),
-('milena.silveira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Milena Silveira'),
-('leticia.leite@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Letícia Leite'),
-('maria.sales@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Maria Sales'),
-('daiane.martins@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Daiane Martins'),
-('claudia.alves@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Cláudia Alves'),
-('ana.macedo@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Ana Macedo'),
-('vanessa.barbosa@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Vanessa Barbosa'),
-('marta.bezerra@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Marta Bezerra'),
-('regina.ribeiro@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Regina Ribeiro'),
-('rosangela.macedo@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Rosângela Macedo'),
-('fabiana.farias@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Fabiana Farias'),
-('renata.mendes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Renata Mendes'),
-('michele.pereira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Michele Pereira'),
-('janaina.braga@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Janaína Braga'),
-('alice.teixeira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Alice Teixeira'),
-('fernanda.siqueira@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Fernanda Siqueira'),
-('edna.aguiar@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Edna Aguiar'),
-('janaina.gomes@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Janaína Gomes'),
-('thais.soares@aluno.fatec.com', 'senha.aluno.1234', NULL, 'Thaís Soares');
+ ('ada.lovelace@aluno.fatec.com', 'senha', NULL, 'Ada Lovelace'), -- para fins de teste, não alocada, não apagar
+('artur.almeida@aluno.fatec.com', 'senha', NULL, 'Artur Almeida'),
+('raimundo.araujo@aluno.fatec.com', 'senha', NULL, 'Raimundo Araújo'),
+('renato.araujo@aluno.fatec.com', 'senha', NULL, 'Renato Araújo'),
+('jonas.araujo@aluno.fatec.com', 'senha', NULL, 'Jonas Araújo'),
+('joao.assis@aluno.fatec.com', 'senha', NULL, 'João Assis'),
+('vinicius.assis@aluno.fatec.com', 'senha', NULL, 'Vinícius Assis'),
+('alexandre.assis@aluno.fatec.com', 'senha', NULL, 'Alexandre Assis'),
+('wesley.assis@aluno.fatec.com', 'senha', NULL, 'Wesley Assis'),
+('matheus.barros@aluno.fatec.com', 'senha', NULL, 'Matheus Barros'),
+('matheus.vieira@aluno.fatec.com', 'senha', NULL, 'Matheus Vieira'),
+('joaquim.brito@aluno.fatec.com', 'senha', NULL, 'Joaquim Brito'),
+('alex.brito@aluno.fatec.com', 'senha', NULL, 'Alex Brito'),
+('marco.carvalho@aluno.fatec.com', 'senha', NULL, 'Marco Carvalho'),
+('gabriel.carvalho@aluno.fatec.com', 'senha', NULL, 'Gabriel Carvalho'),
+('geraldo.castro@aluno.fatec.com', 'senha', NULL, 'Geraldo Castro'),
+('samuel.castro@aluno.fatec.com', 'senha', NULL, 'Samuel Castro'),
+('vinicius.conceicao@aluno.fatec.com', 'senha', NULL, 'Vinícius Conceição'),
+('sergio.costa@aluno.fatec.com', 'senha', NULL, 'Sérgio Costa'),
+('davi.cruz@aluno.fatec.com', 'senha', NULL, 'Davi Cruz'),
+('carlos.cruz@aluno.fatec.com', 'senha', NULL, 'Carlos Cruz'),
+('thiago.cunha@aluno.fatec.com', 'senha', NULL, 'Thiago Cunha'),
+('ronaldo.cunha@aluno.fatec.com', 'senha', NULL, 'Ronaldo Cunha'),
+('heitor.cunha@aluno.fatec.com', 'senha', NULL, 'Heitor Cunha'),
+('edson.cunha@aluno.fatec.com', 'senha', NULL, 'Edson Cunha'),
+('willian.fonseca@aluno.fatec.com', 'senha', NULL, 'Willian Fonseca'),
+('willian.freitas@aluno.fatec.com', 'senha', NULL, 'Willian Freitas'),
+('sergio.lima@aluno.fatec.com', 'senha', NULL, 'Sérgio Lima'),
+('valdir.lima@aluno.fatec.com', 'senha', NULL, 'Valdir Lima'),
+('jeferson.lima@aluno.fatec.com', 'senha', NULL, 'Jeferson Lima'),
+('vinicius.lima@aluno.fatec.com', 'senha', NULL, 'Vinícius Lima'),
+('david.matos@aluno.fatec.com', 'senha', NULL, 'David Matos'),
+('jean.melo@aluno.fatec.com', 'senha', NULL, 'Jean Melo'),
+('diogo.melo@aluno.fatec.com', 'senha', NULL, 'Diogo Melo'),
+('ruan.moraes@aluno.fatec.com', 'senha', NULL, 'Ruan Moraes'),
+('fabio.moura@aluno.fatec.com', 'senha', NULL, 'Fábio Moura'),
+('luciano.moura@aluno.fatec.com', 'senha', NULL, 'Luciano Moura'),
+('gilberto.moura@aluno.fatec.com', 'senha', NULL, 'Gilberto Moura'),
+('luciano.neves@aluno.fatec.com', 'senha', NULL, 'Luciano Neves'),
+('diogo.oliveira@aluno.fatec.com', 'senha', NULL, 'Diogo Oliveira'),
+('elias.oliveira@aluno.fatec.com', 'senha', NULL, 'Elias Oliveira'),
+('manoel.reis@aluno.fatec.com', 'senha', NULL, 'Manoel Reis'),
+('edson.reis@aluno.fatec.com', 'senha', NULL, 'Edson Reis'),
+('bernardo.rocha@aluno.fatec.com', 'senha', NULL, 'Bernardo Rocha'),
+('kauan.rocha@aluno.fatec.com', 'senha', NULL, 'Kauan Rocha'),
+('emerson.rocha@aluno.fatec.com', 'senha', NULL, 'Emerson Rocha'),
+('felipe.rosa@aluno.fatec.com', 'senha', NULL, 'Felipe Rosa'),
+('vitor.rosa@aluno.fatec.com', 'senha', NULL, 'Vitor Rosa'),
+('robson.rosa@aluno.fatec.com', 'senha', NULL, 'Robson Rosa'),
+('jose.santos@aluno.fatec.com', 'senha', NULL, 'José Santos'),
+('francisco.sousa@aluno.fatec.com', 'senha', NULL, 'Francisco Sousa'),
+('wesley.sousa@aluno.fatec.com', 'senha', NULL, 'Wesley Sousa'),
+('alex.sousa@aluno.fatec.com', 'senha', NULL, 'Alex Sousa'),
+('robson.sousa@aluno.fatec.com', 'senha', NULL, 'Robson Sousa'),
+('eduardo.souza@aluno.fatec.com', 'senha', NULL, 'Eduardo Souza'),
+('davi.pires@aluno.fatec.com', 'senha', NULL, 'Davi Pires'),
+('victor.pinheiro@aluno.fatec.com', 'senha', NULL, 'Victor Pinheiro'),
+('adriano.amaral@aluno.fatec.com', 'senha', NULL, 'Adriano Amaral'),
+('paulo.correia@aluno.fatec.com', 'senha', NULL, 'Paulo Correia'),
+('leonardo.correia@aluno.fatec.com', 'senha', NULL, 'Leonardo Correia'),
+('edson.mota@aluno.fatec.com', 'senha', NULL, 'Edson Mota'),
+('roberto.garcia@aluno.fatec.com', 'senha', NULL, 'Roberto Garcia'),
+('manoel.silveira@aluno.fatec.com', 'senha', NULL, 'Manoel Silveira'),
+('andre.nunes@aluno.fatec.com', 'senha', NULL, 'André Nunes'),
+('ronaldo.dias@aluno.fatec.com', 'senha', NULL, 'Ronaldo Dias'),
+('adriano.cavalcante@aluno.fatec.com', 'senha', NULL, 'Adriano Cavalcante'),
+('benedito.dias@aluno.fatec.com', 'senha', NULL, 'Benedito Dias'),
+('ronaldo.teixeira@aluno.fatec.com', 'senha', NULL, 'Ronaldo Teixeira'),
+('matheus.dias@aluno.fatec.com', 'senha', NULL, 'Matheus Dias'),
+('roberto.menezes@aluno.fatec.com', 'senha', NULL, 'Roberto Menezes'),
+('marcos.bezerra@aluno.fatec.com', 'senha', NULL, 'Marcos Bezerra'),
+('paulo.amorim@aluno.fatec.com', 'senha', NULL, 'Paulo Amorim'),
+('joaquim.viana@aluno.fatec.com', 'senha', NULL, 'Joaquim Viana'),
+('jose.batista@aluno.fatec.com', 'senha', NULL, 'José Batista'),
+('vinicius.pires@aluno.fatec.com', 'senha', NULL, 'Vinícius Pires'),
+('paulo.medeiros@aluno.fatec.com', 'senha', NULL, 'Paulo Medeiros'),
+('alexandre.tavares@aluno.fatec.com', 'senha', NULL, 'Alexandre Tavares'),
+('ricardo.guimaraes@aluno.fatec.com', 'senha', NULL, 'Ricardo Guimarães'),
+('kauan.duarte@aluno.fatec.com', 'senha', NULL, 'Kauan Duarte'),
+('marcos.fernandes@aluno.fatec.com', 'senha', NULL, 'Marcos Fernandes'),
+('pedro.moreira@aluno.fatec.com', 'senha', NULL, 'Pedro Moreira'),
+('marcio.silveira@aluno.fatec.com', 'senha', NULL, 'Márcio Silveira'),
+('flavio.queiroz@aluno.fatec.com', 'senha', NULL, 'Flávio Queiroz'),
+('claudio.soares@aluno.fatec.com', 'senha', NULL, 'Cláudio Soares'),
+('artur.ribeiro@aluno.fatec.com', 'senha', NULL, 'Artur Ribeiro'),
+('manuel.viana@aluno.fatec.com', 'senha', NULL, 'Manuel Viana'),
+('murilo.morais@aluno.fatec.com', 'senha', NULL, 'Murilo Morais'),
+('marcos.teixeira@aluno.fatec.com', 'senha', NULL, 'Marcos Teixeira'),
+('marcelo.aguiar@aluno.fatec.com', 'senha', NULL, 'Marcelo Aguiar'),
+('enzo.viana@aluno.fatec.com', 'senha', NULL, 'Enzo Viana'),
+('julio.moreira@aluno.fatec.com', 'senha', NULL, 'Júlio Moreira'),
+('lara.pereira@aluno.fatec.com', 'senha', NULL, 'Lara Pereira'),
+('claudia.barbosa@aluno.fatec.com', 'senha', NULL, 'Cláudia Barbosa'),
+('gabriela.coelho@aluno.fatec.com', 'senha', NULL, 'Gabriela Coelho'),
+('daniele.teixeira@aluno.fatec.com', 'senha', NULL, 'Daniele Teixeira'),
+('sofia.coelho@aluno.fatec.com', 'senha', NULL, 'Sofia Coelho'),
+('yasmin.alves@aluno.fatec.com', 'senha', NULL, 'Yasmin Alves'),
+('daiane.tavares@aluno.fatec.com', 'senha', NULL, 'Daiane Tavares'),
+('marcia.filho@aluno.fatec.com', 'senha', NULL, 'Márcia Filho'),
+('jessica.queiroz@aluno.fatec.com', 'senha', NULL, 'Jéssica Queiroz'),
+('gabriela.monteiro@aluno.fatec.com', 'senha', NULL, 'Gabriela Monteiro'),
+('daiane.teixeira@aluno.fatec.com', 'senha', NULL, 'Daiane Teixeira'),
+('silvia.miranda@aluno.fatec.com', 'senha', NULL, 'Sílvia Miranda'),
+('sandra.pires@aluno.fatec.com', 'senha', NULL, 'Sandra Pires'),
+('amanda.correa@aluno.fatec.com', 'senha', NULL, 'Amanda Corrêa'),
+('jessica.macedo@aluno.fatec.com', 'senha', NULL, 'Jéssica Macedo'),
+('barbara.ribeiro@aluno.fatec.com', 'senha', NULL, 'Bárbara Ribeiro'),
+('marli.aguiar@aluno.fatec.com', 'senha', NULL, 'Marli Aguiar'),
+('luiza.pinheiro@aluno.fatec.com', 'senha', NULL, 'Luíza Pinheiro'),
+('camila.monteiro@aluno.fatec.com', 'senha', NULL, 'Camila Monteiro'),
+('fabiana.pires@aluno.fatec.com', 'senha', NULL, 'Fabiana Pires'),
+('amanda.silveira@aluno.fatec.com', 'senha', NULL, 'Amanda Silveira'),
+('lara.goncalves@aluno.fatec.com', 'senha', NULL, 'Lara Gonçalves'),
+('silvana.cardoso@aluno.fatec.com', 'senha', NULL, 'Silvana Cardoso'),
+('julia.cardoso@aluno.fatec.com', 'senha', NULL, 'Júlia Cardoso'),
+('sueli.moreira@aluno.fatec.com', 'senha', NULL, 'Sueli Moreira'),
+('carla.pinto@aluno.fatec.com', 'senha', NULL, 'Carla Pinto'),
+('solange.correia@aluno.fatec.com', 'senha', NULL, 'Solange Correia'),
+('sara.morais@aluno.fatec.com', 'senha', NULL, 'Sara Morais'),
+('sueli.goncalves@aluno.fatec.com', 'senha', NULL, 'Sueli Gonçalves'),
+('vanessa.franca@aluno.fatec.com', 'senha', NULL, 'Vanessa França'),
+('silvana.siqueira@aluno.fatec.com', 'senha', NULL, 'Silvana Siqueira'),
+('manuela.dias@aluno.fatec.com', 'senha', NULL, 'Manuela Dias'),
+('paula.barbosa@aluno.fatec.com', 'senha', NULL, 'Paula Barbosa'),
+('michele.barbosa@aluno.fatec.com', 'senha', NULL, 'Michele Barbosa'),
+('alice.mota@aluno.fatec.com', 'senha', NULL, 'Alice Mota'),
+('yasmin.teixeira@aluno.fatec.com', 'senha', NULL, 'Yasmin Teixeira'),
+('daniele.coelho@aluno.fatec.com', 'senha', NULL, 'Daniele Coelho'),
+('larissa.garcia@aluno.fatec.com', 'senha', NULL, 'Larissa Garcia'),
+('tatiane.lopes@aluno.fatec.com', 'senha', NULL, 'Tatiane Lopes'),
+('silvana.lopes@aluno.fatec.com', 'senha', NULL, 'Silvana Lopes'),
+('paula.mendes@aluno.fatec.com', 'senha', NULL, 'Paula Mendes'),
+('paula.siqueira@aluno.fatec.com', 'senha', NULL, 'Paula Siqueira'),
+('maria.guimaraes@aluno.fatec.com', 'senha', NULL, 'Maria Guimarães'),
+('alessandra.braga@aluno.fatec.com', 'senha', NULL, 'Alessandra Braga'),
+('lara.medeiros@aluno.fatec.com', 'senha', NULL, 'Lara Medeiros'),
+('angela.marques@aluno.fatec.com', 'senha', NULL, 'Ângela Marques'),
+('monica.pires@aluno.fatec.com', 'senha', NULL, 'Mônica Pires'),
+('luciana.viana@aluno.fatec.com', 'senha', NULL, 'Luciana Viana'),
+('isabela.pinheiro@aluno.fatec.com', 'senha', NULL, 'Isabela Pinheiro'),
+('daniele.morais@aluno.fatec.com', 'senha', NULL, 'Daniele Morais'),
+('patricia.braga@aluno.fatec.com', 'senha', NULL, 'Patrícia Braga'),
+('julia.henrique@aluno.fatec.com', 'senha', NULL, 'Júlia Henrique'),
+('renata.silveira@aluno.fatec.com', 'senha', NULL, 'Renata Silveira'),
+('michele.leite@aluno.fatec.com', 'senha', NULL, 'Michele Leite'),
+('daiane.sales@aluno.fatec.com', 'senha', NULL, 'Daiane Sales'),
+('lara.martins@aluno.fatec.com', 'senha', NULL, 'Lara Martins'),
+('raquel.alves@aluno.fatec.com', 'senha', NULL, 'Raquel Alves'),
+('francisca.macedo@aluno.fatec.com', 'senha', NULL, 'Francisca Macedo'),
+('yasmin.barbosa@aluno.fatec.com', 'senha', NULL, 'Yasmin Barbosa'),
+('aline.bezerra@aluno.fatec.com', 'senha', NULL, 'Aline Bezerra'),
+('marta.ribeiro@aluno.fatec.com', 'senha', NULL, 'Marta Ribeiro'),
+('jessica.martins@aluno.fatec.com', 'senha', NULL, 'Jéssica Martins'),
+('simone.farias@aluno.fatec.com', 'senha', NULL, 'Simone Farias'),
+('eduarda.mendes@aluno.fatec.com', 'senha', NULL, 'Eduarda Mendes'),
+('paula.pereira@aluno.fatec.com', 'senha', NULL, 'Paula Pereira'),
+('thais.braga@aluno.fatec.com', 'senha', NULL, 'Thaís Braga'),
+('francisca.teixeira@aluno.fatec.com', 'senha', NULL, 'Francisca Teixeira'),
+('isadora.siqueira@aluno.fatec.com', 'senha', NULL, 'Isadora Siqueira'),
+('julia.aguiar@aluno.fatec.com', 'senha', NULL, 'Júlia Aguiar'),
+('silvana.gomes@aluno.fatec.com', 'senha', NULL, 'Silvana Gomes'),
+('thais.santana@aluno.fatec.com', 'senha', NULL, 'Thaís Santana'),
+('milena.silveira@aluno.fatec.com', 'senha', NULL, 'Milena Silveira'),
+('leticia.leite@aluno.fatec.com', 'senha', NULL, 'Letícia Leite'),
+('maria.sales@aluno.fatec.com', 'senha', NULL, 'Maria Sales'),
+('daiane.martins@aluno.fatec.com', 'senha', NULL, 'Daiane Martins'),
+('claudia.alves@aluno.fatec.com', 'senha', NULL, 'Cláudia Alves'),
+('ana.macedo@aluno.fatec.com', 'senha', NULL, 'Ana Macedo'),
+('vanessa.barbosa@aluno.fatec.com', 'senha', NULL, 'Vanessa Barbosa'),
+('marta.bezerra@aluno.fatec.com', 'senha', NULL, 'Marta Bezerra'),
+('regina.ribeiro@aluno.fatec.com', 'senha', NULL, 'Regina Ribeiro'),
+('rosangela.macedo@aluno.fatec.com', 'senha', NULL, 'Rosângela Macedo'),
+('fabiana.farias@aluno.fatec.com', 'senha', NULL, 'Fabiana Farias'),
+('renata.mendes@aluno.fatec.com', 'senha', NULL, 'Renata Mendes'),
+('michele.pereira@aluno.fatec.com', 'senha', NULL, 'Michele Pereira'),
+('janaina.braga@aluno.fatec.com', 'senha', NULL, 'Janaína Braga'),
+('alice.teixeira@aluno.fatec.com', 'senha', NULL, 'Alice Teixeira'),
+('fernanda.siqueira@aluno.fatec.com', 'senha', NULL, 'Fernanda Siqueira'),
+('edna.aguiar@aluno.fatec.com', 'senha', NULL, 'Edna Aguiar'),
+('janaina.gomes@aluno.fatec.com', 'senha', NULL, 'Janaína Gomes'),
+('thais.soares@aluno.fatec.com', 'senha', NULL, 'Thaís Soares');
 
 -- CURSO
 INSERT INTO curso (nome_curso, sigla_curso) VALUES 
@@ -998,26 +999,26 @@ JOIN questao q ON q.enunciado = v.enunciado AND q.tipo = v.tipo;
 -- ========= PROVA aplicada TURMA =============
 -- Provas 1 e 2 e recuperação, cada uma na turma do semestre da disciplina:
 -- Inglês I e Eng. de Software I = BD 1º sem. (turma 1) | Análise e Desenv. de BD III = BD 3º sem. (turma 3)
-INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim, recuperacao)
-SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario, v.horario_fim, v.recuperacao
+INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim)
+SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario, v.horario_fim
 FROM (
-    SELECT 1 AS id_turma, 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina, '2026-09-18' AS data, '19:35:00' AS horario, '21:15:00' AS horario_fim, false AS recuperacao
+    SELECT 1 AS id_turma, 'Prova 1' AS nome_prova, 'teresinha.fatima@prof.fatec.com' AS email_professor, 'Inglês I' AS nome_disciplina, '2026-09-18' AS data, '19:35:00' AS horario, '21:15:00' AS horario_fim
     UNION ALL
-    SELECT 1, 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-10-20', '19:35:00', '21:15:00', false
+    SELECT 1, 'Prova 2', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-10-20', '19:35:00', '21:15:00'
     UNION ALL
-    SELECT 3, 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-10-14', '21:25:00', '23:05:00', false
+    SELECT 3, 'Prova 1', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-10-14', '21:25:00', '23:05:00'
     UNION ALL
-    SELECT 3, 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-11-18', '21:25:00', '23:05:00', false
+    SELECT 3, 'Prova 2', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-11-18', '21:25:00', '23:05:00'
     UNION ALL
-    SELECT 1, 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-10-15', '19:35:00', '21:15:00', false
+    SELECT 1, 'Prova 1', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-10-15', '19:35:00', '21:15:00'
     UNION ALL
-    SELECT 1, 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-11-19', '19:35:00', '21:10:00', false
+    SELECT 1, 'Prova 2', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-11-19', '19:35:00', '21:10:00'
     UNION ALL
-    SELECT 1, 'Recuperação', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-12-02', '19:35:00', '21:15:00', true
+    SELECT 1, 'Recuperação', 'teresinha.fatima@prof.fatec.com', 'Inglês I', '2026-12-02', '19:35:00', '21:15:00'
     UNION ALL
-    SELECT 1, 'Recuperação', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-12-03', '19:30:00', '21:10:00', true
+    SELECT 1, 'Recuperação', 'giuliano.bertoti@prof.fatec.com', 'Engenharia de Software I', '2026-12-03', '19:30:00', '21:10:00'
     UNION ALL
-    SELECT 3, 'Recuperação', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-12-04', '21:30:00', '23:05:00', true
+    SELECT 3, 'Recuperação', 'emanuel.mineda@prof.fatec.com', 'Análise e desenvolvimento de Banco de Dados III', '2026-12-04', '21:30:00', '23:05:00'
 ) AS v
 JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_professor AND p.nome_disciplina = v.nome_disciplina;
 
@@ -1155,20 +1156,20 @@ JOIN questao q ON q.enunciado = v.enunciado AND q.tipo = v.tipo;
 
 -- PROVA APLICADA À TURMA (turmas matutinas: 08:00)
 -- Fabiano: Sistemas Operacionais I = ADS 1º sem. (turma 7) | Adriana: Desenvolvimento Web I = DSM 1º sem. (turma 13)
-INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim, recuperacao)
-SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario, v.horario_fim, v.recuperacao
+INSERT INTO prova_turma (prova_id, id_turma, email_professor, nome_disciplina, data, horario, horario_fim)
+SELECT p.prova_id, v.id_turma, p.email_professor, p.nome_disciplina, v.data, v.horario, v.horario_fim
 FROM (
-    SELECT 7 AS id_turma, 'Prova 1' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina, '2026-10-16' AS data, '08:00:00' AS horario, '09:50:00' AS horario_fim, false AS recuperacao
+    SELECT 7 AS id_turma, 'Prova 1' AS nome_prova, 'fabiano.sabha@prof.fatec.com' AS email_professor, 'Sistemas Operacionais I' AS nome_disciplina, '2026-10-16' AS data, '08:00:00' AS horario, '09:50:00' AS horario_fim
     UNION ALL
-    SELECT 7, 'Prova 2', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-11-20', '08:00:00', '09:50:00', false
+    SELECT 7, 'Prova 2', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-11-20', '08:00:00', '09:50:00'
     UNION ALL
-    SELECT 7, 'Recuperação', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-12-07', '08:00:00', '09:50:00', true
+    SELECT 7, 'Recuperação', 'fabiano.sabha@prof.fatec.com', 'Sistemas Operacionais I', '2026-12-07', '08:00:00', '09:50:00'
     UNION ALL
-    SELECT 13, 'Prova 1', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-10-19', '08:00:00', '09:50:00', false
+    SELECT 13, 'Prova 1', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-10-19', '08:00:00', '09:50:00'
     UNION ALL
-    SELECT 13, 'Prova 2', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-11-23', '08:00:00', '09:50:00', false
+    SELECT 13, 'Prova 2', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-11-23', '08:00:00', '09:50:00'
     UNION ALL
-    SELECT 13, 'Recuperação', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-12-08', '08:00:00', '09:50:00', true
+    SELECT 13, 'Recuperação', 'adriana.silva@prof.fatec.com', 'Desenvolvimento Web I', '2026-12-08', '08:00:00', '09:50:00'
 ) AS v
 JOIN prova p ON p.nome_prova = v.nome_prova AND p.email_professor = v.email_professor AND p.nome_disciplina = v.nome_disciplina;
 
@@ -1418,7 +1419,7 @@ WHERE pe.id_turma = 9 AND a.email IN ('edson.reis@aluno.fatec.com', 'diogo.olive
 -- NOVO: EXEMPLO DE COMPOSIÇÃO DA MÉDIA (colocar antes da CONFERÊNCIA)
 -- Inglês I / turma 1: Prova 1 = 60%, Prova 2 = 40% (soma 100)
 -- BD III / turma 3: Prova 1 = 50%, Prova 2 = 50% (Prova 2 ainda sem correção)
--- A Recuperação NÃO entra como item: ela substitui o item escolhido pelo professor (bloco RECUPERAÇÃO abaixo).
+-- A Recuperação é uma prova comum: só entra na média se o professor cadastrá-la como item.
 -- =====================================================================
 -- localiza as aplicações pelo nome (não depende do id gerado pelo AUTO_INCREMENT)
 SET @app_ing_p1 = (SELECT pt.id_aplicacao FROM prova_turma pt JOIN prova p ON p.prova_id = pt.prova_id
@@ -1472,21 +1473,12 @@ UPDATE prova_aluno SET nota = 2, corrigida_em = '2026-10-30 10:00:00' WHERE id_a
 UPDATE prova_aluno SET nota = 10, corrigida_em = '2026-10-30 10:00:00' WHERE id_aplicacao = @app_bd_p1 AND RA = '3579364582';
 
 -- =====================================================================
--- NOVO: RECUPERAÇÃO
--- (as aplicações de recuperação já estão marcadas com recuperacao = true em prova_turma)
--- Inglês I (turma 1): o professor escolhe qual item cada aluno substitui
---    Daiane   -> Prova 1     (recuperação já corrigida: 8)
---    Alexandre-> Prova 2     (recuperação já corrigida: 7)
---    Cláudia  -> Prova 1     (recuperação ainda NÃO corrigida: vale a nota original)
+-- NOVO: NOTAS DA RECUPERAÇÃO DE INGLÊS I (prova comum, só 3 alunos convocados)
+-- Daiane e Alexandre: correção fechada | Cláudia: nota provisória (correção não fechada)
 -- =====================================================================
 UPDATE prova_aluno SET nota = 8, corrigida_em = '2026-12-03 10:00:00' WHERE id_aplicacao = @app_ing_rec AND RA = '3480944395';
 UPDATE prova_aluno SET nota = 7, corrigida_em = '2026-12-03 10:00:00' WHERE id_aplicacao = @app_ing_rec AND RA = '3955057679';
 UPDATE prova_aluno SET nota = 5                                       WHERE id_aplicacao = @app_ing_rec AND RA = '8089811057';  -- provisória
-
-INSERT INTO recuperacao_substituicao (id_aplicacao, id_turma, nome_disciplina, RA, item_id) VALUES
-(@app_ing_rec, 1, 'Inglês I', '3480944395', (SELECT item_id FROM item_avaliativo WHERE id_turma = 1 AND nome_disciplina = 'Inglês I' AND nome = 'Prova 1')),
-(@app_ing_rec, 1, 'Inglês I', '3955057679', (SELECT item_id FROM item_avaliativo WHERE id_turma = 1 AND nome_disciplina = 'Inglês I' AND nome = 'Prova 2')),
-(@app_ing_rec, 1, 'Inglês I', '8089811057', (SELECT item_id FROM item_avaliativo WHERE id_turma = 1 AND nome_disciplina = 'Inglês I' AND nome = 'Prova 1'));
 
 -- =====================================================================
 -- TESTE DO APP: prova respondida e corrigida
@@ -1575,10 +1567,8 @@ SELECT * FROM resposta_aluno;
 
 -- novas
 SELECT * FROM item_avaliativo;
-SELECT * FROM recuperacao_substituicao;
 
 SELECT * FROM v_media_aluno;
-SELECT * FROM v_recuperacao_status;
 SELECT * FROM v_correcao_status;
 SELECT * FROM v_auditoria_pesos;
 SELECT * FROM v_auditoria_notas;
