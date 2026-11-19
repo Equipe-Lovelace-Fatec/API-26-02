@@ -328,11 +328,11 @@ public class AlunoController {
         }
 
         caixa.getChildren().add(titulo("Resposta do Aluno:"));
-        caixa.getChildren().add(texto(respostaAluno == null || respostaAluno.texto == null
+        caixa.getChildren().add(blocoTexto(respostaAluno == null || respostaAluno.texto == null
                 || respostaAluno.texto.isBlank() ? "Não respondida" : respostaAluno.texto));
 
         caixa.getChildren().add(titulo("Resposta Esperada:"));
-        caixa.getChildren().add(texto(q.gabarito.isEmpty()
+        caixa.getChildren().add(blocoTexto(q.gabarito.isEmpty()
                 ? "Sem resposta cadastrada" : String.join("\n", q.gabarito)));
 
         if (cartao.ehAberta()) {
@@ -452,9 +452,20 @@ public class AlunoController {
     private Label texto(String t) {
         Label l = new Label(t);
         l.setWrapText(true);
+        l.setMinHeight(javafx.scene.layout.Region.USE_PREF_SIZE);   // nunca cortar o texto com "..."
         l.setFont(Font.font(16));
         l.setStyle("-fx-text-fill: " + COR_TEXTO + ";");
         return l;
+    }
+
+    // Texto de várias linhas (um par "item → conceito" por linha): um rótulo por linha.
+    // Um único Label com quebras de linha e wrapText calcula a altura de uma linha só e corta o resto.
+    private VBox blocoTexto(String t) {
+        VBox bloco = new VBox(4);
+        for (String linha : t.split("\\R", -1)) {
+            bloco.getChildren().add(texto(linha.isEmpty() ? " " : linha));
+        }
+        return bloco;
     }
 
     private void mostrarMensagemVazia(String mensagem) {
@@ -538,11 +549,6 @@ public class AlunoController {
     @FXML
     void irProva_agendar(ActionEvent event) throws IOException {
         App.setRoot("SelecaoProva");
-    }
-
-    @FXML
-    void irProva_pesos(ActionEvent event) throws IOException {
-        App.setRoot("pesos");
     }
 
     @FXML

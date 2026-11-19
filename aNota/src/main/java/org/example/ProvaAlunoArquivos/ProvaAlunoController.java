@@ -402,6 +402,11 @@ public class ProvaAlunoController {
 
     @FXML
     void ir_minha_agenda(ActionEvent event) {
-
+        try {
+            App.setRoot("Agenda_Aluno");
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Erro", "Não foi possível abrir a tela de correção/gabarito: " + e.getMessage());
+        }
     }
 }

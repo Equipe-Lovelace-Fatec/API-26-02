@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="136.0" minHeight="136.0" prefHeight="136.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #624695; -fx-border-width: 2; -fx-border-radius: 8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.CartaoProvaAlunoController">
+<HBox alignment="CENTER_LEFT" spacing="5.5" maxHeight="136.0" minHeight="136.0" prefHeight="136.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #624695; -fx-border-width: 2; -fx-border-radius: 8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.CartaoProvaAlunoController">
    <padding>
-      <Insets right="14.0" />
+      <Insets left="57.0" right="14.0" />
    </padding>
    <VBox.margin>
       <Insets left="16.0" right="16.0" />
@@ -21,12 +21,12 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lbl_disciplina" alignment="CENTER" maxWidth="257.0" minWidth="257.0" prefWidth="257.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+      <Label fx:id="lbl_disciplina" alignment="CENTER" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lbl_valor" alignment="CENTER" maxWidth="123.0" minWidth="123.0" prefWidth="123.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+      <Label fx:id="lbl_valor" alignment="CENTER" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

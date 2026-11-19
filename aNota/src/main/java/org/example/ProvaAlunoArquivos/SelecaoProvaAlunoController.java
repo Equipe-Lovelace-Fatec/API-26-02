@@ -138,7 +138,6 @@ public class SelecaoProvaAlunoController {
 
     @FXML
     void ir_correcao(ActionEvent event) {
-        // já é a tela de correção
     }
 
     @FXML
@@ -153,6 +152,11 @@ public class SelecaoProvaAlunoController {
 
     @FXML
     void ir_minha_agenda(ActionEvent event) {
-
+        try {
+            App.setRoot("Agenda_Aluno");
+        } catch (IOException e) {
+            e.printStackTrace();
+            avisar("Erro", "Não foi possível abrir a tela de desempenho: " + e.getMessage());
+        }
     }
 }

@@ -30,13 +30,13 @@ public class CorrecaoAlunoGabaritoController {
         vboxContainerQuestoes.getChildren().clear();
 
         if (!ContextoProvaAluno.temSelecao()) {
-            titulo_gabarito_prova.setText("Gabarito da Avaliação");
+            titulo_gabarito_prova.setText("GABARITO DA AVALIAÇÃO");
             vboxContainerQuestoes.getChildren().add(mensagem("Escolha uma prova em Correção para ver o gabarito."));
             return;
         }
 
         ProvaRealizada prova = ContextoProvaAluno.getProva();
-        titulo_gabarito_prova.setText("Gabarito: " + prova.getNomeProva());
+        titulo_gabarito_prova.setText(("Gabarito: " + prova.getNomeProva()).toUpperCase());
 
         try {
             List<CorrecaoAlunoQuestao> questoes = dao.carregarQuestoes(ContextoProvaAluno.getRa(), prova, false);
@@ -85,7 +85,12 @@ public class CorrecaoAlunoGabaritoController {
 
     @FXML
     void ir_minha_agenda(ActionEvent event) {
-
+        try {
+            App.setRoot("Agenda_Aluno");
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Erro", "Não foi possível abrir a tela de correção/gabarito: " + e.getMessage());
+        }
     }
 
     private void abrir(String fxml, String descricao) {
