@@ -129,10 +129,10 @@ public class LoginController {
 
     private void abrirTelaAluno() {
         try {
-            App.abrirTela("Agenda_Aluno", "aNota - Minha Agenda", 1350, 1080);
+            App.abrirTela("Agenda_Aluno", "aNota - Minha Agenda", 1350, 800);
         } catch (IOException e) {
             e.printStackTrace();
-            lbl_erro.setText("Erro ao abrir a tela de prova do aluno.");
+            lbl_erro.setText("Erro ao abrir a agenda do aluno.");
         }
     }
 }

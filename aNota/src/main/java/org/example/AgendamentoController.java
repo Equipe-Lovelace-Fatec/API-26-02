@@ -36,6 +36,7 @@ public class AgendamentoController {
     @FXML private MenuButton menu_alunos;
     @FXML private ChoiceBox<String> choice_box_disciplina;
     @FXML private ChoiceBox<String> choice_box_hora;
+    @FXML private ChoiceBox<String> choice_box_termino;
     @FXML private DatePicker date_picker;
     @FXML private ImageView img_fundoverde1350x1080;
     @FXML private ImageView img_menu_elaboradas;
@@ -89,8 +90,12 @@ public class AgendamentoController {
             atualizarHorarios(nova);
         });
 
-        choice_box_hora.getSelectionModel().selectedItemProperty().addListener((obs, antiga, nova) ->
-                nome_hora_selecionada.setText(nova == null ? "-" : nova));
+        choice_box_hora.getSelectionModel().selectedItemProperty().addListener((obs, antiga, nova) -> {
+            atualizarTerminos(choice_box_turma.getValue(), nova);
+            atualizarResumoHorario();
+        });
+        choice_box_termino.getSelectionModel().selectedItemProperty().addListener((obs, antiga, nova) ->
+                atualizarResumoHorario());
 
         carregarTurmas();
     }
@@ -255,6 +260,31 @@ public class AgendamentoController {
         choice_box_hora.getItems().setAll(horas);
     }
 
+    private void atualizarTerminos(Turma turma, String inicioTexto) {
+        choice_box_termino.getSelectionModel().clearSelection();
+        if (turma == null || inicioTexto == null) {
+            choice_box_termino.getItems().clear();
+            return;
+        }
+        List<String> terminos = new ArrayList<>();
+        for (LocalTime fim : HorarioAula.terminosApos(turma.getPeriodo(), LocalTime.parse(inicioTexto))) {
+            terminos.add(fim.format(DateTimeFormatter.ofPattern("HH:mm")));
+        }
+        choice_box_termino.getItems().setAll(terminos);
+    }
+
+    private void atualizarResumoHorario() {
+        String inicio = choice_box_hora.getValue();
+        String termino = choice_box_termino.getValue();
+        if (inicio == null) {
+            nome_hora_selecionada.setText("-");
+        } else if (termino == null) {
+            nome_hora_selecionada.setText(inicio);
+        } else {
+            nome_hora_selecionada.setText(inicio + " às " + termino);
+        }
+    }
+
     @FXML
     void escolhe_data_prova(ActionEvent event) {
         LocalDate data = date_picker.getValue();
@@ -287,8 +317,18 @@ public class AgendamentoController {
             avisar(Alert.AlertType.WARNING, "Agendar prova", "Escolha o horário da prova (depende do período da turma).");
             return;
         }
+        String terminoTexto = choice_box_termino.getValue();
+        if (terminoTexto == null) {
+            avisar(Alert.AlertType.WARNING, "Agendar prova", "Escolha o horário de término da prova.");
+            return;
+        }
 
         LocalTime horario = LocalTime.parse(horaTexto);
+        LocalTime horarioFim = LocalTime.parse(terminoTexto);
+        if (!horarioFim.isAfter(horario)) {
+            avisar(Alert.AlertType.WARNING, "Agendar prova", "O término precisa ser depois do início.");
+            return;
+        }
         if (!HorarioAula.iniciosDoPeriodo(turma.getPeriodo()).contains(horario)) {
             avisar(Alert.AlertType.WARNING, "Agendar prova",
                     "Esse horário não é permitido para o período da turma.");
@@ -301,7 +341,7 @@ public class AgendamentoController {
         }
 
         try {
-            agendamentoDAO.agendar(prova, turma.getIdTurma(), data, horario, ras);
+            agendamentoDAO.agendar(prova, turma.getIdTurma(), data, horario, horarioFim, ras);
         } catch (SQLException e) {
             e.printStackTrace();
             if (e.getErrorCode() == 1062) {
@@ -318,7 +358,7 @@ public class AgendamentoController {
 
         avisar(Alert.AlertType.INFORMATION, "Agendamento confirmado",
                 prova.getNomeProva() + " agendada para " + FORMATO_DATA.format(data)
-                        + " às " + horaTexto + ", para " + ras.size()
+                        + ", das " + horaTexto + " às " + terminoTexto + ", para " + ras.size()
                         + (ras.size() == 1 ? " aluno." : " alunos."));
         Sessao.setProvaParaAgendar(null);
         voltarParaLista();

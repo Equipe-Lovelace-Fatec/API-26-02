@@ -174,6 +174,16 @@ public class SelecaoProvaController {
     }
 
     @FXML
+    void irProvas_agendadas(ActionEvent event) {
+        try {
+            App.abrirTela("ProvasAgendadas", "aNota", 1350, 800);
+        } catch (IOException e) {
+            e.printStackTrace();
+            avisar("Erro", "Não foi possível abrir as provas agendadas.");
+        }
+    }
+
+    @FXML
     void irProva_pesos(ActionEvent event)       { navegar("pesos"); }
 
     @FXML

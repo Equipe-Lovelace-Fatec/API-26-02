@@ -216,6 +216,7 @@ public class DesempenhoController {
 
     @FXML
     void ir_minha_agenda(ActionEvent event) {
+        abrir("Agenda_Aluno", "a agenda");
     }
 
     private void abrir(String fxml, String descricao) {
