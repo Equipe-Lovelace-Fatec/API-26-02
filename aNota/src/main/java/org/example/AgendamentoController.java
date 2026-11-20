@@ -388,7 +388,7 @@ public class AgendamentoController {
 
     @FXML
     void irAlunos_notas(ActionEvent event) {
-        navegar("Aluno");
+        navegar("notas");
     }
 
     @FXML

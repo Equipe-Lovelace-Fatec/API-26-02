@@ -187,8 +187,7 @@ public class SelecaoProvaController {
     void irProva_pesos(ActionEvent event)       { navegar("pesos"); }
 
     @FXML
-    void irAlunos_notas(ActionEvent event) {
-    }
+    void irAlunos_notas(ActionEvent event)  { navegar("notas"); }
 
     @FXML
     void irAlunos_corrigir(ActionEvent event) {

@@ -903,7 +903,8 @@ public class PesosController {
     }
 
     @FXML
-    private void irAlunos_notas(ActionEvent event) {
+    private void irAlunos_notas(ActionEvent event) throws IOException {
+        App.setRoot("notas");
     }
 
     @FXML

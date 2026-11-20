@@ -60,7 +60,7 @@
                         <TableColumn fx:id="col_avaliacao" editable="false" prefWidth="280.0" reorderable="false" sortable="false" text="AVALIAÇÃO" />
                         <TableColumn fx:id="col_data" editable="false" prefWidth="160.0" reorderable="false" sortable="false" text="DATA" />
                         <TableColumn fx:id="col_nota" editable="false" prefWidth="220.0" reorderable="false" sortable="false" text="NOTA" />
-                        <TableColumn fx:id="col_observacao" editable="false" prefWidth="374.0" reorderable="false" sortable="false" />
+                        <TableColumn fx:id="col_observacao" editable="false" prefWidth="374.0" reorderable="false" sortable="false" text="DESEMPENHO" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

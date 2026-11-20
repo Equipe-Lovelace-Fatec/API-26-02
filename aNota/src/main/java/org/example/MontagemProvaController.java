@@ -640,7 +640,7 @@ public class MontagemProvaController {
 
         @FXML void irAlunos(ActionEvent event) {}
         @FXML void irAlunos_corrigir(ActionEvent event) throws IOException { App.setRoot("Aluno"); }
-        @FXML void irAlunos_notas(ActionEvent event) {}
+        @FXML void irAlunos_notas(ActionEvent event) throws IOException { App.setRoot("notas");}
         @FXML void irProva(ActionEvent event) {}
         @FXML void irProva_agendar(ActionEvent event) throws IOException { App.abrirTela("SelecaoProva", "aNota", 1350, 1080); }
         @FXML void irProva_pesos(ActionEvent event)      throws IOException{ App.setRoot("pesos");}
