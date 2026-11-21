@@ -782,10 +782,7 @@ public class Controller {
 
     }
 
-    @FXML
-    void irAlunos_notas(ActionEvent event) {
-
-    }
+    @FXML void irAlunos_notas(ActionEvent event) throws IOException { App.setRoot("notas");}
 
     @FXML
     void irProva(ActionEvent event) {

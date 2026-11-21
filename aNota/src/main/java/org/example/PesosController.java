@@ -83,6 +83,8 @@ public class PesosController {
 
     private Set<Long> provasRecuperacao = new HashSet<>();
 
+    private Map<Long, BigDecimal> pesosSalvos = new LinkedHashMap<>();
+
     private final Map<String, TurmaInfo> turmasPorTexto = new LinkedHashMap<>();
 
 
@@ -261,6 +263,28 @@ public class PesosController {
     }
 
 
+    private void carregarPesosSalvos(int idTurma) throws SQLException {
+        String sql = "SELECT pt.prova_id, ia.peso_percentual FROM item_avaliativo ia "
+                + "JOIN prova_turma pt ON pt.id_aplicacao = ia.id_aplicacao "
+                + "WHERE ia.id_turma = ?";
+
+        Map<Long, BigDecimal> salvos = new LinkedHashMap<>();
+
+        try (Connection con = ConexaoBD.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idTurma);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    salvos.put(rs.getLong("prova_id"), rs.getBigDecimal("peso_percentual"));
+                }
+            }
+        }
+
+        pesosSalvos = salvos;
+    }
+
+
     private boolean ehRecuperacao(Prova prova) {
         return provasRecuperacao.contains(prova.getProvaId())
                 || (prova.getNomeProva() != null
@@ -274,6 +298,7 @@ public class PesosController {
         disciplinasDaTurma = new ArrayList<>();
         provasDaTurma = null;
         provasRecuperacao = new HashSet<>();
+        pesosSalvos = new LinkedHashMap<>();
 
         if (turma == null) {
             atualizarProvasExibidas();
@@ -296,6 +321,8 @@ public class PesosController {
             disciplinasDaTurma = carregarDisciplinasDaTurma(usuario.getEmail(), turma.id);
 
             carregarAplicacoesDaTurma(turma.id, usuario.getEmail());
+
+            carregarPesosSalvos(turma.id);
         } catch (SQLException | RuntimeException e) {
             mostrarAlerta(
                     Alert.AlertType.ERROR,
@@ -403,6 +430,38 @@ public class PesosController {
                 }
 
 
+
+                Set<String> disciplinasGravadas = new HashSet<>();
+
+                for (Prova prova : provas) {
+                    disciplinasGravadas.add(prova.getNomeDisciplina());
+                }
+
+                for (String disciplina : disciplinasGravadas) {
+                    List<Long> daDisciplina = new ArrayList<>();
+
+                    for (int i = 0; i < provas.size(); i++) {
+                        if (provas.get(i).getNomeDisciplina().equals(disciplina)) {
+                            daDisciplina.add(aplicacoes.get(i));
+                        }
+                    }
+
+                    String marcadores = "?" + ",?".repeat(daDisciplina.size() - 1);
+                    String sqlLimpar = "DELETE FROM item_avaliativo "
+                            + "WHERE id_turma = ? AND nome_disciplina = ? "
+                            + "AND id_aplicacao NOT IN (" + marcadores + ")";
+
+                    try (PreparedStatement ps = con.prepareStatement(sqlLimpar)) {
+                        ps.setInt(1, turma.id);
+                        ps.setString(2, disciplina);
+
+                        for (int k = 0; k < daDisciplina.size(); k++) {
+                            ps.setLong(3 + k, daDisciplina.get(k));
+                        }
+
+                        ps.executeUpdate();
+                    }
+                }
 
                 String sqlGravar = "INSERT INTO item_avaliativo "
                         + "(id_turma, nome_disciplina, nome, peso_percentual, id_aplicacao) "
@@ -565,6 +624,14 @@ public class PesosController {
 
                     }
             );
+
+            BigDecimal salvo = pesosSalvos.get(prova.getProvaId());
+
+            if (salvo != null && !recuperacao) {
+                checkProva.setSelected(true);
+                campoPeso.setText(salvo.divide(BigDecimal.TEN, 2, RoundingMode.HALF_UP)
+                        .stripTrailingZeros().toPlainString());
+            }
 
 
 
@@ -788,6 +855,20 @@ public class PesosController {
             return;
         }
 
+        if (Math.abs(somaPesos - 10) > 0.001) {
+            txtMediaFinal.clear();
+
+            mostrarAlerta(
+                    Alert.AlertType.WARNING,
+                    "Soma dos pesos diferente de 10",
+                    "A soma dos pesos das provas marcadas precisa ser 10. Agora está em "
+                            + String.format(Locale.forLanguageTag("pt-BR"), "%.2f", somaPesos)
+                            + ". Ajuste os pesos e salve de novo."
+            );
+
+            return;
+        }
+
         txtMediaFinal.setText(
                 String.format(Locale.forLanguageTag("pt-BR"), "%.2f", somaPonderada / somaPesos)
         );
@@ -831,10 +912,34 @@ public class PesosController {
             return;
         }
 
+        try {
+            carregarPesosSalvos(turma.id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String mediaCalculada = txtMediaFinal.getText();
+
+        atualizarProvasExibidas();
+
+        txtMediaFinal.setText(mediaCalculada);
+
+        StringBuilder resumo = new StringBuilder("Pesos gravados com sucesso.\n");
+
+        for (int i = 0; i < provasGravar.size(); i++) {
+            resumo.append("\n")
+                    .append(provasGravar.get(i).getNomeProva())
+                    .append(" - ")
+                    .append(provasGravar.get(i).getNomeDisciplina())
+                    .append(": ")
+                    .append(percentuais.get(i).toPlainString().replace('.', ','))
+                    .append("%");
+        }
+
         mostrarAlerta(
                 Alert.AlertType.INFORMATION,
                 "Pesos",
-                "Pesos gravados com sucesso."
+                resumo.toString()
         );
     }
 

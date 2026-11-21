@@ -583,10 +583,7 @@ public class AlunoController {
         App.setRoot("pesos");
     }
 
-    @FXML
-    void irAlunos_notas(ActionEvent event) {
-
-    }
+    @FXML void irAlunos_notas(ActionEvent event) throws IOException { App.setRoot("notas");}
 
     @FXML
     void irAlunos_corrigir(ActionEvent event) throws IOException {
