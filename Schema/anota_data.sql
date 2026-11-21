@@ -12,7 +12,7 @@ INSERT INTO usuario (email, senha, foto, nome) VALUES
 ('felipe.lemes@prof.fatec.com', 'senha', NULL, 'Felipe Lemes'), -- teste, sem disciplinas
  
   -- ALUNOS
- ('ada.lovelace@aluno.fatec.com', 'senha', NULL, 'Ada Lovelace'), -- para fins de teste, não alocada, não apagar
+('ada.lovelace@aluno.fatec.com', 'senha', NULL, 'Ada Lovelace'), -- para fins de teste, não alocada, não apagar
 ('artur.almeida@aluno.fatec.com', 'senha', NULL, 'Artur Almeida'),
 ('raimundo.araujo@aluno.fatec.com', 'senha', NULL, 'Raimundo Araújo'),
 ('renato.araujo@aluno.fatec.com', 'senha', NULL, 'Renato Araújo'),
@@ -1540,6 +1540,195 @@ SET nota = (SELECT SUM(r.nota) FROM resposta_aluno r
             WHERE r.id_aplicacao = prova_aluno.id_aplicacao AND r.RA = prova_aluno.RA),
     corrigida_em = '2026-10-20 10:00:00'
 WHERE id_aplicacao = @app_so;
+
+
+-- =====================================================================
+-- AJUSTE: respostas (resposta_aluno) dos alunos que só tinham nota forçada em prova_aluno
+-- (Inglês I: Prova 1, Prova 2 e Recuperação | BD III: Prova 1)
+-- Cria resposta_aluno só de quem tem nota e ainda não tem nenhuma resposta.
+-- A soma das notas das questões = nota da prova (não altera prova_aluno).
+--   alternativa e relacionamento: tudo ou nada | dissertativa: fica com o que sobrar
+-- =====================================================================
+INSERT INTO resposta_aluno (id_aplicacao, prova_id, RA, questao_id, resposta_id, texto_resposta, correta, nota)
+WITH base AS (
+    SELECT pa.id_aplicacao, pt.prova_id, pa.RA, pa.nota AS nota_prova,
+           pq.questao_id, pq.peso, qu.tipo
+    FROM prova_aluno pa
+    JOIN prova_turma pt   ON pt.id_aplicacao = pa.id_aplicacao
+    JOIN prova_questao pq ON pq.prova_id = pt.prova_id
+    JOIN questao qu       ON qu.questao_id = pq.questao_id
+    WHERE pa.nota IS NOT NULL
+      AND NOT EXISTS (SELECT 1 FROM resposta_aluno x
+                      WHERE x.id_aplicacao = pa.id_aplicacao AND x.RA = pa.RA)
+),
+passo1 AS (   -- alternativa: acerta se a nota cobre o peso
+    SELECT base.*,
+           COALESCE(MAX(CASE WHEN tipo = 'alt' AND nota_prova >= peso THEN peso END)
+                    OVER (PARTITION BY id_aplicacao, RA), 0) AS alt_ganho
+    FROM base
+),
+passo2 AS (   -- relacionamento: acerta tudo se o que sobrou cobre o peso
+    SELECT passo1.*,
+           COALESCE(MAX(CASE WHEN tipo = 'rela' AND nota_prova - alt_ganho >= peso THEN peso END)
+                    OVER (PARTITION BY id_aplicacao, RA), 0) AS rela_ganho
+    FROM passo1
+),
+passo3 AS (   -- nota de cada questão; a dissertativa fica com o resto
+    SELECT passo2.*,
+           CASE tipo WHEN 'alt'  THEN alt_ganho
+                     WHEN 'rela' THEN rela_ganho
+                     ELSE nota_prova - alt_ganho - rela_ganho END AS ganho
+    FROM passo2
+),
+passo4 AS (   -- primeiro nome e idade do aluno (na data da prova) + enunciado, para personalizar a resposta
+    SELECT passo3.*,
+           SUBSTRING_INDEX(u.nome, ' ', 1) AS pnome,
+           TIMESTAMPDIFF(YEAR, al.data_nascimento, pt.data) AS idade,
+           qd.enunciado AS enunciado
+    FROM passo3
+    JOIN aluno al ON al.RA = passo3.RA
+    JOIN usuario u ON u.email = al.email
+    JOIN prova_turma pt ON pt.id_aplicacao = passo3.id_aplicacao
+    JOIN questao qd ON qd.questao_id = passo3.questao_id
+)
+SELECT c.id_aplicacao, c.prova_id, c.RA, c.questao_id,
+
+       -- alternativa marcada (certa se acertou, senão a primeira errada)
+       CASE WHEN c.tipo = 'alt' THEN
+            (SELECT r.resposta_id FROM resposta r
+             WHERE r.questao_id = c.questao_id
+               AND r.correta = IF(c.ganho = c.peso, 1, 0)
+             ORDER BY r.resposta_id LIMIT 1)
+       END,
+
+       -- texto: dissertativa e relacionamento
+       CASE
+         WHEN c.tipo = 'diss' AND c.enunciado LIKE 'Escreva em inglês uma frase se apresentando%' THEN
+              CASE
+                WHEN c.ganho >= c.peso THEN          -- nota cheia: apresentação completa, cada aluno com a sua
+                     ELT(1 + MOD(CRC32(CONCAT(c.RA, c.id_aplicacao)), 5),
+                         CONCAT('My name is ', c.pnome, ', I am ', c.idade, ' years old and I am a student.'),
+                         CONCAT('Hello! I am ', c.pnome, ', I am ', c.idade, ' years old and I work as a developer.'),
+                         CONCAT('Hi, my name is ', c.pnome, '. I am ', c.idade, ' years old and I am a college student.'),
+                         CONCAT('I am ', c.pnome, ', ', c.idade, ' years old, and I am a student at Fatec.'),
+                         CONCAT('My name is ', c.pnome, ' and I am ', c.idade, ' years old. I am a software intern.'))
+                WHEN c.ganho >= c.peso / 2 THEN      -- nota média: completa, mas com erros ou faltando algo
+                     ELT(1 + MOD(CRC32(CONCAT(c.RA, c.id_aplicacao)), 3),
+                         CONCAT('My name is ', c.pnome, ', I have ', c.idade, ' years old and I am a student.'),
+                         CONCAT('I am ', c.pnome, ', ', c.idade, ' years old, I am student.'),
+                         CONCAT('My name is ', c.pnome, ' and I am a student.'))
+                WHEN c.ganho > 0 THEN                -- nota baixa: resposta curta
+                     ELT(1 + MOD(CRC32(CONCAT(c.RA, c.id_aplicacao)), 3),
+                         CONCAT('My name is ', c.pnome, '.'),
+                         CONCAT('I am ', c.idade, ' years old.'),
+                         CONCAT('Hello, I am ', c.pnome, '.'))
+                ELSE 'Não sei responder.'
+              END
+         WHEN c.tipo = 'diss' THEN
+              CASE WHEN c.ganho >= c.peso THEN rd.texto
+                   WHEN c.ganho > 0 THEN CONCAT(SUBSTRING_INDEX(SUBSTRING_INDEX(rd.texto, ';', 1), ',', 1), '.')
+                   ELSE 'Não sei responder.' END
+         WHEN c.tipo = 'rela' AND c.ganho >= c.peso THEN      -- todos os pares certos
+              (SELECT CONCAT('[', GROUP_CONCAT(CONCAT('{"item":"', a.texto, '","ligou":"', a.conceito, '"}')
+                                               ORDER BY a.resposta_id SEPARATOR ','), ']')
+               FROM resposta a WHERE a.questao_id = c.questao_id)
+         WHEN c.tipo = 'rela' THEN                            -- todos os pares errados (conceito do item seguinte)
+              (SELECT CONCAT('[', GROUP_CONCAT(CONCAT('{"item":"', a.texto, '","ligou":"', b.conceito, '"}')
+                                               ORDER BY a.resposta_id SEPARATOR ','), ']')
+               FROM resposta a
+               JOIN resposta b ON b.questao_id = a.questao_id
+                AND b.resposta_id = COALESCE(
+                      (SELECT MIN(n.resposta_id) FROM resposta n
+                       WHERE n.questao_id = a.questao_id AND n.resposta_id > a.resposta_id),
+                      (SELECT MIN(m.resposta_id) FROM resposta m WHERE m.questao_id = a.questao_id))
+               WHERE a.questao_id = c.questao_id)
+       END,
+
+       CASE WHEN c.ganho >= c.peso THEN TRUE ELSE FALSE END,   -- correta só com nota cheia
+       c.ganho
+FROM passo4 c
+LEFT JOIN resposta rd ON rd.questao_id = c.questao_id AND c.tipo = 'diss';
+
+
+-- =====================================================================
+-- AJUSTE: respostas (resposta_aluno) das provas dos outros professores (menos Inglês)
+-- Provas que já terminaram, sem nota e sem nenhuma resposta: cria as respostas dos alunos convocados.
+-- Só as respostas: nota e correção ficam em branco para o professor corrigir no app.
+--   alternativa e relacionamento: ~70% acertam (correta já vem marcada, como o app faz na entrega)
+--   dissertativa: 4 níveis de resposta, do completo ao fraco
+-- =====================================================================
+INSERT INTO resposta_aluno (id_aplicacao, prova_id, RA, questao_id, resposta_id, texto_resposta, correta)
+WITH base AS (
+    SELECT pa.id_aplicacao, pt.prova_id, pa.RA, pq.questao_id, qu.tipo, qu.enunciado,
+           MOD(CRC32(CONCAT(pa.RA, pa.id_aplicacao, pq.questao_id)), 10) AS sorteio
+    FROM prova_aluno pa
+    JOIN prova_turma pt   ON pt.id_aplicacao = pa.id_aplicacao
+    JOIN prova_questao pq ON pq.prova_id = pt.prova_id
+    JOIN questao qu       ON qu.questao_id = pq.questao_id
+    WHERE pa.nota IS NULL
+      AND pt.nome_disciplina NOT LIKE 'Inglês%'
+      AND TIMESTAMP(pt.data, pt.horario_fim) <= NOW()
+      AND NOT EXISTS (SELECT 1 FROM resposta_aluno x
+                      WHERE x.id_aplicacao = pa.id_aplicacao AND x.RA = pa.RA)
+),
+niveis AS (
+    SELECT base.*, 1 + (sorteio >= 4) + (sorteio >= 7) + (sorteio >= 9) AS nivel
+    FROM base
+)
+SELECT c.id_aplicacao, c.prova_id, c.RA, c.questao_id,
+
+       CASE WHEN c.tipo = 'alt' THEN
+            (SELECT r.resposta_id FROM resposta r
+             WHERE r.questao_id = c.questao_id
+               AND r.correta = IF(c.sorteio < 7, 1, 0)
+             ORDER BY CRC32(CONCAT(r.resposta_id, c.RA)) LIMIT 1)
+       END,
+
+       CASE
+         WHEN c.tipo = 'diss' AND c.enunciado LIKE 'Explique a diferença entre chave primária%' THEN
+              ELT(c.nivel,
+                  'A chave primária identifica cada registro de forma única; a chave estrangeira referencia a chave primária de outra tabela e garante a integridade.',
+                  'A PK identifica a linha da tabela e a FK liga uma tabela a outra.',
+                  'A chave primária é única e a estrangeira aponta para outra tabela.',
+                  'A chave primária é a chave principal e a estrangeira é a secundária.')
+         WHEN c.tipo = 'diss' AND c.enunciado LIKE 'Cite duas diferenças entre requisitos%' THEN
+              ELT(c.nivel,
+                  'Os requisitos funcionais descrevem o que o sistema faz, como cadastrar um usuário; os não funcionais descrevem qualidades como desempenho e segurança.',
+                  'Funcionais são o que o sistema faz e não funcionais são como ele faz, por exemplo o desempenho.',
+                  'Os funcionais são as funções do sistema e os não funcionais são a velocidade.',
+                  'Os funcionais são mais importantes que os não funcionais.')
+         WHEN c.tipo = 'diss' AND c.enunciado LIKE 'Explique a diferença entre processo e thread%' THEN
+              ELT(c.nivel,
+                  'Um processo tem seu próprio espaço de memória; as threads de um mesmo processo compartilham a memória e os recursos dele.',
+                  'Processo é um programa em execução e a thread é uma parte dele que roda junto.',
+                  'A thread fica dentro do processo e compartilha a memória.',
+                  'Processo e thread são a mesma coisa.')
+         WHEN c.tipo = 'diss' AND c.enunciado LIKE 'Explique a diferença entre HTML e CSS%' THEN
+              ELT(c.nivel,
+                  'O HTML estrutura o conteúdo da página, enquanto o CSS cuida da aparência, das cores e do layout.',
+                  'HTML é a estrutura da página e CSS é o estilo.',
+                  'O HTML faz a página e o CSS deixa ela bonita.',
+                  'CSS é uma linguagem de programação e HTML é só texto.')
+         WHEN c.tipo = 'diss' THEN rd.texto
+         WHEN c.tipo = 'rela' AND c.sorteio < 7 THEN
+              (SELECT CONCAT('[', GROUP_CONCAT(CONCAT('{"item":"', a.texto, '","ligou":"', a.conceito, '"}')
+                                               ORDER BY a.resposta_id SEPARATOR ','), ']')
+               FROM resposta a WHERE a.questao_id = c.questao_id)
+         WHEN c.tipo = 'rela' THEN
+              (SELECT CONCAT('[', GROUP_CONCAT(CONCAT('{"item":"', a.texto, '","ligou":"', b.conceito, '"}')
+                                               ORDER BY a.resposta_id SEPARATOR ','), ']')
+               FROM resposta a
+               JOIN resposta b ON b.questao_id = a.questao_id
+                AND b.resposta_id = COALESCE(
+                      (SELECT MIN(n.resposta_id) FROM resposta n
+                       WHERE n.questao_id = a.questao_id AND n.resposta_id > a.resposta_id),
+                      (SELECT MIN(m.resposta_id) FROM resposta m WHERE m.questao_id = a.questao_id))
+               WHERE a.questao_id = c.questao_id)
+       END,
+
+       CASE WHEN c.tipo IN ('alt', 'rela') THEN (c.sorteio < 7) END
+FROM niveis c
+LEFT JOIN resposta rd ON rd.questao_id = c.questao_id AND c.tipo = 'diss';
 
 
 -- ========== CONFERÊNCIA ==========
