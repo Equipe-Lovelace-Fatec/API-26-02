@@ -1,0 +1,7 @@
+.fundo-roxo {
+    -fx-background-color: #8481ff;
+    -fx-background-image: url("telas.png/FUNDO%20ROXO.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}

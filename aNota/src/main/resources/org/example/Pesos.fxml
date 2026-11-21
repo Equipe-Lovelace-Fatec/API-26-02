@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<ScrollPane prefHeight="1066.0" prefWidth="1362.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.PesosController">
+   <content>
+      <AnchorPane prefHeight="1067.0" prefWidth="1366.0">
+      
+          <children>
+      
+              <!-- FUNDO -->
+              <ImageView fitHeight="1067.0" fitWidth="1366.0" mouseTransparent="true" preserveRatio="false">
+                  <image>
+                      <Image url="@../../telas.png/Pesos.png" />
+                  </image>
+              </ImageView>
+      
+              <!-- MENU QUESTÕES -->
+              <MenuButton fx:id="btnQuestoes" layoutX="386.0" layoutY="37.0" mnemonicParsing="false" onAction="#irQuestao" opacity="0.0" prefHeight="44.0" prefWidth="187.0">
+                  <items>
+                      <MenuItem fx:id="btquestoes_criar" onAction="#IrQuestao_criar" text="Criar" />
+                      <MenuItem fx:id="btquestoes_consultar" onAction="#irQuestao_consultar" text="Consultar" />
+                  </items>
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </MenuButton>
+      
+              <!-- MENU PROVA -->
+              <MenuButton fx:id="btnProva" layoutX="756.0" layoutY="37.0" mnemonicParsing="false" onAction="#irProva" opacity="0.0" prefHeight="44.0" prefWidth="188.0">
+                  <items>
+                      <MenuItem fx:id="btProva_montar" onAction="#IrProva_montar" text="Montar" />
+                      <MenuItem fx:id="btProva_agendar" onAction="#irProva_agendar" text="Agendar" />
+                      <MenuItem fx:id="btProva_pesos" onAction="#irProva_pesos" text="Média" />
+                  </items>
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </MenuButton>
+      
+              <!-- MENU ALUNOS -->
+              <MenuButton fx:id="btnAlunos" layoutX="1127.0" layoutY="37.0" mnemonicParsing="false" onAction="#irAlunos" opacity="0.0" prefHeight="44.0" prefWidth="188.0">
+                  <items>
+                      <MenuItem fx:id="btalunos_notas" onAction="#irAlunos_notas" text="Notas" />
+                      <MenuItem fx:id="btalunos_corrigir" onAction="#irAlunos_corrigir" text="Corrigir" />
+                  </items>
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </MenuButton>
+      
+              <!-- TURMA -->
+              <ComboBox fx:id="cbTurma" layoutX="248.0" layoutY="319.0" prefHeight="48.0" prefWidth="111.0" style="-fx-background-color: white;                          -fx-border-color: #ff43a5;                          -fx-border-width: 1.8;                          -fx-border-radius: 10;                          -fx-background-radius: 10;                          -fx-font-size: 15px;">
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </ComboBox>
+      
+              <!-- DISCIPLINA -->
+              <ComboBox fx:id="cbDisciplina" layoutX="544.0" layoutY="319.0" prefHeight="48.0" prefWidth="111.0" style="-fx-background-color: white;                          -fx-border-color: #ff43a5;                          -fx-border-width: 1.8;                          -fx-border-radius: 10;                          -fx-background-radius: 10;                          -fx-font-size: 15px;">
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </ComboBox>
+      
+              <!-- TURNO -->
+              <ComboBox fx:id="cbTurno" layoutX="794.0" layoutY="319.0" prefHeight="48.0" prefWidth="111.0" style="-fx-background-color: white;                          -fx-border-color: #ff43a5;                          -fx-border-width: 1.8;                          -fx-border-radius: 10;                          -fx-background-radius: 10;                          -fx-font-size: 15px;">
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </ComboBox>
+      
+              <!-- SEMESTRE -->
+              <ComboBox fx:id="cbSemestre" layoutX="1087.0" layoutY="319.0" prefHeight="48.0" prefWidth="111.0" style="-fx-background-color: white;                          -fx-border-color: #ff43a5;                          -fx-border-width: 1.8;                          -fx-border-radius: 10;                          -fx-background-radius: 10;                          -fx-font-size: 15px;">
+                  <cursor>
+                      <Cursor fx:constant="HAND" />
+                  </cursor>
+              </ComboBox>
+      
+              <!-- ÁREA DINÂMICA DAS PROVAS -->
+              <ScrollPane fx:id="scrollProvas" fitToWidth="true" hbarPolicy="NEVER" layoutX="140.0" layoutY="451.0" prefHeight="370.0" prefWidth="1090.0" style="-fx-background-color: transparent;                            -fx-background: transparent;                            -fx-border-color: transparent;                            -fx-padding: 0;" vbarPolicy="AS_NEEDED">
+                  <content>
+                      <VBox fx:id="conteinerProvas" fillWidth="true" prefHeight="370.0" prefWidth="1059.0" spacing="18.0" style="-fx-background-color: transparent;                              -fx-padding: 4 5 10 5;" />
+                  </content>
+              </ScrollPane>
+      
+              <!-- TEXTO MÉDIA FINAL -->
+              <Label alignment="CENTER_RIGHT" layoutX="730.0" layoutY="865.0" prefHeight="49.0" prefWidth="135.0" style="-fx-font-size: 23px;                       -fx-font-family: 'Georgia';                       -fx-text-fill: #006477;" text="Média final" />
+      
+              <!-- CAMPO DA MÉDIA -->
+              <TextField fx:id="txtMediaFinal" alignment="CENTER" editable="false" layoutX="872.0" layoutY="865.0" prefHeight="49.0" prefWidth="112.0" style="-fx-background-color: white;                           -fx-border-color: #ff43a5;                           -fx-border-width: 1.8;                           -fx-border-radius: 10;                           -fx-background-radius: 10;                           -fx-font-size: 18px;                           -fx-text-fill: #006477;" />
+      
+              <!-- BOTÃO ADICIONAR PESOS -->
+              <Button fx:id="btnadicionarpesos" layoutX="1029.0" layoutY="847.0" mnemonicParsing="false" onAction="#adicionarPesos" prefHeight="55.0" prefWidth="200.0" style="-fx-background-color: transparent;                        -fx-border-color: transparent;                        -fx-cursor: hand;" text="" />
+      
+          </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>

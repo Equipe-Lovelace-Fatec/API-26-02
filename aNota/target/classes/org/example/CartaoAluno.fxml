@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="cartao" alignment="CENTER_LEFT" maxHeight="136.0" maxWidth="Infinity" minHeight="82.0" onMouseClicked="#clicarNoCartao" prefHeight="82.0" prefWidth="784.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #00596a; -fx-border-width: 2; -fx-border-radius: 8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.CartaoAlunoController">
+   <padding>
+      <Insets right="26.5" />
+   </padding>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+   <VBox.margin>
+      <Insets left="16.0" right="16.0" />
+   </VBox.margin>
+   <children>
+      <Label fx:id="lbl_nome" alignment="CENTER" maxWidth="358.0" minWidth="358.0" prefHeight="30.0" prefWidth="358.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Region HBox.hgrow="ALWAYS" />
+      <Label fx:id="lbl_media" alignment="CENTER" maxWidth="148.0" minWidth="148.0" prefHeight="30.0" prefWidth="148.0" style="-fx-text-alignment: center;" textFill="#737373" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</HBox>

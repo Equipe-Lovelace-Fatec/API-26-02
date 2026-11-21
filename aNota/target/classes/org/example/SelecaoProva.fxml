@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
@@ -25,15 +26,16 @@
                </image>
             </ImageView>
             <MenuButton fx:id="btnQuestoes" layoutX="378.0" layoutY="41.0" mnemonicParsing="false" onAction="#irQuestao" prefHeight="39.0" prefWidth="187.0" snapToPixel="false" style="-fx-background-color: transparent;">
-              <items>
-                <MenuItem fx:id="btquestoes_criar" mnemonicParsing="false" onAction="#IrQuestao_criar" text="Criar" />
-                <MenuItem fx:id="btquestoes_consultar" mnemonicParsing="false" onAction="#irQuestao_consultar" text="Consultar" />
-              </items>
+               <items>
+                  <MenuItem fx:id="btquestoes_criar" mnemonicParsing="false" onAction="#IrQuestao_criar" text="Criar" />
+                  <MenuItem fx:id="btquestoes_consultar" mnemonicParsing="false" onAction="#irQuestao_consultar" text="Consultar" />
+               </items>
             </MenuButton>
             <MenuButton fx:id="btnProva" layoutX="752.0" layoutY="41.0" mnemonicParsing="false" onAction="#irProva" prefHeight="39.0" prefWidth="175.0" style="-fx-background-color: transparent;">
                <items>
                   <MenuItem fx:id="btProva_montar" mnemonicParsing="false" onAction="#IrProva_montar" text="Montar" />
                   <MenuItem fx:id="btProva_agendar" mnemonicParsing="false" onAction="#irProva_agendar" text="Agendar" />
+                  <MenuItem fx:id="btProva_pesos" mnemonicParsing="false" onAction="#irProva_pesos" text="Média" />
                </items>
             </MenuButton>
             <MenuButton fx:id="btnAlunos" layoutX="1119.0" layoutY="43.0" mnemonicParsing="false" onAction="#irAlunos" prefHeight="39.0" prefWidth="175.0" style="-fx-background-color: transparent;">
@@ -56,6 +58,7 @@
                                     <Rectangle2D height="84.0" minX="0.0" minY="0.0" width="886.0" />
                                  </viewport>
                               </ImageView>
+                              <Button fx:id="bt_provas_agendadas" layoutX="990.0" layoutY="36.0" mnemonicParsing="false" onAction="#irProvas_agendadas" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #005c6d; -fx-background-radius: 8; -fx-cursor: hand; -fx-font-weight: bold; -fx-font-size: 13px;" text="PROVAS AGENDADAS" textFill="WHITE" />
                               <VBox fx:id="lista_provas" layoutX="0.0" layoutY="118.0" prefWidth="1181.0" spacing="49.0" />
                            </children>
                         </Pane>
