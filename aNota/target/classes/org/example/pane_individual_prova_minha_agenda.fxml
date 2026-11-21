@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="pane_individual_provas1" onMouseClicked="#selecionar" prefHeight="121.0" prefWidth="500.0" style="-fx-background-color: #ffffff; -fx-border-color: #624695; -fx-border-width: 3; -fx-background-radius: 6; -fx-border-radius: 6;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.CartaoProvaAgendaController">
+   <children>
+      <Label fx:id="label_prova_de_disciplina" layoutX="7.0" prefHeight="76.0" prefWidth="484.0" textFill="#005c6d" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_data" layoutX="8.0" layoutY="78.0" prefHeight="35.0" prefWidth="63.0" text="Data:" textFill="#005c6d">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_data_dd_mm_aaaa" layoutX="71.0" layoutY="78.0" prefHeight="35.0" prefWidth="167.0" textFill="#005c6d">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_hora" layoutX="250.0" layoutY="78.0" prefHeight="35.0" prefWidth="63.0" text="Hora:" textFill="#005c6d">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_hora_hh_mm" layoutX="317.0" layoutY="78.0" prefHeight="35.0" prefWidth="163.0" textFill="#005c6d">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

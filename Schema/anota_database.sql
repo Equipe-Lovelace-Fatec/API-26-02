@@ -133,7 +133,6 @@ CREATE TABLE `questao` ( -- QUESTÃO (cria/edita: professor 1:N | contém: disci
     `nome_disciplina` varchar(100) NOT NULL,
 
     PRIMARY KEY (`questao_id`),
-    UNIQUE (`enunciado`,`tipo`),
 
     CONSTRAINT `fk_questao_professor` FOREIGN KEY (`email_professor`)
         REFERENCES `professor` (`email`),
@@ -204,14 +203,12 @@ CREATE TABLE prova_turma (
     data            DATE         NOT NULL,
     horario         TIME         NOT NULL, 
     horario_fim     TIME         NOT NULL, 
-    recuperacao     BOOLEAN      NOT NULL DEFAULT FALSE,  -- NOVO: TRUE = aplicação de recuperação (não entra como item da média)
 
     PRIMARY KEY (id_aplicacao),
     UNIQUE (id_turma, prova_id, data, horario),
     UNIQUE (id_aplicacao, id_turma),
     UNIQUE KEY uq_pt_aplicacao_prova (id_aplicacao, prova_id),
     UNIQUE KEY uq_pt_aplicacao_turma_disc (id_aplicacao, id_turma, nome_disciplina), -- NOVO
-    UNIQUE KEY uq_pt_aplicacao_rec (id_aplicacao, id_turma, nome_disciplina, recuperacao), -- NOVO
     CONSTRAINT ck_pt_janela CHECK (horario_fim > horario),
 
     CONSTRAINT fk_pt_prova FOREIGN KEY (prova_id, email_professor, nome_disciplina)
@@ -223,7 +220,7 @@ CREATE TABLE prova_turma (
 
 
 
-CREATE TABLE prova_aluno ( -- alunos convocados para a aplicação (turma toda ou só alguns, ex.: recuperação)
+CREATE TABLE prova_aluno ( -- alunos convocados para a aplicação (turma toda ou só alguns)
 
     id_aplicacao BIGINT       NOT NULL,
     id_turma     BIGINT       NOT NULL,
@@ -278,8 +275,9 @@ CREATE TABLE resposta_aluno (
 
 -- =====================================================================
 -- NOVO: COMPOSIÇÃO DA MÉDIA - pesos por prova
--- Regra: o professor define, por turma + disciplina, quais provas aplicadas formam
--- a média e quanto cada uma pesa (percentual). A nota vem de prova_aluno.nota.
+-- Regra: o professor escolhe, por turma + disciplina, quais provas aplicadas formam a média
+-- e quanto cada uma pesa (percentual). Qualquer aplicação serve.
+-- A nota vem de prova_aluno.nota (só conta se a correção foi fechada: corrigida_em).
 -- Obs.: peso_percentual (média) NÃO é o mesmo que prova_questao.peso (valor da questão).
 -- A soma dos pesos = 100 é validada pelo app (CHECK não enxerga outras linhas);
 -- a view v_auditoria_pesos mostra o que estiver fora.
@@ -291,96 +289,46 @@ CREATE TABLE item_avaliativo (
     nome            VARCHAR(100)  NOT NULL,                 -- 'Prova 1', 'Prova 2'
     peso_percentual DECIMAL(5,2)  NOT NULL,                 -- % na média (0 a 100)
     id_aplicacao    BIGINT        NOT NULL,                 -- aplicação (prova_turma) que vale na média
-    recuperacao     BOOLEAN       NOT NULL DEFAULT FALSE,   -- sempre FALSE: aplicação de recuperação não vira item
 
     PRIMARY KEY (item_id),
     UNIQUE (id_turma, nome_disciplina, nome),
     UNIQUE (id_aplicacao),                                  -- uma aplicação só entra uma vez na composição
-    UNIQUE KEY uq_ia_item_turma_disc (item_id, id_turma, nome_disciplina),
 
     CONSTRAINT ck_ia_peso CHECK (peso_percentual >= 0 AND peso_percentual <= 100),
-    CONSTRAINT ck_ia_nao_rec CHECK (recuperacao = FALSE),
 
     CONSTRAINT fk_ia_turma_disciplina FOREIGN KEY (id_turma, nome_disciplina)
         REFERENCES turma_disciplina (id_turma, nome_disciplina),
 
-    -- a aplicação precisa ser da MESMA turma e disciplina do item e NÃO pode ser recuperação
-    CONSTRAINT fk_ia_aplicacao FOREIGN KEY (id_aplicacao, id_turma, nome_disciplina, recuperacao)
-        REFERENCES prova_turma (id_aplicacao, id_turma, nome_disciplina, recuperacao)
-);
-
--- NOVO: RECUPERAÇÃO - o professor escolhe, por aluno, qual item a nota da recuperação substitui
---   * a recuperação é uma aplicação (prova_turma.recuperacao = TRUE) com alunos convocados em prova_aluno
---   * 1 substituição por aluno e por aplicação; um item só pode ser substituído 1 vez por aluno
---   * o item precisa ser da mesma turma e disciplina da recuperação
---   * enquanto a recuperação não for corrigida (corrigida_em vazio), vale a nota original
-CREATE TABLE recuperacao_substituicao (
-    id_aplicacao    BIGINT       NOT NULL,   -- aplicação da recuperação
-    id_turma        BIGINT       NOT NULL,
-    nome_disciplina VARCHAR(100) NOT NULL,
-    recuperacao     BOOLEAN      NOT NULL DEFAULT TRUE,   -- sempre TRUE: só aceita aplicação marcada como recuperação
-    RA              VARCHAR(20)  NOT NULL,
-    item_id         BIGINT       NOT NULL,   -- item (prova) cuja nota é substituída
-
-    PRIMARY KEY (id_aplicacao, RA),
-    UNIQUE (item_id, RA),
-    CONSTRAINT ck_rs_rec CHECK (recuperacao = TRUE),
-
-    CONSTRAINT fk_rs_aplicacao FOREIGN KEY (id_aplicacao, id_turma, nome_disciplina, recuperacao)
-        REFERENCES prova_turma (id_aplicacao, id_turma, nome_disciplina, recuperacao),
-
-    -- o aluno precisa ter sido convocado para a recuperação
-    CONSTRAINT fk_rs_convocado FOREIGN KEY (id_aplicacao, RA)
-        REFERENCES prova_aluno (id_aplicacao, RA),
-
-    CONSTRAINT fk_rs_item FOREIGN KEY (item_id, id_turma, nome_disciplina)
-        REFERENCES item_avaliativo (item_id, id_turma, nome_disciplina)
+    -- a aplicação precisa ser da MESMA turma e da MESMA disciplina do item
+    CONSTRAINT fk_ia_aplicacao FOREIGN KEY (id_aplicacao, id_turma, nome_disciplina)
+        REFERENCES prova_turma (id_aplicacao, id_turma, nome_disciplina)
 );
 
 -- 1 linha por (item x aluno da turma): nota usada na média (NULL = ainda sem nota)
--- Só conta prova já corrigida (corrigida_em preenchido).
--- Se o aluno tem recuperação corrigida para o item, vale a nota (e o valor) da recuperação.
+-- Só conta prova já corrigida (corrigida_em preenchido). Aluno que não foi convocado
+-- para a aplicação fica sem nota e aparece em itens_pendentes.
 CREATE VIEW v_item_nota AS
 SELECT i.item_id, i.id_turma, i.nome_disciplina, i.nome AS item,
        i.peso_percentual,
-       CASE WHEN par.nota IS NOT NULL THEN pr.valor ELSE p.valor END AS valor_referencia,
+       p.valor AS valor_referencia,
        pe.RA,
-       CASE WHEN par.nota IS NOT NULL THEN par.nota ELSE pa.nota END AS nota,
-       CASE WHEN par.nota IS NOT NULL THEN 1 ELSE 0 END              AS substituida
+       pa.nota AS nota
 FROM item_avaliativo i
-JOIN pertence pe                 ON pe.id_turma = i.id_turma
-JOIN prova_turma pt              ON pt.id_aplicacao = i.id_aplicacao
-JOIN prova p                     ON p.prova_id = pt.prova_id
-LEFT JOIN prova_aluno pa         ON pa.id_aplicacao = i.id_aplicacao AND pa.RA = pe.RA
-                                AND pa.corrigida_em IS NOT NULL       -- só nota já corrigida entra
-LEFT JOIN recuperacao_substituicao rs ON rs.item_id = i.item_id AND rs.RA = pe.RA
-LEFT JOIN prova_turma ptr        ON ptr.id_aplicacao = rs.id_aplicacao
-LEFT JOIN prova pr               ON pr.prova_id = ptr.prova_id
-LEFT JOIN prova_aluno par        ON par.id_aplicacao = rs.id_aplicacao AND par.RA = rs.RA
-                                AND par.corrigida_em IS NOT NULL;     -- recuperação já corrigida
+JOIN pertence pe          ON pe.id_turma = i.id_turma
+JOIN prova_turma pt       ON pt.id_aplicacao = i.id_aplicacao
+JOIN prova p              ON p.prova_id = pt.prova_id
+LEFT JOIN prova_aluno pa  ON pa.id_aplicacao = i.id_aplicacao AND pa.RA = pe.RA
+                         AND pa.corrigida_em IS NOT NULL;         -- só nota já corrigida entra
 
 -- MÉDIA por aluno / turma / disciplina (0 a 10)
---   media = 10 x soma( nota/valor_referencia x peso/100 )   [sem nota conta 0, aparece em itens_pendentes]
+--   media = 10 x soma( nota/valor_da_prova x peso/100 )   [sem nota conta 0, aparece em itens_pendentes]
 CREATE VIEW v_media_aluno AS
 SELECT id_turma, nome_disciplina, RA,
        ROUND(10 * SUM(COALESCE(nota * 1.0 / valor_referencia, 0) * peso_percentual / 100.0), 2) AS media,
        SUM(CASE WHEN nota IS NULL THEN 1 ELSE 0 END) AS itens_pendentes,
-       COUNT(*)                                      AS itens_total,
-       SUM(substituida)                              AS itens_substituidos
+       COUNT(*)                                      AS itens_total
 FROM v_item_nota
 GROUP BY id_turma, nome_disciplina, RA;
-
--- NOVO: tela da recuperação - por aluno convocado, o que foi escolhido e em que pé está
-CREATE VIEW v_recuperacao_status AS
-SELECT pt.id_turma, pt.nome_disciplina, pa.id_aplicacao, pa.RA,
-       i.nome AS item_substituido, pa.nota AS nota_recuperacao, pa.corrigida_em,
-       CASE WHEN rs.item_id IS NULL        THEN 'ITEM NÃO ESCOLHIDO'
-            WHEN pa.corrigida_em IS NULL   THEN 'AGUARDANDO CORREÇÃO'
-            ELSE 'SUBSTITUIÇÃO APLICADA' END AS situacao
-FROM prova_aluno pa
-JOIN prova_turma pt ON pt.id_aplicacao = pa.id_aplicacao AND pt.recuperacao = TRUE
-LEFT JOIN recuperacao_substituicao rs ON rs.id_aplicacao = pa.id_aplicacao AND rs.RA = pa.RA
-LEFT JOIN item_avaliativo i ON i.item_id = rs.item_id;
 
 -- AUDITORIA 1: soma dos pesos por turma/disciplina (deve ser 100)
 CREATE VIEW v_auditoria_pesos AS

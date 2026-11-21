@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1160.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProvaAlunoArquivos.CorrecaoAlunoProvaController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1857.0" prefWidth="1357.0">
+         <children>
+            <ImageView fitHeight="2086.0" fitWidth="1349.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../telas.png/tela_gabarito_para_aluno.png" />
+               </image>
+            </ImageView>
+            <ScrollPane layoutX="87.0" layoutY="313.0" prefHeight="1460.0" prefWidth="1174.0" style="-fx-background-color: #ffffff;">
+               <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1458.0" prefWidth="1166.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <VBox fx:id="vboxContainerQuestoes" layoutX="33.0" layoutY="34.0" prefHeight="306.0" prefWidth="1096.0" />
+                     </children></AnchorPane>
+               </content>
+            </ScrollPane>
+            <Label fx:id="titulo_correcao_prova" alignment="CENTER" contentDisplay="CENTER" layoutX="54.0" layoutY="100.0" prefHeight="80.0" prefWidth="1219.0" style="-fx-text-fill: #624695;" textFill="#624695" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="38.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="87.0" layoutY="190.0" prefHeight="104.0" prefWidth="1174.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
+               <children>
+                  <Label fx:id="lbl_disciplina_correcao" layoutX="25.0" layoutY="14.0" prefWidth="1120.0" style="-fx-text-fill: #624695;" text="Disciplina:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl_professor_correcao" layoutX="25.0" layoutY="60.0" prefWidth="720.0" style="-fx-text-fill: #624695;" text="Professor:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl_data_correcao" layoutX="800.0" layoutY="60.0" prefWidth="350.0" style="-fx-text-fill: #624695;" text="Data:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Button fx:id="bt_minha_agenda" layoutX="362.0" layoutY="35.0" mnemonicParsing="false" onAction="#ir_minha_agenda" prefHeight="44.0" prefWidth="183.0" style="-fx-background-color: transparent;" />
+            <Button fx:id="bt_avaliacao" layoutX="621.0" layoutY="41.0" mnemonicParsing="false" onAction="#ir_avaliacao" prefHeight="37.0" prefWidth="175.0" style="-fx-background-color: transparent;" />
+            <Button fx:id="bt_correcao" layoutX="873.0" layoutY="40.0" mnemonicParsing="false" onAction="#ir_correcao" prefHeight="37.0" prefWidth="175.0" style="-fx-background-color: transparent;" />
+            <Button fx:id="bt_desempenho" layoutX="1129.0" layoutY="41.0" mnemonicParsing="false" onAction="#ir_desempenho" prefHeight="37.0" prefWidth="175.0" style="-fx-background-color: transparent;" />
+         </children></AnchorPane>
+  </content>
+</ScrollPane>
