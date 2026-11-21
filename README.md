@@ -29,17 +29,17 @@ O processo atual de gestão de avaliações impõe uma rotina operacional exaust
 | 2 | Alta | Como professor, quero manter um histórico de quando utilizei uma questão para evitar repetição excessiva de conteúdo. | 1 e 2 | 8 | ✅ | 
 | 3 | Alta | Como professor, quero selecionar e organizar questões para montar as provas e centralizar o processo de avaliação.  | 1 e 2 | 8 | ✅ | 
 | 4 | Média | Como professor, quero aplicar provas com data e hora definidas para que todos os alunos da turma realizem a prova no mesmo período. | 1 e 2 | 5 | ✅ | 
-| 5 | Média | Como professor, quero divulgar o gabarito da avaliação para que o aluno possa consultar. | 1 e 3 | 2 | ⬜ | 
-| 6 | Média | Como professor, quero que as provas sejam pré-corrigidas para evitar repetições desnecessárias. | 1 e 3 | 5 | ⬜ | 
-| 7 | Média | Como professor, desejo que as alternativas das respostas de múltipla escolha e associação sejam embaralhadas para evitar o compartilhamento de respostas entre os alunos. | 1 e 3 | 5 | ⬜ | 
+| 5 | Média | Como professor, quero divulgar o gabarito da avaliação para que o aluno possa consultar. | 1 e 3 | 2 | ✅ | 
+| 6 | Média | Como professor, quero que as provas sejam pré-corrigidas para evitar repetições desnecessárias. | 1 e 3 | 5 | ✅ | 
+| 7 | Média | Como professor, desejo que as alternativas das respostas de múltipla escolha e associação sejam embaralhadas para evitar o compartilhamento de respostas entre os alunos. | 1 e 3 | 5 | ✅ | 
 | 8 | Baixa | Como professor, quero filtrar as minhas questões por matéria, nível de dificuldade e tipo de pergunta para que eu encontre o meu material com mais facilidade. | 1 e 3 | 8 | ✅ | 
 | 9 | Baixa | Como professor, quero acessar o material de outros professores para analisar o nível de avaliação de outros cursos e disciplinas. | 1 e 3 | 3 | ✅ | 
-| 10 | Baixa | Como professor, quero cadastrar o peso das avaliações para facilitar o cálculo da média final. | 1 e 3 | 2 | ⬜ | 
-| 11 | Baixa | Como aluno, quero ter acesso ao gabarito da avaliação para avaliar meu desempenho. | 1 e 3 | 2 | ⬜ | 
-| 12 | Baixa | Como aluno, quero ver a minha média final para acompanhar meu desempenho ao longo do semestre. | 1 e 3 | 2 | ⬜ | 
+| 10 | Baixa | Como professor, quero cadastrar o peso das avaliações para facilitar o cálculo da média final. | 1 e 3 | 2 | ✅ | 
+| 11 | Baixa | Como aluno, quero ter acesso ao gabarito da avaliação para avaliar meu desempenho. | 1 e 3 | 2 | ✅ | 
+| 12 | Baixa | Como aluno, quero ver a minha média final para acompanhar meu desempenho ao longo do semestre. | 1 e 3 | 2 | ✅ | 
 | 13 | Baixa | Como professor, quero cadastrar notas de atividades extras para o cálculo da média final do aluno. | 1 e 3 | 2 | ⬜ | 
-| 14 | Baixa | Como aluno, quero ver o agendamento das minhas próximas avaliações para organizar meus estudos. | 1 e 3 | 3 | ⬜ | 
-| 15 | Baixa | Como aluno, quero realizar as provas no sistema para facilitar meu acesso e ter um ambiente de resolução sem distrações. | 1 e 3 | 8 | ⬜ | 
+| 14 | Baixa | Como aluno, quero ver o agendamento das minhas próximas avaliações para organizar meus estudos. | 1 e 3 | 3 |✅ | 
+| 15 | Baixa | Como aluno, quero realizar as provas no sistema para facilitar meu acesso e ter um ambiente de resolução sem distrações. | 1 e 3 | 8 | ✅ | 
 
 ### 💻 Tecnologias
 
