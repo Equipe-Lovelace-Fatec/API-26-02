@@ -9,15 +9,15 @@ Concluir as funcionalidades previstas para o professor, com foco na correção d
 
 | Rank | Prioridade | User Story | Sprint | Estimativa | Status |
 |------|------------|------------|--------|------------|--------|
-| 1 | Média |Como professor, quero divulgar o gabarito da avaliação para que o aluno possa consultar. | 1 e 3 | 8 | ⬜ |
-| 2 | Média |Como professor, quero que as provas sejam pré-corrigidas para evitar repetições desnecessárias. | 1 e 3 | 8 |  ⬜ |
-| 3 | Média |Como professor, desejo que as alternativas das respostas de múltipla escolha e associação sejam embaralhadas para evitar o compartilhamento de respostas entre os alunos. | 1 e 3 | 8 | ⬜ |
-| 4 | Baixa |Como professor, quero cadastrar o peso das avaliações para facilitar o cálculo da média final. | 1 e 3 | 5 | ⬜ |
-| 5 | Baixa |Como aluno, quero ter acesso ao gabarito da avaliação para avaliar meu desempenho. | 1 e 3 | 5 | ⬜ |
-| 6 | Baixa |Como aluno, quero ver a minha média final para acompanhar meu desempenho ao longo do semestre. | 1 e 3 | 5 | ⬜ |
+| 1 | Média |Como professor, quero divulgar o gabarito da avaliação para que o aluno possa consultar. | 1 e 3 | 8 | ✅ |
+| 2 | Média |Como professor, quero que as provas sejam pré-corrigidas para evitar repetições desnecessárias. | 1 e 3 | 8 |  ✅ |
+| 3 | Média |Como professor, desejo que as alternativas das respostas de múltipla escolha e associação sejam embaralhadas para evitar o compartilhamento de respostas entre os alunos. | 1 e 3 | 8 | ✅ |
+| 4 | Baixa |Como professor, quero cadastrar o peso das avaliações para facilitar o cálculo da média final. | 1 e 3 | 5 | ✅ |
+| 5 | Baixa |Como aluno, quero ter acesso ao gabarito da avaliação para avaliar meu desempenho. | 1 e 3 | 5 | ✅ |
+| 6 | Baixa |Como aluno, quero ver a minha média final para acompanhar meu desempenho ao longo do semestre. | 1 e 3 | 5 | ✅ |
 | 7 | Baixa |Como professor, quero cadastrar notas de atividades extras para o cálculo da média final do aluno. | 1 e 3 | 5 | ⬜ |
-| 8 | Baixa |Como aluno, quero ver o agendamento das minhas próximas avaliações para organizar meus estudos. | 1 e 3 | 5 | ⬜ |
-| 9 | Baixa |Como aluno, quero realizar as provas no sistema para facilitar meu acesso e ter um ambiente de resolução sem distrações. | 1 e 3 | 5 | ⬜ |
+| 8 | Baixa |Como aluno, quero ver o agendamento das minhas próximas avaliações para organizar meus estudos. | 1 e 3 | 5 | ✅ |
+| 9 | Baixa |Como aluno, quero realizar as provas no sistema para facilitar meu acesso e ter um ambiente de resolução sem distrações. | 1 e 3 | 5 | ✅ |
 ----
 
 ## 📑 Backlog Sprint 3
