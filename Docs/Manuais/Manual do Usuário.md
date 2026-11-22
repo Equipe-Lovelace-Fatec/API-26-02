@@ -14,6 +14,14 @@
 5. [Agendamento de provas](#-5-agendamento-de-provas)
 6. [Alunos e Correção de Provas](#-6-alunos-e-correção-de-provas)
 7. [Navegação entre as Telas](#-7-navegação-entre-as-telas)
+8. [Área do Aluno – Visão Geral](#-8-área-do-aluno--visão-geral)
+9. [Minha Agenda](#-9-minha-agenda)
+10. [Realização de Avaliação](#-10-realização-de-avaliação)
+11. [Provas Realizadas, Gabarito e Correção](#-11-provas-realizadas-gabarito-e-correção)
+     - [Visualizar Gabarito](#-111-visualizar-gabarito)
+     - [Visualizar Correção](#-112-visualizar-correção)
+12. [Desempenho e Notas](#-12-desempenho-e-notas)
+13. [Navegação entre as Telas (Aluno)](#-13-navegação-entre-as-telas-aluno)
 
 ---
 
@@ -259,3 +267,141 @@ Para acessar uma funcionalidade, basta clicar no botão correspondente:
   - Corrigir
 
 O usuário pode utilizar esses botões para alternar entre as diferentes áreas do sistema durante sua utilização.
+---
+
+## 🎓 8. Área do Aluno – Visão Geral
+
+A interface do aluno permite **consultar avaliações agendadas, realizar provas disponíveis no horário marcado, visualizar gabaritos e correções e acompanhar o desempenho e as notas por disciplina**.
+
+Todas as telas do portal do aluno possuem acesso rápido às áreas de:
+
+- 📅 **Minha agenda**
+- 📝 **Avaliação**
+- ✅ **Correção**
+- 📊 **Desempenho**
+
+Para acessar qualquer uma dessas funcionalidades, basta clicar no botão correspondente no menu superior da tela.
+
+---
+
+## 📅 9. Minha Agenda
+
+Na tela **Minha Agenda**, o aluno visualiza a lista de avaliações agendadas e consulta os detalhes de cada prova.
+
+#### 📌 1º Passo
+
+Acesse a opção **Minha agenda** no menu superior.
+
+#### 📌 2º Passo
+
+Na lista à esquerda, visualize as avaliações agendadas com suas respectivas **datas** e **horários**.
+
+#### 📌 3º Passo
+
+Selecione a prova desejada para conferir o **Resumo da Prova** ao lado direito, contendo:
+
+- **Disciplina**
+- **Professor**
+- **Data**
+- **Horário**
+- **Tempo de prova**
+- **Status** (ex.: *Aguardando início*)
+
+---
+
+## 📝 10. Realização de Avaliação
+
+Na tela de **Avaliação**, o aluno realiza a prova no dia e horário agendados, acompanhando o tempo restante pelo cronômetro no canto superior direito.
+
+#### 📌 1º Passo
+
+No horário agendado da prova, clique em **Avaliação** no menu superior.
+
+#### 📌 2º Passo
+
+Responda às questões apresentadas na tela, acompanhando o tempo disponível no **cronômetro**.
+
+#### 📌 3º Passo
+
+Após responder todas as questões, clique em **FINALIZAR PROVA** para enviar suas respostas.
+
+> ⚠️ **Atenção:** caso não exista nenhuma prova agendada para o momento atual, o sistema exibirá um aviso informando que não há avaliação em andamento e a tela permanecerá como **Nenhuma prova disponível**.
+
+---
+
+## ✅ 11. Provas Realizadas, Gabarito e Correção
+
+Na tela **Correção**, o aluno visualiza a lista de **Provas Realizadas**, exibindo o **título**, a **disciplina** e a **nota** obtida (ou `-` enquanto aguarda correção).
+
+### 📋 11.1 Visualizar Gabarito
+
+Para consultar as respostas oficiais de uma prova realizada:
+
+#### 📌 1º Passo
+
+Na lista de **Provas Realizadas**, localize a avaliação desejada e clique em **GABARITO**.
+
+#### 📌 2º Passo
+
+Confira na tela aberta o **enunciado** e a **resposta esperada** de cada questão.
+
+#### 📌 3º Passo
+
+Para retornar à lista de provas realizadas, clique novamente em **Correção** no menu superior.
+
+---
+
+### 🔎 11.2 Visualizar Correção
+
+Para verificar suas respostas e o retorno do professor:
+
+#### 📌 1º Passo
+
+Na lista de **Provas Realizadas**, localize a avaliação desejada e clique em **CORREÇÃO**.
+
+#### 📌 2º Passo
+
+Na tela aberta, confira o cabeçalho com **disciplina**, **professor** e **data** da prova, seguido pelas questões contendo:
+
+- **Enunciado**
+- **Sua Resposta**
+- **Resposta Esperada**
+- **Comentário do Professor, apenas em questões abertas**
+
+#### 📌 3º Passo
+
+Para retornar à lista de provas realizadas, clique novamente em **Correção** no menu superior.
+
+---
+
+## 📊 12. Desempenho e Notas
+
+Na tela **Minhas Notas**, o aluno acompanha sua situação acadêmica e as notas lançadas em cada disciplina.
+
+#### 📌 1º Passo
+
+Clique em **Desempenho** no menu superior.
+
+#### 📌 2º Passo
+
+Nos menus superiores da área de notas, selecione o **Semestre** e a **Disciplina** desejados.
+
+#### 📌 3º Passo
+
+Consulte na tabela **Avaliações** as informações de cada prova da disciplina selecionada:
+
+- **Avaliação**
+- **Data**
+- **Nota**
+- **Desempenho** (status da avaliação, como *Agendada*, *Aguardando correção* ou *Corrigida*)
+
+---
+
+## 🧭 13. Navegação entre as Telas (Aluno)
+
+O menu superior da interface do aluno permite alternar diretamente entre todas as funcionalidades disponíveis:
+
+- 📅 **Minha agenda**: consulta de provas futuras e resumo de horários e duração.
+- 📝 **Avaliação**: acesso à prova em andamento para resolução e envio.
+- ✅ **Correção**: consulta de **Provas Realizadas**, com botões para abrir o **Gabarito** e a **Correção** detalhada.
+- 📊 **Desempenho**: consulta de **Minhas Notas** filtradas por **Semestre** e **Disciplina**.
