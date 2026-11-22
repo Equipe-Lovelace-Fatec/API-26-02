@@ -29,6 +29,12 @@ Concluir as funcionalidades previstas para o professor, com foco na correção d
 | Previsão da Sprint (extra, sem compromisso de entrega) | US de rank 5, 6, 7, 8 (9 Story Points) |
 ----
 
+## 📈 Burnup Sprint 3
+
+<img width="913" height="446" alt="gráfico burn up sprint 3" src="https://github.com/user-attachments/assets/7a22b631-0b2f-4238-9f95-9294a92b6e6f" />
+
+----
+
 ### 💻 Tecnologias
 
 -   **Versionador:** Github
